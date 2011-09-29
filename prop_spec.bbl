@@ -1,0 +1,20 @@
+\begin{thebibliography}{1}
+
+\bibitem{ctan_pdf}
+The Comprehensive TeX Archive~Network (CTAN).
+\newblock A (not so) short introduction to {LaTeX2e}.
+\newblock \texttt{http://www. ctan.org/tex-archive/info/lshort/english/}.
+
+\bibitem{quantm}
+Andrew~G. West, Adam~J. Aviv, Jian Chang, Vinayak~S. Prabhu, Matt Blaze,
+  Sampath Kannan, Insup Lee, Jonathan~M. Smith, and Oleg Sokolsky.
+\newblock Quan{TM}: {A} quantitative trust management system.
+\newblock In {\em {EUROSEC} 2009}, pages 28--35, March 2009.
+
+\bibitem{latex_wikibook}
+Wikibooks.
+\newblock La{T}e{X}.
+\newblock \texttt{http://en.wikibooks.org/wiki/ LaTeX}.
+\newblock Note: Students should not cite Wikis!
+
+\end{thebibliography}
