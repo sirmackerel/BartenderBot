@@ -61,6 +61,19 @@ motor system of the PR2.
 \\After this training, the PR2 will begin putting its learned motions to test.
 It will be asked to select various bottles and  pour different combinations of
 drinks under a reinforcement-learning system.
+\\
+\\ROS is a fairly mature and ubiquitous piece of software and will take care of
+many complex processing tasks (such as path planning, image segmentation, etc.)
+that we would otherwise have to devote significant amounts of time to.  
+Likewise, the Kinect comes with a very strong API for human joint detection,
+which we intend to make heavy use of
+While we expect both ROS and Kinect to have relatively steep learning curves,
+we do not anticipate these being the limiting factor in how much progress we
+are able to achieve. 
+Rather, we expect the area of novel difficulty to be the combining of these
+two distinct systems into one coherent system which can be used for
+teleimmersive learning.
+
 \\\emph{Having summarized \textit{what} you are going to do, its time to describe \textit{how} you plan to do it. Our factorization example does not work so well here (its likely impossible to realize) -- so let us suppose you are going to create a service that takes a cell-phone picture of a building and returns via text-message, the name of that building\footnote{Do not use this idea -- someone did it last year.}.}
 \emph{
 In this case you might want to talk about establishing a server to receive pictures via MMS. Once the picture is received, you will run an edge extraction algorithm over it. Then, similarity between the submitted picture and those stored (and tagged) in a MySQL database will be computing using algorithm $XYZ$. Finally, the tag of the most similar image will be returned to the user. Do not bore the reader with trivial details, but give them an overview; a block-flow diagram may prove extremely helpful.}
