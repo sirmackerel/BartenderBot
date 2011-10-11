@@ -1,9 +1,34 @@
 \begin{thebibliography}{1}
 
+\bibitem{beer}
+Jonathan Bohren, Radu~Bogdan Rusu, E.~Gil Jones, Eitan Marder-Eppstein,
+  Caroline Pantofaru, Melonee Wise, Lorenz M¨osenlechner, Wim Meeussen, and
+  Stefan Holzer.
+\newblock Towards autonomous robotic butlers: Lessons learned with the pr2.
+\newblock In {\em {ICRA} 2011}. Willow Garage, 2011.
+
+\bibitem{ros_pr2}
+Steve Cousins.
+\newblock {ROS} on the {PR2}.
+\newblock {\em IEEE Robotics \& Automation Magazine}, pages 23--25, September
+  2010.
+
 \bibitem{ctan_pdf}
 The Comprehensive TeX Archive~Network (CTAN).
 \newblock A (not so) short introduction to {LaTeX2e}.
 \newblock \texttt{http://www. ctan.org/tex-archive/info/lshort/english/}.
+
+\bibitem{pouring_arm}
+Ulrich Hillenbrand, Bernhard~Brunner ad~Christoph~Borst, and Gerd Hirzinger.
+\newblock The robutler: a vision-controlled hand-arm system for manipulating
+  bottles and glasses.
+\newblock Technical report, Institute of Robotics and Mechatronics, 2004.
+
+\bibitem{ros}
+Morgan Quigley, Brian Gerkey, Ken Conley, Josh Faust, Tully Foote, Jeremy
+  Leibs, Eric Berger, Rob Wheeler, and Andrew Ng.
+\newblock {ROS}: An open-source robot operating system.
+\newblock Technical report, Stanford University, 2009.
 
 \bibitem{quantm}
 Andrew~G. West, Adam~J. Aviv, Jian Chang, Vinayak~S. Prabhu, Matt Blaze,
