@@ -37,7 +37,7 @@ This method has several advantages over existing approaches. First of all, the K
 \label{sec:related_work}
 There have been many other projects involving autonomous robots and handling drinks. Hillenbrand \textit{et al.}~\cite{pouring_arm} designed a semi-autonomous hand-arm robot for serving drinks. The robot was capable of responding to user input by choosing a drink from multiple choices, opening it, and pouring it into a glass, and then offering the drink to the user. The hand was capable of not only picking up bottles and cups, but also unscrewing bottle caps. The robot combined stereo processing and object recognition to identify the drinks, and then used grasp planning to pick up the drink itself. Bohren \textit{et al.}~\cite{beer} used the PR2 and ROS to build a robotic system for retrieving a beer from a refrigerator. In their work, they developed a task-level execution system known as SMACH for rapidly prototyping robotic applications. The PR2 had to navigate an obstacle map to reach the refrigerator, use object recognization and grasp planning to identify the door handle and the drinks, and ultimately use facial recognition to deliver the beer to a human recipient. Each step of the process contained detail planning and image processing in order to carry out the expected behavior. Srinivasa \textit{et al.}~\cite{herb} designed an autonomous robot capable of navigating a household-like environment and manipulating a wide variety of household objects. Consisting of an arm mounted on a segway, HERB used a powerful array of six multi-core processors to successfully traverse its environment and interact with objects around it.
 
-All of these robots relied on vision processing and path planning to carry out their tasks. However, there have been other approaches involving demonstration and learning to allow a robot to perform a specific job. Kormushev \textit{et al.}~\cite{walk_imitation} taught a robot new motor skills through kinesthetic teaching. The robot had two distinct modes of operation: a learning phase and a reproduction phase. During the learning phase, the robot was shown how to clean a whiteboard by direct human manipulation of the robot's joints, recording both position and force information. During the reproduction phase, the robot would translate the learned information to its own reference frame and attempt to duplicate the teacher's movement pattern on the whiteboard.  Kormushev \textit{et al.}~\cite{pancakes} also used kinesthetic learning to teach a robotic arm how to flip a pancake. A human teacher first moved the arm to demonstrate the movement required to flip a pancake 180 degrees in the air and catch it again. In subsequent trials, reinforcement learning techniques were applied such that the robot could evaulate the performance of its flips and attempt to adjust the motion of the arm for better future flips. In a much earlier attempt, Chalodhorn \textit{et al.}~\cite{walk_imitation} used motion capturing to teach a bipedal humanoid robot how to walk by imitation. Joint angles from motion capture data from a human demonstrator wearing a motion capture suit were mapped to joint angles in the robot. This data was combined with predictions of future state based on sensory information to reproduce a human-like gait in the robot. 
+All of these robots relied on vision processing and path planning to carry out their tasks. However, there have been other approaches involving demonstration and learning to allow a robot to perform a specific job. Kormushev \textit{et al.}~\cite{whiteboard} taught a robot new motor skills through kinesthetic teaching. The robot had two distinct modes of operation: a learning phase and a reproduction phase. During the learning phase, the robot was shown how to clean a whiteboard by direct human manipulation of the robot's joints, recording both position and force information. During the reproduction phase, the robot would translate the learned information to its own reference frame and attempt to duplicate the teacher's movement pattern on the whiteboard.  Kormushev \textit{et al.}~\cite{pancakes} also used kinesthetic learning to teach a robotic arm how to flip a pancake. A human teacher first moved the arm to demonstrate the movement required to flip a pancake 180 degrees in the air and catch it again. In subsequent trials, reinforcement learning techniques were applied such that the robot could evaulate the performance of its flips and attempt to adjust the motion of the arm for better future flips. In a much earlier attempt, Chalodhorn \textit{et al.}~\cite{walk_imitation} used motion capturing to teach a bipedal humanoid robot how to walk by imitation. Joint angles from motion capture data from a human demonstrator wearing a motion capture suit were mapped to joint angles in the robot. This data was combined with predictions of future state based on sensory information to reproduce a human-like gait in the robot. 
 
 \section{Project Proposal}
 \label{sec:project_proposal}We propose to teach a PR2 robot to mix drinks via
@@ -48,6 +48,16 @@ trainer perform these actions in the past.
 
 \subsection{Anticipated Approach}
 \label{subsec:approach}
+
+\begin{figure}[htb!]
+	\begin{center}
+		\includegraphics[width=0.9\linewidth]{flowchart}
+	\end{center}
+	\vspace{-12pt}
+	\caption{Block Diagram detailing Anticipated Approach}
+	\label{fig:some_graph}
+\end{figure}
+
 At the base level, the hardware layer of the PR2 will be managed by ROS.
 Using the mounted Kinect, the PR2 will observe a human trainer go
 through the process of selecting bottles and pouring them into glasses. Custom 
@@ -98,41 +108,6 @@ The following is a list of milestones we hope to reach as the fall and spring se
 	% AW: We next move onto the bibliography.
 \bibliographystyle{plain} % Please do not change the bib-style
 \bibliography{prop_spec}  % Just the *.BIB filename
-
-	% AW: Here is a dirty hack. We insert so much vertical space that the appendices, which want to begin in the left colum underneath "references", are pushed over to the right-hand column. If we looked hard enough, there is probably a command to do exactly this (and wouldn't need tweaked after edits).
-\vspace{150pt}
-
-	% AW: We then use appendices to share some additional information with you, though you won't need appendices in your own proposal.
-\appendix
-\section{Other Specifics}
-\label{app:other_specifics}
-Your proposal need not have appendices like this section and the next, but we still have critical info to share:
-
-	% The usage of 'enumerate' (similar to 'itemize') we talked about above
-	%
-	% You may also notice we have many 'vspace' commands lying around. These create 'vertical space' and are a way to force LaTeX to cooperate, sometimes. Don't get too involved with using them initially, though, because adding or deleting a single line of task can dramatically change how LaTeX chooses to format, page, and space the document
-\begin{enumerate*}
-	\item {\sc proposal length}: We require that your proposal be 4--5 pages in length, bibliography included. Be careful, \LaTeX{} and our style-file in particular are \textit{extremely} space efficient. An 9-page MS-Word document could easily become a 5-page \LaTeX{} one.\vspace{5pt}
-	\item {\sc plagarism}: \textbf{DO NOT} plagarize. If you are caught, you will fail the class (\textit{i.e.}, not graduate), or worse. 
-\end{enumerate*}
-
-\section{\LaTeX{} Examples}
-\label{app:latex_examples}
-
-	% This paragraph makes use of dynamic references. Remember how we've been 'label'-ing everything; sections, etc? Using 'ref' we can reference them. Add a new figure/section at the beginning? This technique automatically re-numbers when you build, so you don't have to make static changes.
-At this point, the proposal specification is complete. From here on out, we are just going to show off some commonly used \LaTeX{} technique. Be sure to look at the `code behind' and see Tab.~\ref{tab:some_table}, Eqn.~\ref{eqn:some_equation} and Fig.~\ref{fig:some_graph} for the output!
-
-	% AW - We next encounter tables and figures (images). Big things like these are known as 'floats' in LaTeX because their position is not fixed. Notice that '[htb!]' follows the start of each environment. We are telling LaTeX that we'd like to put the table/fig 'h' - HERE, precisely where it follows in the narrative. If LaTeX determines it doesn't look good here, 't' tells LaTeX we'd like it at the top of this column, and if that doesn't work, use 'b', the bottom of the column. Other options are available. LaTeX shifts floats around to ensure images don't end up on page/column boundaries, which would result in a waste of space for text.
-
-	% AW - We insert a graph/figure into the document. This is a pretty straightforward process once you get the image into a file format that LaTeX plays nice with. Then we just scale it as a % of the column width.
-\begin{figure}[htb!]
-	\begin{center}
-		\includegraphics[width=0.9\linewidth]{flowchart}
-	\end{center}
-	\vspace{-12pt}
-	\caption{Block Diagram detailing Anticipated Approach}
-	\label{fig:some_graph}
-\end{figure}
 
 \end{document} 
 
