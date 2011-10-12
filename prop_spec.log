@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2011.9.25)  11 OCT 2011 04:02
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2011.9.25)  11 OCT 2011 21:37
 entering extended mode
  %&-line parsing enabled.
 **prop_spec.tex
@@ -216,18 +216,31 @@ Overfull \hbox (4.52565pt too wide) in paragraph at lines 41--43
 [1
 
 
-] (./prop_spec.bbl) [2]
-File: some_graph.ps Graphic file (type eps)
- <some_graph.ps> [3
+]
+Underfull \hbox (badness 10000) in paragraph at lines 45--52
 
-] (./prop_spec.aux) ) 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 57--78
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 57--78
+
+ []
+
+(./prop_spec.bbl [2])
+File: flowchart.ps Graphic file (type eps)
+ <flowchart.ps> [3] (./prop_spec.aux) ) 
 Here is how much of TeX's memory you used:
  1928 strings out of 495062
- 21292 string characters out of 1182644
+ 21290 string characters out of 1182644
  79658 words of memory out of 3000000
  5085 multiletter control sequences out of 15000+50000
  42978 words of font info for 53 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 39i,10n,26p,1656b,293s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,10n,26p,1654b,293s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on prop_spec.dvi (3 pages, 18888 bytes).
+Output written on prop_spec.dvi (3 pages, 21064 bytes).
