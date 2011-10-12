@@ -65,10 +65,11 @@ It will be asked to select various bottles and  pour different combinations of
 drinks under a reinforcement-learning system.
 \\
 \\ROS is a fairly mature and ubiquitous piece of software and will take care of
-many complex processing tasks (such as path planning, image segmentation, etc.)
-that we would otherwise have to devote significant amounts of time to.  
-Likewise, the Kinect comes with a very strong API for human joint detection,
-which we intend to make heavy use of
+many of the more sophisticated computational tasks (such as path planning, 
+image segmentation, etc.) that we would otherwise have to devote significant 
+amounts of time to developing.  
+Likewise, we intend to make heavy use of the Kinect API, which comes with very
+strong support for human joint detection.
 While we expect both ROS and Kinect to have relatively steep learning curves,
 we do not anticipate these being the limiting factor in how much progress we
 are able to achieve. 
@@ -76,12 +77,6 @@ Rather, we expect the area of novel difficulty to be the combining of these
 two distinct systems into one coherent system which can be used for
 teleimmersive learning.
 
-\emph{Having summarized \textit{what} you are going to do, its time to describe \textit{how} you plan to do it. Our factorization example does not work so well here (its likely impossible to realize) -- so let us suppose you are going to create a service that takes a cell-phone picture of a building and returns via text-message, the name of that building\footnote{Do not use this idea -- someone did it last year.}.}
-\emph{
-In this case you might want to talk about establishing a server to receive pictures via MMS. Once the picture is received, you will run an edge extraction algorithm over it. Then, similarity between the submitted picture and those stored (and tagged) in a MySQL database will be computing using algorithm $XYZ$. Finally, the tag of the most similar image will be returned to the user. Do not bore the reader with trivial details, but give them an overview; a block-flow diagram may prove extremely helpful.}
-\emph{
-Also note where you anticipate having \underline{novel} difficulty. Maybe you have never setup a MySQL database or even used SQL before at all -- yes, that is a challenge -- but not one reader's care about. More novel would be the fact that many buildings on Penn's campus look similar and your classifier may be inaccurate in such instances.}
-\subsection{Evaluation Criteria}
 \label{subsec:eval_criteria}
 Suppose you have implemented your approach, and it is functioning. Now how are you going to convince readers your approach is better than what exists? In the factorization example, you could just compare run-times between algorithms run on the same input. The image recognition example might use a percentage of accurate classifications. Other fields may have established testing benchmarks.
 
