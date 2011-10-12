@@ -1,19 +1,15 @@
-
 % Andrew G. West - prop_spec.tex
 % Main LaTeX file for CIS400/401 Project Proposal Specification
 %
-% Once built and in PDF form this document outlines the format of a project proposal. However, in raw (.tex) form, we also try to comment on some basic LaTeX technique. This is not intended to be a LaTeX tutorial, instead just (1) a use-case thereof, and (2) a template for your own writing.
 
-	% AW - Ordinarily we'd begin by specifying some broad document properties like font-size, page-size, margins, etc. -- We have done this (and much more) for you by creating a 'style file', which the 'documentclass' command references.
 \documentclass{sig-alternate}
  
-	% AW - These 'usepackage' commands are a way of importing additional LaTeX styles and formattings that aren't part of the 'standard library'
 \usepackage{mdwlist}
 \usepackage{url}
 
 \begin{document} 
 
-	% AW - We setup the parameters to our title header before 'making' it.
+% AW - We setup the parameters to our title header before 'making' it.
 \title{CIS400/401 Project Proposal Specification - BartenderBot}
 \subtitle{Dept. of CIS - Senior Design 2010-2011}
 \numberofauthors{3}
@@ -24,7 +20,6 @@
 \date{}
 \maketitle
 
-	% AW - Next we write out our abstract -- generally a two paragraph maximum, executive summary of the motivation and contributions of the work.
 \begin{abstract}
 \textit{Programming a robot to perform human tasks has been the focus of many research papers. The task has been traditionally very challenging, as it involves heavy computation and complicated coordination between many different joints. Here we present a method to teach the Willow Garage PR2 robot how to mix and serve a drink through imitation. By using immersive teleoperation, it is possible to issue complex commands to the PR2 and have it shadow human motion. The teleoperation will be provided by the Microsoft XBox Kinect, and communication with the PR2 will be handled with ROS. The goal of this project is to have the PR2 not only shadow human motion captured by the Kinect, but also learn from this motion and adapt to new situations via reinforcement learning techniques. We will outline our plan for achieving both shadowing and learning with the Kinect, PR2, and ROS.}
 \end{abstract}
@@ -39,7 +34,9 @@ We propose to use the Kinect to map human movement to teach the PR2 how to mix a
 \section{Related Work}
 \label{sec:related_work}
 There have been many other projects involving autonomous robots and handling drinks. Hillenbrand \textit{et al.}~\cite{pouring_arm} designed a semi-autonomous hand-arm robot for serving drinks. The robot was capable of responding to user input by choosing a drink from multiple choices, opening it, and pouring it into a glass, and then offering the drink to the user. The hand was capable of not only picking up bottles and cups, but also unscrewing bottle caps. The robot combined stereo processing and object recognition to identify the drinks, and then used grasp planning to pick up the drink itself. Bohren \textit{et al.}~\cite{beer} used the PR2 and ROS to build a robotic system for retrieving a beer from a refrigerator. In their work, they developed a task-level execution system known as SMACH for rapidly prototyping robotic applications. The PR2 had to navigate an obstacle map to reach the refrigerator, use object recognization and grasp planning to identify the door handle and the drinks, and ultimately use facial recognition to deliver the beer to a human recipient. Each step of the process contained detail planning and image processing in order to carry out the expected behavior. Srinivasa \textit{et al.}~\cite{herb} designed an autonomous robot capable of navigating a household-like environment and manipulating a wide variety of household objects. Consisting of an arm mounted on a segway, HERB used a powerful array of six multi-core processors to successfully traverse its environment and interact with objects around it.
+
 All of these robots relied on vision processing and path planning to carry out their tasks. However, there have been other approaches involving demonstration and learning to allow a robot to perform a specific job. (Insert stuff here describing work with kinesthetic teaching and demonstrative teaching, maybe with some reinforcement learning too?)
+\cite{walk_imitation}
 
 \section{Project Proposal}
 \label{sec:project_proposal}We propose to teach a PR2 robot to mix drinks via
@@ -47,10 +44,6 @@ teleimmersive demonstration learning methods. It is our goal that given a
 setting consisting of bottles and glasses, the PR2 will be able to select
 desired bottles and pour them into glasses, just by having seen a human
 trainer perform these actions in the past.
-\\
-\\\emph{Now is the time to introduce your proposed project in all of its glory. Admittedly, this is not the easiest since you probably have not done much actual research yet. Even so, setting and realizing realistic research goals is an important skill. Begin by summarizing what you are going to do and the expected benefit it will bring.}
-
-
 
 \subsection{Anticipated Approach}
 \label{subsec:approach}
