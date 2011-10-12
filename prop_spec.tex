@@ -77,22 +77,28 @@ Rather, we expect the area of novel difficulty to be the combining of these
 two distinct systems into one coherent system which can be used for
 teleimmersive learning.
 
+\subsection{Evaluation Criteria}
 \label{subsec:eval_criteria}
-Suppose you have implemented your approach, and it is functioning. Now how are you going to convince readers your approach is better than what exists? In the factorization example, you could just compare run-times between algorithms run on the same input. The image recognition example might use a percentage of accurate classifications. Other fields may have established testing benchmarks.
+We will evaulate the performance of our proposed system to teach the PR2 by experimentally determining how quickly and easily the PR2
+can acquire new behavior. We will start with very simple motions, such as simply lifting and pouring a single cup or bottle. Once the PR2 is capable of completing those actions after shadowing a human demonstrator, we can attempt to teach it increasingly complex sequences of mixing and pouring. The goal here is to show that many different movement sequences can be taught to the PR2 using the same motion capturing setup from the Kinect.
 
-No matter the case, you need to prove you have contributed to the field. This will be easier for some than others. In particular, those with `sensory' projects involving visual or sonic elements need to think this point through -- objectivity measures are always better than subjective ones.
+If time permits, we would also like to evaluate the PR2's ability to adapt to changing conditions. For instance, we can measure how far a bottle can be moved from its expected position before the PR2 becomes unable to pick it up. The weight of the bottle can also be toggled to see how well the PR2 can adapt to nearly-full versus nearly-empty drink containers.
 
 \section{Research Timeline}
 \label{sec:research_timeline}
-Finally, we would like you to speculate about the pace of your research progress. This section need not be lengthy, we would just like you to specify some milestones so we can gauge your progress during our intermediate interviews. Let us follow through with our image recognition example:
+The following is a list of milestones we hope to reach as the fall and spring semesters progress. 
 
 	% The 'itemize' environment shown here, and its friend 'enumerate' (shown below), are used to create indented\bulleted\outline style lists.
 \begin{itemize*}
-	\item {\sc already completed}: Preliminary reading. Began implementation of image-recognition algorithm.\vspace{3pt}
-	\item {\sc prior-to thanksgiving} : Photograph buildings for DB. Make algorithm more efficient, tune parameters.\vspace{3pt}
-	\item {\sc prior-to christmas} : Create server-MMS interface. Expand tagged DB collection.\vspace{3pt}
-	\item {\sc completion tasks} : Verify implementation is bug-free. Conduct accuracy testing. Complete write-up.\vspace{3pt}
-	\item {\sc if there's time} : Investigate image pre-processing techniques to improve accuracy.
+	\item {\sc already completed}: Preliminary reading and project selection. Project proposal completed.\vspace{3pt}
+	\item {\sc prior-to Nov.1}: Complete ROS tutorials and practice using ROS.\vspace{3pt}
+	\item {\sc prior-to Dec.1}: Capture human movement with Kinect. Experiment with PR2 simulator.\vspace{3pt}
+	\item {\sc prior-to winter break}: Issue commands to PR2 simulator by human gestures captured by Kinect. Progress report completed.\vspace{3pt}
+	\item {\sc prior-to Feb.1}: Attempt real trials on the actual PR2.\vspace{3pt}
+	\item {\sc prior-to Mar.1}: Achieve a simple, successful drink mixing with the PR2.\vspace{3pt}
+	\item {\sc prior-to Apr.1}: Develop a more complex sequence of drink mixing with the PR2.\vspace{3pt}
+	\item {\sc completion tasks}: Verify that the PR2 can successfully mix a drink. Conduct accuracy testing. Complete write-up.\vspace{3pt}
+	\item {\sc if there's time} : Investigate ways to improve the PR2's ability to adapt and learn from different drink configurations.
 \end{itemize*}
 
 	% AW: We next move onto the bibliography.
