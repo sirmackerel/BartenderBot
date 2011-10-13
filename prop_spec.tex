@@ -92,13 +92,17 @@ At the base level, the hardware layer of the PR2 will be managed by ROS.
 Using the mounted Kinect, the PR2 will observe a human trainer go
 through the process of selecting bottles and pouring them into glasses. 
 Specialized software will then attempt to map the motions of the human trainer
-onto the motor system of the PR2.\\
-
-After this training, the PR2 will begin putting its learned motions to test.
-It will be asked to select various bottles and  pour different combinations of
-drinks under a reinforcement-learning system.\\
-
-ROS is a fairly mature and ubiquitous piece of software and will take care of
+onto the motor system of the PR2.
+\\
+\\The second phase utilizes software that lets the PR2 attempt to reproduce
+the observed motions under a reinforcement learning environment. In addition
+to simply trying to replicate the motion in identical situations,
+the PR2 will evaluate its own performance in scenarios where objects are not 
+placed in the exact same location as they were for the human demonstrator.
+The end goal is that the PR2 can refine its acquired motions and adapt to new
+situations via reinforcement learning techniques. 
+\\ 
+\\ROS is a fairly mature and ubiquitous piece of software and will take care of
 many of the more sophisticated computational tasks (such as path planning, 
 image segmentation, etc.) that we would otherwise have to devote significant 
 amounts of time to developing.  
