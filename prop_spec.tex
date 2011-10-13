@@ -6,7 +6,9 @@
  
 \usepackage{mdwlist}
 \usepackage{url}
-
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[section]{placeins}
 \begin{document} 
 
 \title{BERTRAM: A Bartending, Experimental, Reinforced-learning, Teleimmersive, Robotic, Autonomous Mixologist}
@@ -21,7 +23,8 @@
 \maketitle
 
 \begin{abstract}
-\textit{Programming a robot to autonomously perform human tasks has been a long time goal of robotics. Such endeavors have typically involved heavy computation due to the demands of visual processing, path planning, and motor coordination. Human demonstration has often used to introduce a sequence of moves to a robot, both in the form of direct kinesthetic learning and visual motion capture. Here we present a method to teach a Willow Garage PR2 robot how to mix and serve a drink through teleimmersive shadowing and reinforcement learning.\\
+\textit{Programming a robot to autonomously perform human tasks has been a long-time goal of robotics. Such endeavors have typically involved heavy computation due to the demands of visual processing, path planning, and motor coordination. Human demonstration has often been used to introduce a sequence of moves to a robot, both in the form of direct kinesthetic learning and visual motion capture. 
+Here we present a method to teach a Willow Garage PR2 robot how to mix and serve a drink through teleimmersive shadowing and reinforcement learning.\\
 Our method consists of two parts: first, shadowing a human teacher, and then refining the learned motion through reinforcement learning. For the first part, we propose using teleimmersive operation to demonstrate behavior that the PR2 can imitate and reproduce at a later time. The Microsoft XBox Kinect will be used to capture human motion to provide the teleimmersive effect. Data will be transferred from the Kinect to the PR2 via the Robotic Operating System (ROS). The second phase of our proposal involves writing custom software such that the PR2 can refine its learned motions adapt to new situations via reinforcement learning techniques. The PR2 will evaluate its own performance in scenarios where objects are not placed in the exact same location as they were for the human demonstrator. If successful, the proposed method will demonstrate an easy way for the PR2 to rapidly acquire and refine different complex behaviors within a specific environment. This paper details our plan for achieving both shadowing and learning with the Kinect, PR2, and ROS.}
 \end{abstract}
 
@@ -47,7 +50,7 @@ We propose to use the Kinect to capture human movement in order to teach the PR2
 10 client.wait\_for\_server()\\
 11\\
 12 g = PointHeadGoal()\\
-13 g.target.header.frame\_id = ’base\_link’\\
+13 g.target.header.frame\_id = 'base\_link'\\
 14 g.target.point = Point(1.0, 0.0, 1.0)\\
 15 g.min\_duration = rospy.Duration(1)\\
 16\\
@@ -69,19 +72,24 @@ All of these robots relied on vision processing and path planning to carry out t
 
 \section{Project Proposal}
 \label{sec:project_proposal}We propose to teach a PR2 robot to mix drinks via
-teleimmersive demonstration learning methods. It is our goal that given a 
-setting consisting of bottles and glasses, the PR2 will be able to select
-desired bottles and pour them into glasses, just by having seen a human
+teleimmersive demonstration learning methods. It is our goal that if presented
+with a setting consisting of bottles and glasses, the PR2 will be able to 
+distinguish and select the desired bottles and them pour them into glasses, 
+just by having seen a human
 trainer perform these actions in the past.
-
+\\
+\\The most visible metric of success will be of course how well the PR2
+can perform as a bartender. It is important to note however, that the real
+measure of success is how well teleimmersive learning via Kinect can be used
+for robots to acquire motions and behaviors.
 \subsection{Anticipated Approach}
 \label{subsec:approach}
 
 At the base level, the hardware layer of the PR2 will be managed by ROS.
 Using the mounted Kinect, the PR2 will observe a human trainer go
-through the process of selecting bottles and pouring them into glasses. Custom 
-software will then attempt to map the motions of the human trainer onto the 
-motor system of the PR2.\\
+through the process of selecting bottles and pouring them into glasses. 
+Specialized software will then attempt to map the motions of the human trainer
+onto the motor system of the PR2.\\
 
 After this training, the PR2 will begin putting its learned motions to test.
 It will be asked to select various bottles and  pour different combinations of
@@ -109,12 +117,12 @@ If time permits, we would also plan to evaluate the PR2's ability to adapt to ch
 \subsection{Block Diagram}
 \label{subsec:block_diagram}
 
-\begin{figure}[htb!]
+\begin{figure}[h!] 
 	\begin{center}
 		\includegraphics[width=0.9\linewidth]{flowchart}
 	\end{center}
-	\vspace{-24pt}
-	\caption{Block Diagram summarizing Anticipated Approach}
+	%\vspace{-24pt}
+	\caption{Block Diagram Summarizing Anticipated Approach}
 	\label{fig:some_graph}
 \end{figure}
 
