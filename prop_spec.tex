@@ -69,20 +69,21 @@ Our method has several advantages over existing approaches. First of all, the Ki
 	
 \section{Related Work}
 \label{sec:related_work}
-Other institutions have conducted research involving autonomous robots and handling drinks. Hillenbrand \textit{et al.}~\cite{pouring_arm} designed a semi-autonomous hand-arm robot for serving drinks. The hand-arm was capable of responding to user input by choosing a drink from a variety of different containers, opening the drink if necessary, pouring the liquid into a glass, and then offering the drink to the user. It was capable of not only picking up bottles and cups, but also of unscrewing bottle caps. Stereo processing was combined with object recognition to identify the drinks, after which grasp planning was used to actually pick up and manipulate the drink. Srinivasa \textit{et al.}~\cite{herb} designed an autonomous robot capable of navigating a household-like environment and manipulating a wide variety of everyday objects. Consisting of an arm mounted on a segway, HERB used a powerful array of six multi-core processors to successfully traverse its environment and interact with objects around it, such as cups and drawers.\\
+Other institutions have conducted research involving autonomous robots and handling drinks. Hillenbrand \textit{et al.}~\cite{pouring_arm} designed a semi-autonomous hand-arm robot for serving drinks. The hand-arm was capable of responding to user input by choosing a drink from a variety of different containers, opening the drink if necessary, pouring the liquid into a glass, and then offering the drink to the user. It was capable of not only picking up bottles and cups, but also of unscrewing bottle caps. Stereo processing was combined with object recognition to identify the drinks, after which grasp planning was used to actually pick up and manipulate the drink. Srinivasa \textit{et al.}~\cite{herb} designed an autonomous robot capable of navigating a household-like environment and manipulating a wide variety of everyday objects. Consisting of an arm mounted on a segway, HERB used a powerful array of six multi-core processors to successfully traverse its environment and interact with objects around it, such as cups and drawers. By combining modules for object recognition, task based planning, caged grasping, and workspace goal regions, HERB was able to autonomously carry out commands issued from a GUI to perform simple kitchen tasks such as placing an object in a recycling bin.\\
 
-There has also been significant work done in teaching the PR2 robot to perform human tasks. Bohren \textit{et al.}~\cite{beer} used the PR2 and ROS to build a robotic system for retrieving a beer from a refrigerator. In their work, they developed a task-level execution system known as SMACH for rapidly prototyping robotic applications. The PR2 had to navigate an obstacle map to reach the refrigerator, use object recognition and grasp planning to identify the door handle and the drinks, and ultimately use facial recognition to deliver the beer to a human recipient. Each step of the process contained detail planning and image processing in order to carry out the expected behavior. Klingbeil \textit{et al.}~\cite{groceries} developed a grasping algorithm to enable the PR2 to pick up objects and attempt to locate and scan the barcode. Their technique bypassed the training phase by allowing the PR2 to devise a plan to grasp the object from only a single 3D snapshot. Saito \textit{et al.}~\cite{subway} devised a method for the PR2 to intelligently navigate large environments via semantic search. The PR2 attempts to find a specific object by first searching areas that would logically contain that item. When asked to retrieve a sandwich, the PR2 first inspected a nearby refrigerator in its environment.\\ 
+There has also been significant work done in teaching the PR2 robot to perform human tasks. Bohren \textit{et al.}~\cite{beer} used the PR2 and ROS to build a robotic system for retrieving a beer from a refrigerator. In their work, they developed a task-level execution system known as SMACH for rapidly prototyping robotic applications. The PR2 had to navigate an obstacle map to reach the refrigerator, use object recognition and grasp planning to identify the door handle and the drinks, and ultimately use facial recognition to deliver the beer to a human recipient. Each step of the process contained detail planning and image processing in order to carry out the expected behavior. Klingbeil \textit{et al.}~\cite{groceries} developed a grasping algorithm to enable the PR2 to pick up objects and attempt to locate and scan the barcode. Their technique bypassed the training phase by allowing the PR2 to devise a plan to grasp the object from only a single 3D snapshot. Their algorithm emphasized the importance of positiong the PR2's gripper such that its shape most closely matched the shape of the object it attempts to grasp. Saito \textit{et al.}~\cite{subway} devised a method for the PR2 to intelligently navigate large environments via semantic search. The PR2 attempts to find a specific object by first searching areas that would logically contain that item. When asked to retrieve a sandwich, the PR2 first inspected a nearby refrigerator in its environment.\\ 
 
 All of these robots relied on some combination of vision processing and path planning to carry out their tasks. However, there have been other approaches involving demonstration learning to allow a robot to perform a specific job. In a relatively early attempt, Chalodhorn \textit{et al.}~\cite{walk_imitation} used motion capturing to teach a bipedal humanoid robot how to walk by imitation. Joint angles from motion capture data from a human demonstrator wearing a motion capture suit were mapped to joint angles in the robot. This data was combined with predictions of future state based on sensory information to reproduce a human-like gait in the robot. Kormushev \textit{et al.}~\cite{whiteboard} taught a robot new motor skills through kinesthetic teaching. The robot had two distinct modes of operation: a learning phase and a reproduction phase. During the learning phase, the robot was shown how to clean a whiteboard by direct human manipulation of the robot's joints, recording both position and force information. During the reproduction phase, the robot would translate the learned information to its own reference frame and attempt to duplicate the teacher's movement pattern on the whiteboard.  Kormushev \textit{et al.}~\cite{pancakes} also used kinesthetic learning to teach a robotic arm how to flip a pancake. A human teacher first moved the arm to demonstrate the movement required to flip a pancake 180 degrees in the air and catch it again. In subsequent trials, reinforcement learning techniques were applied such that the robot could evaluate the performance of its flips and attempt to adjust the motion of the arm for better future flips.
 
 \section{Project Proposal}
 \label{sec:project_proposal}We propose to teach a PR2 robot how to mix drinks via
-teleimmersive demonstration learning methods. One of our goals is to have the PR2
-be able to recall different drink mixing recipes acquired from watching
-a human demonstrator perform them in the past. Ideally, if presented
-with a setting consisting of bottles and glasses, the PR2 should be able to 
+teleimmersive demonstration learning methods. One of our major goals is to have the PR2
+be able to reproduce different drink mixing recipes acquired from watching
+a human demonstrator perform them in the past.
+Our other major goal involves having the PR2 adapt its behavior by learning from failed attempts.
+Given a setting consisting of many different bottles and glasses, the PR2 should be able to 
 distinguish and select the desired bottles and them pour them into glasses by
-combining its stored library of known mixes with reinforcement learning techniques./
+combining its stored library of known mixes with reinforcement learning techniques.
 \\
 \\The most visible metric of success will be  how well the PR2
 can perform as a bartender. We can determine how often the PR2
@@ -92,26 +93,33 @@ for robots to acquire new motions and behaviors.
 \subsection{Anticipated Approach}
 \label{subsec:approach}
 Our method consists of two phases. First the robot will shadow a human teacher,
-remembering the actions so that it can subsequently try to reproduce them. 
-It will then attempt to improve its execution of the learned motion through 
-reinforcement learning.
+remembering the actions so that it can subsequently try to reproduce them. For example,
+the sequence of moves involved for mixing a martini will be different than the ones
+involved in mixing a gin and tonic.
+In the next part, the PR2 will then attempt to improve its execution of the learned motion through 
+reinforcement learning. For instance, if we move a cup two centimeters away
+from its expected position, and the PR2 fails to pick it up, it can try again 
+by adjusting its recorded sequence of moves. 
 \\
 \\For the first part, we propose using teleimmersive operation to demonstrate
 behavior to the PR2 so that it can imitate and reproduce these motions at a
 later time. At the base level, the hardware layer of the PR2 will be managed 
 by ROS. This will be combined with the Microsoft XBOX Kinect to capture human
-motion and to provide the teleimmersive framework.
-Using the mounted Kinect, the PR2 will observe a human trainer go
+motion and to provide the teleimmersive framework. The Kinect will provide nodes
+that can publish motion capture data, which in turn can be subscribed to by nodes
+controlling parts of the PR2.
+In this way,the PR2 can observe a human trainer go
 through the process of selecting bottles and pouring them into glasses. 
 Specialized software will then attempt to map the motions of the human trainer
 onto the motor system of the PR2.
 \\
 \\The second phase utilizes software that lets the PR2 attempt to reproduce
-the observed motions under a reinforcement learning environment. In addition
+the observed motions augmented by reinforcement learning techniques. In addition
 to simply trying to replicate the motion in identical situations,
-the PR2 will evaluate its own performance in scenarios where objects are not 
-placed in the exact same location as they were for the human demonstrator.
-The end goal is that the PR2 can refine its acquired motions and adapt to new
+the PR2 will evaluate its own performance in changing environments. For instance, 
+objects may
+placed in the exact same location as they were placed for the human demonstrator.
+The end goal is for the PR2 to refine its acquired motions and adapt to new
 situations via reinforcement learning techniques. 
 \\ 
 \\ROS is a fairly mature and ubiquitous piece of software that can take care of
@@ -119,7 +127,8 @@ many of the more sophisticated computational tasks (such as path planning,
 image segmentation, etc.) that we would otherwise have to devote significant 
 amounts of time to developing.  
 Likewise, we intend to make heavy use of the Kinect API, which comes with very
-strong support for human joint detection.
+strong support for human joint detection. The Kinect has already been integrated with 
+ROS with great success.
 While we expect both ROS and Kinect to have relatively steep learning curves,
 we do not anticipate these being the limiting factor in how much progress we
 are able to achieve. 
@@ -129,9 +138,9 @@ teleimmersive learning.
 \subsection{Evaluation Criteria}
 \label{subsec:eval_criteria}
 We will evaluate the performance of our proposed system to teach the PR2 by experimentally determining how quickly and easily the PR2
-can acquire new behavior. We will start with very simple motions, such as simply lifting and pouring a single cup or bottle. Once the PR2 is capable of completing those actions after shadowing a human demonstrator, we can attempt to teach it increasingly complex sequences of mixing and pouring. We can measure the PR2's success rate in repeating a recorded movement over multiple trials. The goal here is to show that many different movement sequences can be taught to the PR2 using the same motion capturing setup from the Kinect.\\
+can acquire new behavior. We will start with very simple motions, such as simply lifting and pouring a single cup or bottle. Once the PR2 is capable of completing those actions after shadowing a human demonstrator, we can attempt to teach it increasingly complex sequences of mixing and pouring. We can measure the PR2's success rate in repeating a recorded movement over multiple trials. This success rate can be then be correlated with the complexity of the demonstrated command. The goal here is to show that many different movement sequences of varying difficulty can be taught to the PR2 using the same motion capturing setup from the Kinect.\\
 \\
-If time permits, we also plan to evaluate the PR2's ability to adapt to variable conditions. For instance, we can measure how far a bottle can be moved from its expected position before the PR2 becomes unable to pick it up. The weight of the bottle can also be changed to see how well the PR2 can adapt to grasping nearly-full versus nearly-empty drink containers. We can measure how the success rate of the PR2's drink mixing is affected as a function of these variables (distance moved, weight of drinks, etc).
+If time permits, we also plan to evaluate the PR2's ability to adapt to variable conditions. For instance, we can measure how far a bottle can be moved from its expected position before the PR2 becomes unable to pick it up. The weight of the bottle can also be changed to see how well the PR2 can adapt to grasping nearly-full versus nearly-empty drink containers. The success rate of the PR2's drink mixing can be analyzed as a function of these variables (distance moved, weight of drinks, etc).
 \subsection{Block Diagram}
 \label{subsec:block_diagram}
 
