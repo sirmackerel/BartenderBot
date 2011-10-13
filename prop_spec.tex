@@ -16,26 +16,54 @@
 \author{
 \alignauthor Seth Shannin \\ \email{sshannin@seas} \\ Univ. of Pennsylvania \\ Philadelphia, PA
 \alignauthor Kevin Xu \\ \email{kevinxu@seas} \\ Univ. of Pennsylvania \\ Philadelphia, PA
-\alignauthor Camillo Jose Taylor \\ \email{cjtaylor@cis} \\ Univ. of Pennsylvania \\ Philadelphia, PA}
+\alignauthor Dr. Camillo Jose Taylor \\ \email{cjtaylor@cis} \\ Univ. of Pennsylvania \\ Philadelphia, PA}
 \date{}
 \maketitle
 
 \begin{abstract}
-\textit{Programming a robot to perform human tasks has been the focus of many research papers. The task has been traditionally very challenging, as it involves heavy computation and complicated coordination between many different joints. Here we present a method to teach the Willow Garage PR2 robot how to mix and serve a drink through imitation. By using immersive teleoperation, it is possible to issue complex commands to the PR2 and have it shadow human motion. The teleoperation will be provided by the Microsoft XBox Kinect, and communication with the PR2 will be handled with ROS. The goal of this project is to have the PR2 not only shadow human motion captured by the Kinect, but also learn from this motion and adapt to new situations via reinforcement learning techniques. We will outline our plan for achieving both shadowing and learning with the Kinect, PR2, and ROS.}
+\textit{Programming a robot to autonomously perform human tasks has been a long time goal of robotics. Such endeavors have typically involved heavy computation due to the demands of visual processing, path planning, and motor coordination. Human demonstration has often used to introduce a sequence of moves to a robot, both in the form of direct kinesthetic learning and visual motion capture. Here we present a method to teach a Willow Garage PR2 robot how to mix and serve a drink through teleimmersive shadowing and reinforcement learning.\\
+Our method consists of two parts: first, shadowing a human teacher, and then refining the learned motion through reinforcement learning. For the first part, we propose using teleimmersive operation to demonstrate behavior that the PR2 can imitate and reproduce at a later time. The Microsoft XBox Kinect will be used to capture human motion to provide the teleimmersive effect. Data will be transferred from the Kinect to the PR2 via the Robotic Operating System (ROS). The second phase of our proposal involves writing custom software such that the PR2 can refine its learned motions adapt to new situations via reinforcement learning techniques. The PR2 will evaluate its own performance in scenarios where objects are not placed in the exact same location as they were for the human demonstrator. If successful, the proposed method will demonstrate an easy way for the PR2 to rapidly acquire and refine different complex behaviors within a specific environment. This paper details our plan for achieving both shadowing and learning with the Kinect, PR2, and ROS.}
 \end{abstract}
 
 	% AW - Then we proceed into the body of the report itself. The effect of the 'section' command is obvious, but also notice 'label'. Its good practice to label every (sub)-section, graph, equation etc. -- this gives us a way to dynamically reference it later in the text via the 'ref' command.
 \section{Introduction}
 \label{sec:intro}
-Constructing a fully autonomous and adaptive robot has been a long-time goal of robotics research. There have been many different attempts at overcoming the challenges involved in developing such a robot. The ability to learn is a powerful intermediate step towards full autonomy. A common problem involves choosing how exactly to demonstrate a desired behavior in such a way that a robot can learn that behavior. In this paper we propose to teach a WillowGarage PR2 Robot how to perform a reasonably complex task (mixing a drink) through shadowing of human motion capured by the Microsoft XBOX Kinect. The XBOX Kinect sensor from Microsoft provides real-time depth information from a scene at 30 FPS. Combined with various open source libraries\cite{kinect}, the Kinect has been used in many projects involving real-time tracking of human motion, many of which can be found online\cite{freenect}. The PR2 is a humanoid robot developed by  Willow Garage\cite{pr2} for the purpose of robotics research. It  has been taught by different teams to do many things, including baking cookies\cite{cookies}, scanning and bagging groceries\cite{groceries}, and fetching a sandwich from Subway\cite{subway}.
+Constructing a fully autonomous and adaptive robot has been a long-time goal of robotics research. The possibility of a robotic butler is only one of many potential applications. However, real autonomous decision making is an incredibly challenging process, for many different processes must be coordinated - vision processing must be done quickly and accurately to respond to changes in the environment, accurate path planning is needed to navigate the environment, and precise motor coordination is needed to manipulate the environment. There have been many different attempts at overcoming these challenges involved in developing an autonomous robot. One approach that has been often explored is machine learning. The ability to learn is a powerful intermediate step towards autonomy, since learning can allow a robot to adapt to new, unforeseen scenarios. Teaching by human demonstration is a common approach to robot learning since it enables the transmission of complex behavior in a manner far easier than coding the movement of each individual motor and joint. However, choosing how exactly how the demonstrated behavior is delivered to the robot in such a way that it can record and reproduce that behavior is still a very challenging task.\\ 
 
-We propose to use the Kinect to map human movement to teach the PR2 how to mix and pour a drink. The Kinect sensor provides a convenient way to demonstrate the desired behavior by tracking human motion. The captured data can be relayed to the PR2 via ROS, an open-source Robot Operating System\cite{ros}. ROS provides a convenient framework for inter-process communication and coordination between different sensors and components of the PR2. ROS enables relatively short programs to issue surprisingly sophisticated commands to the PR2, such as continually tracking a moving point over time\cite{ros_pr2}. By using ROS, Kinect, and the PR2, we will demonstrate the effectiveness of teleimmersive demonstration learning in teaching a robot new behavior.
+In this proposal we outline a method to teach a WillowGarage PR2 Robot how to mix and serve drinks through shadowing of human motion capured by the Microsoft XBOX Kinect. The XBOX Kinect sensor from Microsoft provides depth information at real-time speeds (30 frames per second), which essentially perfors the computation that would have been involved in stereo processing. Combined with various open source libraries\cite{kinect}, the Kinect also works with APIs that provide human motion sensing and tracking, which greatly simplifies the task of object recognition to detect body movement. These Kinect libraries have already been used successfully in many projects involving real-time tracking of human motion, examples of which can be found online\cite{freenect}.\\
 
-This method has several advantages over existing approaches. First of all, the Kinect sensor provides accurate real-time human motion tracking that can be translated to joint movement in the PR2 thanks to ROS. Secondly, teleimmersion better enables a human teacher to show a robot learner exactly how to move in a given situation compared to kinesthetic learning, which involves manipulating the robot learner directly by physical contact. Teleimmersion will also allow demonstrations for robots that cannot be subject to kinesthetic learning easily, such as very large or very small robots. Our method, if successful, would allow for rapid introduction of all kinds of different behavior to the PR2 all from human motion. This technique could be generalized to other humanoid robots besides the PR2 to teach them different behavior.
+The PR2 is a humanoid robot developed by  Willow Garage\cite{pr2} for the purpose of robotics research. It is omnidirectional, capable of telescoping height, and possesses a pair of highly movable arms and grippers that permits grasping of many different kinds of objects. The PR2 also comes with a robust series of software development tools, such as a visualizer, simulator, and logger. Willow Garage donated 11 PR2s to 11 different institutions for the purpose of conducting research on machine learning, dynamic object manipulation, and human-robot interaction\cite{ros_pr2}. Since then, these institutions have taught the PR2 a wide variety of human actions, such as baking cookies\cite{cookies}, scanning and bagging groceries\cite{groceries}, and fetching a sandwich from Subway\cite{subway}.\\
+
+We propose to use the Kinect to capture human movement in order to teach the PR2 how to mix and pour different kinds of drinks. The Kinect sensor provides a convenient way to capture a human demonstration of desired behavior. The captured data can be relayed to the PR2 via ROS, an open-source Robot Operating System\cite{ros}. ROS provides a convenient framework for inter-process communication and coordination. Processes that perform computation are visualized as nodes in a graph, with inter-process communcation representing the edges of the graph. Nodes send information to each other in the form of messages. Nodes that wish to send messages to other nodes can 'publish' to a topic, and nodes wishing to receive these messages need only to 'subscribe' to these topics. ROS enables relatively short programs to issue surprisingly sophisticated commands to the PR2, such as continually tracking a moving point over time, as the following ROS python code snippet demonstrates\cite{ros_pr2}:\\
+{\tt \\1 import rospy\\
+2 from actionlib import SimpleActionClient\\
+3 from pr2\_controllers\_msgs.msg import PointHeadAction, PointHeadGoal\\
+4 from geometry\_msgs.msg import Point\\
+5\\
+6 rospy.init\_node('move\_the\_head')\\
+7\\
+8 client = SimpleActionClient(\\
+9 '/head\_traj\_controller/point\_head\_action', PointHeadAction)\\
+10 client.wait\_for\_server()\\
+11\\
+12 g = PointHeadGoal()\\
+13 g.target.header.frame\_id = ’base\_link’\\
+14 g.target.point = Point(1.0, 0.0, 1.0)\\
+15 g.min\_duration = rospy.Duration(1)\\
+16\\
+17 client.send\_goal(g)\\
+18 client.wait\_for\_result()\\
+}
+
+Lines 1-4 simply import the required modules. Line 6-10 create a new ROS node called 'move\_the\_head' and a controller that will move the head. Lines 12-15 order the head to stare at a pointer offset by (1, 0, 1) from the base of the PR2. By changing Line 14, the head of the PR2 can be commanded to look at another point. One can imagine enclosing that code in a loop and updating the target.point to have the head dynamically track a moving object. By using ROS along with the PR2 and the Kinect, we will demonstrate the effectiveness of teleimmersive demonstrative learning.\\
+
+Our method has several advantages over existing approaches. First of all, the Kinect sensor provides accurate real-time human motion tracking that can be mapped to specific movement in the PR2 thanks to ROS. Secondly, teleimmersion enables a human teacher to more precisely show a robot how to move in a given situation compared to kinesthetic learning, which involves manipulating the robot directly by physical contact. Teleimmersion also enables demonstrations for robots that cannot be easily subject to kinesthetic techniques, such as very large or very small robots. Our method, if successful, would allow for rapid demonstration of different sequences of behavior to the PR2, which could be stored and queued up for later reproduction. This technique could even be generalized to other humanoid robots besides the PR2 to teach them different behavior.\\
+
+\vspace{15pt}
 	
 \section{Related Work}
 \label{sec:related_work}
-There have been many other projects involving autonomous robots and handling drinks. Hillenbrand \textit{et al.}~\cite{pouring_arm} designed a semi-autonomous hand-arm robot for serving drinks. The robot was capable of responding to user input by choosing a drink from multiple choices, opening it, and pouring it into a glass, and then offering the drink to the user. The hand was capable of not only picking up bottles and cups, but also unscrewing bottle caps. The robot combined stereo processing and object recognition to identify the drinks, and then used grasp planning to pick up the drink itself. Bohren \textit{et al.}~\cite{beer} used the PR2 and ROS to build a robotic system for retrieving a beer from a refrigerator. In their work, they developed a task-level execution system known as SMACH for rapidly prototyping robotic applications. The PR2 had to navigate an obstacle map to reach the refrigerator, use object recognization and grasp planning to identify the door handle and the drinks, and ultimately use facial recognition to deliver the beer to a human recipient. Each step of the process contained detail planning and image processing in order to carry out the expected behavior. Srinivasa \textit{et al.}~\cite{herb} designed an autonomous robot capable of navigating a household-like environment and manipulating a wide variety of household objects. Consisting of an arm mounted on a segway, HERB used a powerful array of six multi-core processors to successfully traverse its environment and interact with objects around it.
+There have been many other projects involving autonomous robots and handling drinks. Hillenbrand \textit{et al.}~\cite{pouring_arm} designed a semi-autonomous hand-arm robot for serving drinks. The robot was capable of responding to user input by choosing a drink from multiple choices, opening it, and pouring it into a glass, and then offering the drink to the user. The hand was capable of not only picking up bottles and cups, but also unscrewing bottle caps. The robot combined stereo processing and object recognition to identify the drinks, and then used grasp planning to pick up the drink itself. Bohren \textit{et al.}~\cite{beer} used the PR2 and ROS to build a robotic system for retrieving a beer from a refrigerator. In their work, they developed a task-level execution system known as SMACH for rapidly prototyping robotic applications. The PR2 had to navigate an obstacle map to reach the refrigerator, use object recognization and grasp planning to identify the door handle and the drinks, and ultimately use facial recognition to deliver the beer to a human recipient. Each step of the process contained detail planning and image processing in order to carry out the expected behavior. Srinivasa \textit{et al.}~\cite{herb} designed an autonomous robot capable of navigating a household-like environment and manipulating a wide variety of household objects. Consisting of an arm mounted on a segway, HERB used a powerful array of six multi-core processors to successfully traverse its environment and interact with objects around it.\\
 
 All of these robots relied on vision processing and path planning to carry out their tasks. However, there have been other approaches involving demonstration and learning to allow a robot to perform a specific job. Kormushev \textit{et al.}~\cite{whiteboard} taught a robot new motor skills through kinesthetic teaching. The robot had two distinct modes of operation: a learning phase and a reproduction phase. During the learning phase, the robot was shown how to clean a whiteboard by direct human manipulation of the robot's joints, recording both position and force information. During the reproduction phase, the robot would translate the learned information to its own reference frame and attempt to duplicate the teacher's movement pattern on the whiteboard.  Kormushev \textit{et al.}~\cite{pancakes} also used kinesthetic learning to teach a robotic arm how to flip a pancake. A human teacher first moved the arm to demonstrate the movement required to flip a pancake 180 degrees in the air and catch it again. In subsequent trials, reinforcement learning techniques were applied such that the robot could evaulate the performance of its flips and attempt to adjust the motion of the arm for better future flips. In a much earlier attempt, Chalodhorn \textit{et al.}~\cite{walk_imitation} used motion capturing to teach a bipedal humanoid robot how to walk by imitation. Joint angles from motion capture data from a human demonstrator wearing a motion capture suit were mapped to joint angles in the robot. This data was combined with predictions of future state based on sensory information to reproduce a human-like gait in the robot. 
 
@@ -49,26 +77,17 @@ trainer perform these actions in the past.
 \subsection{Anticipated Approach}
 \label{subsec:approach}
 
-\begin{figure}[htb!]
-	\begin{center}
-		\includegraphics[width=0.9\linewidth]{flowchart}
-	\end{center}
-	\vspace{-12pt}
-	\caption{Block Diagram detailing Anticipated Approach}
-	\label{fig:some_graph}
-\end{figure}
-
 At the base level, the hardware layer of the PR2 will be managed by ROS.
 Using the mounted Kinect, the PR2 will observe a human trainer go
 through the process of selecting bottles and pouring them into glasses. Custom 
 software will then attempt to map the motions of the human trainer onto the 
-motor system of the PR2.
-\\
-\\After this training, the PR2 will begin putting its learned motions to test.
+motor system of the PR2.\\
+
+After this training, the PR2 will begin putting its learned motions to test.
 It will be asked to select various bottles and  pour different combinations of
-drinks under a reinforcement-learning system.
-\\
-\\ROS is a fairly mature and ubiquitous piece of software and will take care of
+drinks under a reinforcement-learning system.\\
+
+ROS is a fairly mature and ubiquitous piece of software and will take care of
 many of the more sophisticated computational tasks (such as path planning, 
 image segmentation, etc.) that we would otherwise have to devote significant 
 amounts of time to developing.  
@@ -84,13 +103,24 @@ teleimmersive learning.
 \subsection{Evaluation Criteria}
 \label{subsec:eval_criteria}
 We will evaulate the performance of our proposed system to teach the PR2 by experimentally determining how quickly and easily the PR2
-can acquire new behavior. We will start with very simple motions, such as simply lifting and pouring a single cup or bottle. Once the PR2 is capable of completing those actions after shadowing a human demonstrator, we can attempt to teach it increasingly complex sequences of mixing and pouring. The goal here is to show that many different movement sequences can be taught to the PR2 using the same motion capturing setup from the Kinect.
+can acquire new behavior. We will start with very simple motions, such as simply lifting and pouring a single cup or bottle. Once the PR2 is capable of completing those actions after shadowing a human demonstrator, we can attempt to teach it increasingly complex sequences of mixing and pouring. The goal here is to show that many different movement sequences can be taught to the PR2 using the same motion capturing setup from the Kinect.\\
+If time permits, we would also plan to evaluate the PR2's ability to adapt to changing conditions. For instance, we can measure how far a bottle can be moved from its expected position before the PR2 becomes unable to pick it up. The weight of the bottle can also be toggled to see how well the PR2 can adapt to nearly-full versus nearly-empty drink containers.
 
-If time permits, we would also like to evaluate the PR2's ability to adapt to changing conditions. For instance, we can measure how far a bottle can be moved from its expected position before the PR2 becomes unable to pick it up. The weight of the bottle can also be toggled to see how well the PR2 can adapt to nearly-full versus nearly-empty drink containers.
+\subsection{Block Diagram}
+\label{subsec:block_diagram}
+
+\begin{figure}[htb!]
+	\begin{center}
+		\includegraphics[width=0.9\linewidth]{flowchart}
+	\end{center}
+	\vspace{-24pt}
+	\caption{Block Diagram summarizing Anticipated Approach}
+	\label{fig:some_graph}
+\end{figure}
 
 \section{Research Timeline}
 \label{sec:research_timeline}
-The following is a list of milestones we hope to reach as the fall and spring semesters progress. 
+The following is a list of milestones we hope to reach as the fall and spring semesters progress.
 
 	% The 'itemize' environment shown here, and its friend 'enumerate' (shown below), are used to create indented\bulleted\outline style lists.
 \begin{itemize*}
