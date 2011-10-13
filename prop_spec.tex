@@ -76,17 +76,19 @@ There has also been significant work done in teaching the PR2 robot to perform h
 All of these robots relied on some combination of vision processing and path planning to carry out their tasks. However, there have been other approaches involving demonstration learning to allow a robot to perform a specific job. In a relatively early attempt, Chalodhorn \textit{et al.}~\cite{walk_imitation} used motion capturing to teach a bipedal humanoid robot how to walk by imitation. Joint angles from motion capture data from a human demonstrator wearing a motion capture suit were mapped to joint angles in the robot. This data was combined with predictions of future state based on sensory information to reproduce a human-like gait in the robot. Kormushev \textit{et al.}~\cite{whiteboard} taught a robot new motor skills through kinesthetic teaching. The robot had two distinct modes of operation: a learning phase and a reproduction phase. During the learning phase, the robot was shown how to clean a whiteboard by direct human manipulation of the robot's joints, recording both position and force information. During the reproduction phase, the robot would translate the learned information to its own reference frame and attempt to duplicate the teacher's movement pattern on the whiteboard.  Kormushev \textit{et al.}~\cite{pancakes} also used kinesthetic learning to teach a robotic arm how to flip a pancake. A human teacher first moved the arm to demonstrate the movement required to flip a pancake 180 degrees in the air and catch it again. In subsequent trials, reinforcement learning techniques were applied such that the robot could evaulate the performance of its flips and attempt to adjust the motion of the arm for better future flips.
 
 \section{Project Proposal}
-\label{sec:project_proposal}We propose to teach a PR2 robot to mix drinks via
-teleimmersive demonstration learning methods. It is our goal that if presented
-with a setting consisting of bottles and glasses, the PR2 will be able to 
-distinguish and select the desired bottles and them pour them into glasses, 
-just by having seen a human
-trainer perform these actions in the past.
+\label{sec:project_proposal}We propose to teach a PR2 robot how to mix drinks via
+teleimmersive demonstration learning methods. One of our goals is to have the PR2
+be able to recall different drink mixing recipes acquired from watching
+a human demonstrater perform them in the past. Ideally, if presented
+with a setting consisting of bottles and glasses, the PR2 should be able to 
+distinguish and select the desired bottles and them pour them into glasses by
+combining its stored library of known mixes with reinforcement learning techniques./
 \\
-\\The most visible metric of success will be of course how well the PR2
-can perform as a bartender. It is important to note however, that the real
+\\The most visible metric of success will be  how well the PR2
+can perform as a bartender. We can determine how often the PR2
+successfully serves a requested drink. It is important to note, however, that the real
 measure of success is how well teleimmersive learning via Kinect can be used
-for robots to acquire motions and behaviors.
+for robots to acquire new motions and behaviors.
 \subsection{Anticipated Approach}
 \label{subsec:approach}
 Our method consists of two phases. First the robot will shadow a human teacher,
@@ -112,7 +114,7 @@ placed in the exact same location as they were for the human demonstrator.
 The end goal is that the PR2 can refine its acquired motions and adapt to new
 situations via reinforcement learning techniques. 
 \\ 
-\\ROS is a fairly mature and ubiquitous piece of software and will take care of
+\\ROS is a fairly mature and ubiquitous piece of software that can take care of
 many of the more sophisticated computational tasks (such as path planning, 
 image segmentation, etc.) that we would otherwise have to devote significant 
 amounts of time to developing.  
@@ -127,9 +129,9 @@ teleimmersive learning.
 \subsection{Evaluation Criteria}
 \label{subsec:eval_criteria}
 We will evaulate the performance of our proposed system to teach the PR2 by experimentally determining how quickly and easily the PR2
-can acquire new behavior. We will start with very simple motions, such as simply lifting and pouring a single cup or bottle. Once the PR2 is capable of completing those actions after shadowing a human demonstrator, we can attempt to teach it increasingly complex sequences of mixing and pouring. The goal here is to show that many different movement sequences can be taught to the PR2 using the same motion capturing setup from the Kinect.\\
+can acquire new behavior. We will start with very simple motions, such as simply lifting and pouring a single cup or bottle. Once the PR2 is capable of completing those actions after shadowing a human demonstrator, we can attempt to teach it increasingly complex sequences of mixing and pouring. We can measure the PR2's success rate in repeating a recorded movement over multiple trials. The goal here is to show that many different movement sequences can be taught to the PR2 using the same motion capturing setup from the Kinect.\\
 \\
-If time permits, we would also plan to evaluate the PR2's ability to adapt to changing conditions. For instance, we can measure how far a bottle can be moved from its expected position before the PR2 becomes unable to pick it up. The weight of the bottle can also be toggled to see how well the PR2 can adapt to nearly-full versus nearly-empty drink containers.
+If time permits, we also plan to evaluate the PR2's ability to adapt to variable conditions. For instance, we can measure how far a bottle can be moved from its expected position before the PR2 becomes unable to pick it up. The weight of the bottle can also be changed to see how well the PR2 can adapt to grasping nearly-full versus nearly-empty drink containers. We can measure how the success rate of the PR2's drink mixing is affected as a function of these variables (distance moved, weight of drinks, etc).
 \subsection{Block Diagram}
 \label{subsec:block_diagram}
 
