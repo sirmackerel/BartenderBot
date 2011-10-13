@@ -24,13 +24,11 @@
 
 \begin{abstract}
 \textit{Programming a robot to autonomously perform human tasks has been a long-time goal of robotics. Such endeavors have typically involved heavy computation due to the demands of visual processing, path planning, and motor coordination. Human demonstration has often been used to introduce a sequence of moves to a robot, both in the form of direct kinesthetic learning and visual motion capture. 
-Here we investigate teaching motion and behavior via teleimmersive shadowing 
-and reinforcement learning. We explore this method through the example of
-teaching a Willow Garage PR2 robot how to mix and serve drinks as a human 
-bartender would.
+Here we explore teaching motions via teleimmersive shadowing and reinforcement
+learning. We explore this method by teaching a Willow Garage PR2 robot how to
+mix and serve drinks as a human bartender would.
 \\
-\\If successful, the proposed method will demonstrate an easy way for the PR2 (or any robot for that matter) to rapidly acquire and
- refine different complex behaviors within a specific environment. This paper details our plan for achieving both shadowing and learning with the Kinect, PR2, and ROS.}
+\\Our method consists of two parts: first, shadowing a human teacher, and then refining the learned motion through reinforcement learning. For the first part, we propose using teleimmersive operation to demonstrate behavior that the PR2 can imitate and reproduce at a later time. The Microsoft XBox Kinect will be used to capture human motion to provide the teleimmersive effect. Data will be transferred from the Kinect to the PR2 via the Robotic Operating System (ROS). The second phase of our proposal involves writing custom software such that the PR2 can refine its learned motions adapt to new situations via reinforcement learning techniques. The PR2 will evaluate its own performance in scenarios where objects are not placed in the exact same location as they were for the human demonstrator. If successful, the proposed method will demonstrate an easy way for the PR2 to rapidly acquire and refine different complex behaviors within a specific environment. This paper details our plan for achieving both shadowing and learning with the Kinect, PR2, and ROS.}
 \end{abstract}
 
 	% AW - Then we proceed into the body of the report itself. The effect of the 'section' command is obvious, but also notice 'label'. Its good practice to label every (sub)-section, graph, equation etc. -- this gives us a way to dynamically reference it later in the text via the 'ref' command.
@@ -66,14 +64,14 @@ We propose to use the Kinect to capture human movement in order to teach the PR2
 Lines 1-4 simply import the required modules. Line 6-10 create a new ROS node called 'move\_the\_head' and a controller that will move the head. Lines 12-15 order the head to stare at a pointer offset by (1, 0, 1) from the base of the PR2. By changing Line 14, the head of the PR2 can be commanded to look at another point. One can imagine enclosing that code in a loop and updating the target.point to have the head dynamically track a moving object. By using ROS along with the PR2 and the Kinect, we will demonstrate the effectiveness of teleimmersive demonstrative learning.\\
 
 Our method has several advantages over existing approaches. First of all, the Kinect sensor provides accurate real-time human motion tracking that can be mapped to specific movement in the PR2 thanks to ROS. Secondly, teleimmersion enables a human teacher to more precisely show a robot how to move in a given situation compared to kinesthetic learning, which involves manipulating the robot directly by physical contact. Teleimmersion also enables demonstrations for robots that cannot be easily subject to kinesthetic techniques, such as very large or very small robots. Our method, if successful, would allow for rapid demonstration of different sequences of behavior to the PR2, which could be stored and queued up for later reproduction. This technique could even be generalized to other humanoid robots besides the PR2 to teach them different behavior.\\
-
-\vspace{15pt}
 	
 \section{Related Work}
 \label{sec:related_work}
-There have been many other projects involving autonomous robots and handling drinks. Hillenbrand \textit{et al.}~\cite{pouring_arm} designed a semi-autonomous hand-arm robot for serving drinks. The robot was capable of responding to user input by choosing a drink from multiple choices, opening it, and pouring it into a glass, and then offering the drink to the user. The hand was capable of not only picking up bottles and cups, but also unscrewing bottle caps. The robot combined stereo processing and object recognition to identify the drinks, and then used grasp planning to pick up the drink itself. Bohren \textit{et al.}~\cite{beer} used the PR2 and ROS to build a robotic system for retrieving a beer from a refrigerator. In their work, they developed a task-level execution system known as SMACH for rapidly prototyping robotic applications. The PR2 had to navigate an obstacle map to reach the refrigerator, use object recognization and grasp planning to identify the door handle and the drinks, and ultimately use facial recognition to deliver the beer to a human recipient. Each step of the process contained detail planning and image processing in order to carry out the expected behavior. Srinivasa \textit{et al.}~\cite{herb} designed an autonomous robot capable of navigating a household-like environment and manipulating a wide variety of household objects. Consisting of an arm mounted on a segway, HERB used a powerful array of six multi-core processors to successfully traverse its environment and interact with objects around it.\\
+Other institutions have conducted research involving autonomous robots and handling drinks. Hillenbrand \textit{et al.}~\cite{pouring_arm} designed a semi-autonomous hand-arm robot for serving drinks. The hand-arm was capable of responding to user input by choosing a drink from a variety of different containers, opening the drink if necessary, pouring the liquid into a glass, and then offering the drink to the user. It was capable of not only picking up bottles and cups, but also of unscrewing bottle caps. Stereo processing was combined with object recognition to identify the drinks, after which grasp planning was used to actually pick up and manipulate the drink. Srinivasa \textit{et al.}~\cite{herb} designed an autonomous robot capable of navigating a household-like environment and manipulating a wide variety of everyday objects. Consisting of an arm mounted on a segway, HERB used a powerful array of six multi-core processors to successfully traverse its environment and interact with objects around it, such as cups and drawers.\\
 
-All of these robots relied on vision processing and path planning to carry out their tasks. However, there have been other approaches involving demonstration and learning to allow a robot to perform a specific job. Kormushev \textit{et al.}~\cite{whiteboard} taught a robot new motor skills through kinesthetic teaching. The robot had two distinct modes of operation: a learning phase and a reproduction phase. During the learning phase, the robot was shown how to clean a whiteboard by direct human manipulation of the robot's joints, recording both position and force information. During the reproduction phase, the robot would translate the learned information to its own reference frame and attempt to duplicate the teacher's movement pattern on the whiteboard.  Kormushev \textit{et al.}~\cite{pancakes} also used kinesthetic learning to teach a robotic arm how to flip a pancake. A human teacher first moved the arm to demonstrate the movement required to flip a pancake 180 degrees in the air and catch it again. In subsequent trials, reinforcement learning techniques were applied such that the robot could evaulate the performance of its flips and attempt to adjust the motion of the arm for better future flips. In a much earlier attempt, Chalodhorn \textit{et al.}~\cite{walk_imitation} used motion capturing to teach a bipedal humanoid robot how to walk by imitation. Joint angles from motion capture data from a human demonstrator wearing a motion capture suit were mapped to joint angles in the robot. This data was combined with predictions of future state based on sensory information to reproduce a human-like gait in the robot. 
+There has also been significant work done in teaching the PR2 robot to perform human tasks. Bohren \textit{et al.}~\cite{beer} used the PR2 and ROS to build a robotic system for retrieving a beer from a refrigerator. In their work, they developed a task-level execution system known as SMACH for rapidly prototyping robotic applications. The PR2 had to navigate an obstacle map to reach the refrigerator, use object recognization and grasp planning to identify the door handle and the drinks, and ultimately use facial recognition to deliver the beer to a human recipient. Each step of the process contained detail planning and image processing in order to carry out the expected behavior. Klingbeil \textit{et al.}~\cite{groceries} developed a grasping algorithm to enable the PR2 to pick up objects and attempt to locate and scan the barcode. Their technique bypassed the training phase by allowing the PR2 to devise a plan to grasp the object from only a single 3D snapshot. Saito \textit{et al.}~\cite{subway} devised a method for the PR2 to intelligently navigate large environments via semantic search. The PR2 attempts to find a specific object by first searching areas that would logically contain that item. When asked to retrieve a sandwich, the PR2 first inspected a nearby refrigerator in its environment.\\ 
+
+All of these robots relied on some combination of vision processing and path planning to carry out their tasks. However, there have been other approaches involving demonstration learning to allow a robot to perform a specific job. In a relatively early attempt, Chalodhorn \textit{et al.}~\cite{walk_imitation} used motion capturing to teach a bipedal humanoid robot how to walk by imitation. Joint angles from motion capture data from a human demonstrator wearing a motion capture suit were mapped to joint angles in the robot. This data was combined with predictions of future state based on sensory information to reproduce a human-like gait in the robot. Kormushev \textit{et al.}~\cite{whiteboard} taught a robot new motor skills through kinesthetic teaching. The robot had two distinct modes of operation: a learning phase and a reproduction phase. During the learning phase, the robot was shown how to clean a whiteboard by direct human manipulation of the robot's joints, recording both position and force information. During the reproduction phase, the robot would translate the learned information to its own reference frame and attempt to duplicate the teacher's movement pattern on the whiteboard.  Kormushev \textit{et al.}~\cite{pancakes} also used kinesthetic learning to teach a robotic arm how to flip a pancake. A human teacher first moved the arm to demonstrate the movement required to flip a pancake 180 degrees in the air and catch it again. In subsequent trials, reinforcement learning techniques were applied such that the robot could evaulate the performance of its flips and attempt to adjust the motion of the arm for better future flips.
 
 \section{Project Proposal}
 \label{sec:project_proposal}We propose to teach a PR2 robot to mix drinks via
@@ -89,30 +87,18 @@ measure of success is how well teleimmersive learning via Kinect can be used
 for robots to acquire motions and behaviors.
 \subsection{Anticipated Approach}
 \label{subsec:approach}
-Our method consists of two phases. First the robot will shadow a human teacher,
-remembering the actions so that it can subsequentially try to reproduce them. 
-It will then attempt to improve its execution of the learned motion through 
-reinforcement learning.
-\\
-\\For the first part, we propose using teleimmersive operation to demonstrate
-behavior to the PR2 so that it can imitate and reproduce these motions at a
-later time. At the base level, the hardware layer of the PR2 will be managed 
-by ROS. This will be combined with the Microsoft XBox Kinect to capture human
-motion and to provide the teleimmersive framework.
+
+At the base level, the hardware layer of the PR2 will be managed by ROS.
 Using the mounted Kinect, the PR2 will observe a human trainer go
 through the process of selecting bottles and pouring them into glasses. 
 Specialized software will then attempt to map the motions of the human trainer
-onto the motor system of the PR2.
-\\
-\\The second phase utilizes software that lets the PR2 attempt to reproduce
-the observed motions under a reinforcement learning environment. In addition
-to simply trying to replicate the motion in identical situations,
-the PR2 will evaluate its own performance in scenarios where objects are not 
-placed in the exact same location as they were for the human demonstrator.
-The end goal is that the PR2 can refine its acquired motions and adapt to new
-situations via reinforcement learning techniques. 
-\\
-\\ROS is a fairly mature and ubiquitous piece of software and will take care of
+onto the motor system of the PR2.\\
+
+After this training, the PR2 will begin putting its learned motions to test.
+It will be asked to select various bottles and  pour different combinations of
+drinks under a reinforcement-learning system.\\
+
+ROS is a fairly mature and ubiquitous piece of software and will take care of
 many of the more sophisticated computational tasks (such as path planning, 
 image segmentation, etc.) that we would otherwise have to devote significant 
 amounts of time to developing.  
@@ -124,6 +110,7 @@ are able to achieve.
 Rather, we expect the area of novel difficulty to be the combining of these
 two distinct systems into one coherent system which can be used for
 teleimmersive learning.
+
 \subsection{Evaluation Criteria}
 \label{subsec:eval_criteria}
 We will evaulate the performance of our proposed system to teach the PR2 by experimentally determining how quickly and easily the PR2
@@ -164,4 +151,3 @@ The following is a list of milestones we hope to reach as the fall and spring se
 \bibliography{prop_spec}  % Just the *.BIB filename
 
 \end{document} 
-
