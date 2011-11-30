@@ -1,0 +1,75 @@
+
+% Andrew G. West - progress_spec.tex
+% Main LaTeX file for CIS400/401 Progress Report Specification
+
+\documentclass{sig-alternate}
+\usepackage{mdwlist}
+\usepackage{url}
+
+\begin{document} 
+
+\title{CIS400/401 Progress Report Specification\thanks{For this report, we do \textbf{not} need a signed hard-copy. Electronic submission is sufficient:  Submit \textbf{only} via BlackBoard, please do \textbf{not} email copies to the professor or TAs.}}
+\subtitle{Dept. of CIS - Senior Design 2011-2012}
+\numberofauthors{3}
+\author{
+\alignauthor Andrew G. West \\ \email{westand@cis.upenn.edu} \\ Univ. of Pennsylvania \\ Philadelphia, PA
+\alignauthor Alex Roederer \\ \email{roederer@cis.upenn.edu} \\ Univ. of Pennsylvania \\ Philadelphia, PA
+\alignauthor Insup Lee \\ Project Supervisor \\ \email{lee@cis.upenn.edu} \\ Univ. of Pennsylvania}
+\date{}
+\maketitle
+
+\begin{abstract}
+\textit{The purpose of your progress report is to inform us (Insup and the TAs), how your research/implementation is proceeding. At times, your progress report may be similar to your proposal (\textit{i.e.,} introduction, related work). However, we also expect significant additions to be made, elaborating on what has been done, and how your anticipated approach has been refined -- all with a heightened level of technical detail. \\
+\indent Everything noted in the proposal specification still applies. In this document, we only focus on how sections should be extended to reflect your progress. Do not be afraid to break from our suggested organization as your project may require.} 
+\end{abstract}
+
+
+\section{Introduction}
+\label{sec:intro}
+Just as with your proposal, introduce your topic and the associated key concepts. Motivate your ideas, summarize what has/will be done, and outline how the rest of the paper will proceed. Projects operating in complex or unfamiliar domains may be well served by adding a \textit{background} section. 
+
+\section{Related Work}
+\label{sec:related_work}
+Similarly, related work should proceed as previously. Use respected and academic resources whenever possible -- make sure they are relevant to your project domain. Add or remove resources as additional reading has deemed necessary.
+
+\section{System Model}
+\label{sec:sys_model}
+Here you need to answer the \textit{what} and \textit{why} about your system. Impart a high-level intuition about what you are doing and why it will work. Include a block diagram of your system workflow. Cover each component of your system in a technical manner, but do not get caught up in low-level details. Abstract out the \textit{general system behavior}.
+
+\section{System Implementation}
+\label{sec:sys_implement}
+Here is where you answer the \textit{how}. How did you implement the system described in Sec.~\ref{sec:sys_model}? Justify your design decisions (\textit{e.g.}, performance vs. efficiency). Indeed, your implementation is probably not yet complete, but you should be speculative about the direction your group plans to take. This is the \textit{only} section where things like DB-choice, programming language, \textit{etc.} should be discussed. 
+
+\section{System Performance}
+\label{sec:sys_perform}
+Here you need to show that the implementation of Sec.~\ref{sec:sys_implement} succeeds in leveraging the properties discussed in Sec.~\ref{sec:sys_model}. Being that your implementation is incomplete, robust performance statistics are probably not possible. However, you need to demonstrate you are on the right track. Extrapolate from na\"\i ve tests to predict full-fledged performance. Visualize performance (\textit{i.e.}, graphs, tables) whenever possible.  Also report on auxiliary measures (\textit{e.g.}, accuracy may your primary goal, but efficiency statistics are also interesting). 
+
+\section{Remaining Work}
+\label{sec:remaining_work}
+Some remaining tasks have likely been discussed prior to this point -- now succinctly aggregate them all here. Also provide an honest assessment of your completion percentage.
+
+
+\bibliographystyle{plain}     % Please do not change the bib-style
+\bibliography{progress_spec}  % Just the *.BIB filename
+
+\appendix
+\section{Proposal Issues}
+\label{app:prop_issues}
+Overall, we were pleased with the quality of the (revised) proposals. However, there were a few common errors:
+
+\begin{itemize*}
+  \item Projects should have a \textit{title}. That title should not be, ``CIS 400/401 Project Proposal Specification.''
+  \item Vertical margin issues? Run \texttt{texconfig} and verify your default paper is letter-size instead of A4 (default).
+  \item \textit{Citations}. The proper format is: ``\ldots end of sentence~\cite{latex_wikibook}.'' Notice the citation is, (1) inside the period, (2) inside the quotations, and (3) a space from the last word. Some groups also needed significantly more citations.
+  \item The word `I' should never be used -- use `we' sparingly. Similarly, try to limit usage of ``this project.''
+  \item Use more figures/graphics. When you do, make sure they are \textit{original} works. They should be designed so they are legible when printed in black and white.
+	\item Make sure you discuss the \textit{merit} of your work. What is the real world benefit?
+\end{itemize*}
+
+
+\section{Report Parameters}
+\label{app:report_params}
+Progress reports should be $6$--$8$ pages in length. There is no fixed requirement on the number of resources -- use good judgement. Poor reports will require revision, re-submission, and be penalized. Again, \textbf{do not plagiarize}.
+
+\end{document} 
+
