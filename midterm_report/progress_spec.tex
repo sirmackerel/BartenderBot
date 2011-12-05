@@ -1,75 +1,138 @@
-
-% Andrew G. West - progress_spec.tex
-% Main LaTeX file for CIS400/401 Progress Report Specification
+% Andrew G. West - prop_spec.tex
+% Main LaTeX file for CIS400/401 Project Proposal Specification
+%
 
 \documentclass{sig-alternate}
+ 
 \usepackage{mdwlist}
 \usepackage{url}
-
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[section]{placeins}
 \begin{document} 
 
-\title{CIS400/401 Progress Report Specification\thanks{For this report, we do \textbf{not} need a signed hard-copy. Electronic submission is sufficient:  Submit \textbf{only} via BlackBoard, please do \textbf{not} email copies to the professor or TAs.}}
-\subtitle{Dept. of CIS - Senior Design 2011-2012}
+\title{BERTRAM: A Bartending Robot}
+
+\subtitle{Dept. of CIS - Senior Design 2010-2011}
 \numberofauthors{3}
 \author{
-\alignauthor Andrew G. West \\ \email{westand@cis.upenn.edu} \\ Univ. of Pennsylvania \\ Philadelphia, PA
-\alignauthor Alex Roederer \\ \email{roederer@cis.upenn.edu} \\ Univ. of Pennsylvania \\ Philadelphia, PA
-\alignauthor Insup Lee \\ Project Supervisor \\ \email{lee@cis.upenn.edu} \\ Univ. of Pennsylvania}
+\alignauthor Seth Shannin \\ \email{sshannin@seas.upenn.edu} \\ Univ. of Pennsylvania \\ Philadelphia, PA
+\alignauthor Kevin Xu \\ \email{kevinxu@seas.upenn.edu} \\ Univ. of Pennsylvania \\ Philadelphia, PA
+\alignauthor Dr. Camillo Jose Taylor \\ \email{cjtaylor@cis.upenn.edu} \\ Univ. of Pennsylvania \\ Philadelphia, PA}
 \date{}
 \maketitle
 
 \begin{abstract}
-\textit{The purpose of your progress report is to inform us (Insup and the TAs), how your research/implementation is proceeding. At times, your progress report may be similar to your proposal (\textit{i.e.,} introduction, related work). However, we also expect significant additions to be made, elaborating on what has been done, and how your anticipated approach has been refined -- all with a heightened level of technical detail. \\
-\indent Everything noted in the proposal specification still applies. In this document, we only focus on how sections should be extended to reflect your progress. Do not be afraid to break from our suggested organization as your project may require.} 
+\textit{Programming a robot to autonomously perform human tasks has been a long-time goal of robotics. Such endeavors have typically involved heavy computation due to the demands of visual processing, path planning, and motor coordination. Human demonstration has often been used to introduce a sequence of moves to a robot, both in the form of direct kinesthetic learning and visual motion capture. 
+Here we investigate teaching motion and behavior via teleimmersive shadowing 
+and reinforcement learning. We explore this method through the example of
+teaching a Willow Garage PR2 robot how to mix and serve drinks as a human 
+bartender would.
+\\If successful, the proposed method will demonstrate an easy way for the PR2 (or any robot for that matter) to rapidly acquire and
+ refine different complex behaviors within a specific environment. This paper details our plan for achieving both shadowing and learning with the Kinect, PR2, and ROS.}
 \end{abstract}
 
-
+	% AW - Then we proceed into the body of the report itself. The effect of the 'section' command is obvious, but also notice 'label'. Its good practice to label every (sub)-section, graph, equation etc. -- this gives us a way to dynamically reference it later in the text via the 'ref' command.
 \section{Introduction}
 \label{sec:intro}
-Just as with your proposal, introduce your topic and the associated key concepts. Motivate your ideas, summarize what has/will be done, and outline how the rest of the paper will proceed. Projects operating in complex or unfamiliar domains may be well served by adding a \textit{background} section. 
-
+Constructing a fully autonomous and adaptive robot has been a long-time goal of robotics research. The possibility of a robotic butler is only one of many potential applications. However, real autonomous decision making is an incredibly challenging process, for many different processes must be coordinated - vision processing must be done quickly and accurately to respond to changes in the environment, accurate path planning is needed to navigate the environment, and precise motor coordination is needed to manipulate the environment. There have been many different attempts at overcoming these challenges involved in developing an autonomous robot. One approach that has been often explored is machine learning. The ability to learn is a powerful intermediate step towards autonomy, since learning can allow a robot to adapt to new, unforeseen scenarios. Teaching by human demonstration is a common approach to robot learning since it enables the transmission of complex behavior in a manner far easier than coding the movement of each individual motor and joint. However, choosing how exactly how the demonstrated behavior is delivered to the robot in such a way that it can record and reproduce that behavior is still a very challenging task.\\ 
+In this proposal we outline a method to teach a WillowGarage PR2 Robot how to mix and serve drinks through shadowing of human motion captured by the Microsoft XBOX Kinect. The XBOX Kinect sensor from Microsoft provides depth information at real-time speeds (30 frames per second), which essentially performs the computation that would have been involved in stereo processing. Combined with various open source libraries\cite{kinect}, the Kinect also works with APIs that provide human motion sensing and tracking, which greatly simplifies the task of object recognition to detect body movement. These Kinect libraries have already been used successfully in many projects involving real-time tracking of human motion, examples of which can be found online\cite{freenect}.\\
+The PR2 is a humanoid robot developed by  Willow Garage\cite{pr2} for the purpose of robotics research. It is omnidirectional, capable of telescoping height, and possesses a pair of highly movable arms and grippers that permits grasping of many different kinds of objects. The PR2 also comes with a robust series of software development tools, such as a visualizer, simulator, and logger. Willow Garage donated 11 PR2s to 11 different institutions for the purpose of conducting research on machine learning, dynamic object manipulation, and human-robot interaction\cite{ros_pr2}. Since then, these institutions have taught the PR2 a wide variety of human actions, such as baking cookies\cite{cookies}, scanning and bagging groceries\cite{groceries}, and fetching a sandwich from Subway\cite{subway}.\\
+We propose to use the Kinect to capture human movement in order to teach the PR2 how to mix and pour different kinds of drinks. The Kinect sensor provides a convenient way to capture a human demonstration of desired behavior. The captured data can be relayed to the PR2 via ROS, an open-source Robot Operating System\cite{ros}. ROS provides a convenient framework for inter-process communication and coordination. Processes that perform computation are visualized as nodes in a graph, with inter-process communication representing the edges of the graph. Nodes send information to each other in the form of messages. Nodes that wish to send messages to other nodes can 'publish' to a topic, and nodes wishing to receive these messages need only to 'subscribe' to these topics. ROS enables relatively short programs to issue surprisingly sophisticated commands to the PR2, such as continually tracking a moving point over time. By using ROS along with the PR2 and the Kinect, we will demonstrate the effectiveness of teleimmersive demonstrative learning.\\
+Our method has several advantages over existing approaches. First of all, the Kinect sensor provides accurate real-time human motion tracking that can be mapped to specific movement in the PR2 thanks to ROS. Secondly, teleimmersion enables a human teacher to more precisely show a robot how to move in a given situation compared to kinesthetic learning, which involves manipulating the robot directly by physical contact. Teleimmersion also enables demonstrations for robots that cannot be easily subject to kinesthetic techniques, such as very large or very small robots. Our method, if successful, would allow for rapid demonstration of different sequences of behavior to the PR2, which could be stored and queued up for later reproduction. This technique could even be generalized to other humanoid robots besides the PR2 to teach them different behavior.\\	
 \section{Related Work}
 \label{sec:related_work}
-Similarly, related work should proceed as previously. Use respected and academic resources whenever possible -- make sure they are relevant to your project domain. Add or remove resources as additional reading has deemed necessary.
+Other institutions have conducted research involving autonomous robots and handling drinks. Hillenbrand \textit{et al.}~\cite{pouring_arm} designed a semi-autonomous hand-arm robot for serving drinks. The hand-arm was capable of responding to user input by choosing a drink from a variety of different containers, opening the drink if necessary, pouring the liquid into a glass, and then offering the drink to the user. It was capable of not only picking up bottles and cups, but also of unscrewing bottle caps. Stereo processing was combined with object recognition to identify the drinks, after which grasp planning was used to actually pick up and manipulate the drink. Srinivasa \textit{et al.}~\cite{herb} designed an autonomous robot capable of navigating a household-like environment and manipulating a wide variety of everyday objects. Consisting of an arm mounted on a segway, HERB used a powerful array of six multi-core processors to successfully traverse its environment and interact with objects around it, such as cups and drawers. By combining modules for object recognition, task based planning, caged grasping, and workspace goal regions, HERB was able to autonomously carry out commands issued from a GUI to perform simple kitchen tasks such as placing an object in a recycling bin.\\
+There has also been significant work done in teaching the PR2 robot to perform human tasks. Bohren \textit{et al.}~\cite{beer} used the PR2 and ROS to build a robotic system for retrieving a beer from a refrigerator. In their work, they developed a task-level execution system known as SMACH for rapidly prototyping robotic applications. The PR2 had to navigate an obstacle map to reach the refrigerator, use object recognition and grasp planning to identify the door handle and the drinks, and ultimately use facial recognition to deliver the beer to a human recipient. Each step of the process contained detail planning and image processing in order to carry out the expected behavior. Klingbeil \textit{et al.}~\cite{groceries} developed a grasping algorithm to enable the PR2 to pick up objects and attempt to locate and scan the barcode. Their technique bypassed the training phase by allowing the PR2 to devise a plan to grasp the object from only a single 3D snapshot. Their algorithm emphasized the importance of positiong the PR2's gripper such that its shape most closely matched the shape of the object it attempts to grasp. Saito \textit{et al.}~\cite{subway} devised a method for the PR2 to intelligently navigate large environments via semantic search. The PR2 attempts to find a specific object by first searching areas that would logically contain that item. When asked to retrieve a sandwich, the PR2 first inspected a nearby refrigerator in its environment.\\ 
+All of these robots relied on some combination of vision processing and path planning to carry out their tasks. However, there have been other approaches involving demonstration learning to allow a robot to perform a specific job. In a relatively early attempt, Chalodhorn \textit{et al.}~\cite{walk_imitation} used motion capturing to teach a bipedal humanoid robot how to walk by imitation. Joint angles from motion capture data from a human demonstrator wearing a motion capture suit were mapped to joint angles in the robot. This data was combined with predictions of future state based on sensory information to reproduce a human-like gait in the robot. Kormushev \textit{et al.}~\cite{whiteboard} taught a robot new motor skills through kinesthetic teaching. The robot had two distinct modes of operation: a learning phase and a reproduction phase. During the learning phase, the robot was shown how to clean a whiteboard by direct human manipulation of the robot's joints, recording both position and force information. During the reproduction phase, the robot would translate the learned information to its own reference frame and attempt to duplicate the teacher's movement pattern on the whiteboard.  Kormushev \textit{et al.}~\cite{pancakes} also used kinesthetic learning to teach a robotic arm how to flip a pancake. A human teacher first moved the arm to demonstrate the movement required to flip a pancake 180 degrees in the air and catch it again. In subsequent trials, reinforcement learning techniques were applied such that the robot could evaluate the performance of its flips and attempt to adjust the motion of the arm for better future flips.
 
-\section{System Model}
-\label{sec:sys_model}
-Here you need to answer the \textit{what} and \textit{why} about your system. Impart a high-level intuition about what you are doing and why it will work. Include a block diagram of your system workflow. Cover each component of your system in a technical manner, but do not get caught up in low-level details. Abstract out the \textit{general system behavior}.
+\section{Project Proposal}
+\label{sec:project_proposal}We propose to teach a PR2 robot how to mix drinks via
+teleimmersive demonstration learning methods. One of our major goals is to have the PR2
+be able to reproduce different drink mixing recipes acquired from watching
+a human demonstrator perform them in the past.
+Our other major goal involves having the PR2 adapt its behavior by learning from failed attempts.
+Given a setting consisting of many different bottles and glasses, the PR2 should be able to 
+distinguish and select the desired bottles and them pour them into glasses by
+combining its stored library of known mixes with reinforcement learning techniques.\\
+The most visible metric of success will be  how well the PR2
+can perform as a bartender. We can determine how often the PR2
+successfully serves a requested drink. It is important to note, however, that the real
+measure of success is how well teleimmersive learning via Kinect can be used
+for robots to acquire new motions and behaviors.
+\subsection{Anticipated Approach}
+\label{subsec:approach}
+Our method consists of two phases. First the robot will shadow a human teacher,
+remembering the actions so that it can subsequently try to reproduce them. For example,
+the sequence of moves involved for mixing a martini will be different than the ones
+involved in mixing a gin and tonic.
+In the next part, the PR2 will then attempt to improve its execution of the learned motion through 
+reinforcement learning. For instance, if we move a cup two centimeters away
+from its expected position, and the PR2 fails to pick it up, it can try again 
+by adjusting its recorded sequence of moves.\\
+For the first part, we propose using teleimmersive operation to demonstrate
+behavior to the PR2 so that it can imitate and reproduce these motions at a
+later time. At the base level, the hardware layer of the PR2 will be managed 
+by ROS. This will be combined with the Microsoft XBOX Kinect to capture human
+motion and to provide the teleimmersive framework. The Kinect will provide nodes
+that can publish motion capture data, which in turn can be subscribed to by nodes
+controlling parts of the PR2.
+In this way,the PR2 can observe a human trainer go
+through the process of selecting bottles and pouring them into glasses. 
+Specialized software will then attempt to map the motions of the human trainer
+onto the motor system of the PR2.\\
+The second phase utilizes software that lets the PR2 attempt to reproduce
+the observed motions augmented by reinforcement learning techniques. In addition
+to simply trying to replicate the motion in identical situations,
+the PR2 will evaluate its own performance in changing environments. For instance, 
+objects may placed in the exact same location as they were placed for the human demonstrator.
+The end goal is for the PR2 to refine its acquired motions and adapt to new
+situations via reinforcement learning techniques.\\
+ROS is a fairly mature and ubiquitous piece of software that can take care of
+many of the more sophisticated computational tasks (such as path planning, 
+image segmentation, etc.) that we would otherwise have to devote significant 
+amounts of time to developing.  
+Likewise, we intend to make heavy use of the Kinect API, which comes with very
+strong support for human joint detection. The Kinect has already been integrated with 
+ROS with great success.
+While we expect both ROS and Kinect to have relatively steep learning curves,
+we do not anticipate these being the limiting factor in how much progress we
+are able to achieve. 
+Rather, we expect the area of novel difficulty to be the combining of these
+two distinct systems into one coherent system which can be used for
+teleimmersive learning.
+\subsection{Evaluation Criteria}
+\label{subsec:eval_criteria}
+We will evaluate the performance of our proposed system to teach the PR2 by experimentally determining how quickly and easily the PR2
+can acquire new behavior. We will start with very simple motions, such as simply lifting and pouring a single cup or bottle. Once the PR2 is capable of completing those actions after shadowing a human demonstrator, we can attempt to teach it increasingly complex sequences of mixing and pouring. We can measure the PR2's success rate in repeating a recorded movement over multiple trials. This success rate can be then be correlated with the complexity of the demonstrated command. The goal here is to show that many different movement sequences of varying difficulty can be taught to the PR2 using the same motion capturing setup from the Kinect.\\
+If time permits, we also plan to evaluate the PR2's ability to adapt to variable conditions. For instance, we can measure how far a bottle can be moved from its expected position before the PR2 becomes unable to pick it up. The weight of the bottle can also be changed to see how well the PR2 can adapt to grasping nearly-full versus nearly-empty drink containers. The success rate of the PR2's drink mixing can be analyzed as a function of these variables (distance moved, weight of drinks, etc).
+\subsection{Block Diagram}
+\label{subsec:block_diagram}
 
-\section{System Implementation}
-\label{sec:sys_implement}
-Here is where you answer the \textit{how}. How did you implement the system described in Sec.~\ref{sec:sys_model}? Justify your design decisions (\textit{e.g.}, performance vs. efficiency). Indeed, your implementation is probably not yet complete, but you should be speculative about the direction your group plans to take. This is the \textit{only} section where things like DB-choice, programming language, \textit{etc.} should be discussed. 
-
-\section{System Performance}
-\label{sec:sys_perform}
-Here you need to show that the implementation of Sec.~\ref{sec:sys_implement} succeeds in leveraging the properties discussed in Sec.~\ref{sec:sys_model}. Being that your implementation is incomplete, robust performance statistics are probably not possible. However, you need to demonstrate you are on the right track. Extrapolate from na\"\i ve tests to predict full-fledged performance. Visualize performance (\textit{i.e.}, graphs, tables) whenever possible.  Also report on auxiliary measures (\textit{e.g.}, accuracy may your primary goal, but efficiency statistics are also interesting). 
+\begin{figure}[h!] 
+	\begin{center}
+		\includegraphics[width=1.0\linewidth]{flowchart}
+	\end{center}
+	%\vspace{-24pt}
+	\caption{Block Diagram Summarizing System Model}
+	\label{fig:some_graph}
+\end{figure}
 
 \section{Remaining Work}
 \label{sec:remaining_work}
-Some remaining tasks have likely been discussed prior to this point -- now succinctly aggregate them all here. Also provide an honest assessment of your completion percentage.
+The following is a list of milestones we hope to reach as the spring semester progresses.
 
-
-\bibliographystyle{plain}     % Please do not change the bib-style
-\bibliography{progress_spec}  % Just the *.BIB filename
-
-\appendix
-\section{Proposal Issues}
-\label{app:prop_issues}
-Overall, we were pleased with the quality of the (revised) proposals. However, there were a few common errors:
-
+	% The 'itemize' environment shown here, and its friend 'enumerate' (shown below), are used to create indented\bulleted\outline style lists.
 \begin{itemize*}
-  \item Projects should have a \textit{title}. That title should not be, ``CIS 400/401 Project Proposal Specification.''
-  \item Vertical margin issues? Run \texttt{texconfig} and verify your default paper is letter-size instead of A4 (default).
-  \item \textit{Citations}. The proper format is: ``\ldots end of sentence~\cite{latex_wikibook}.'' Notice the citation is, (1) inside the period, (2) inside the quotations, and (3) a space from the last word. Some groups also needed significantly more citations.
-  \item The word `I' should never be used -- use `we' sparingly. Similarly, try to limit usage of ``this project.''
-  \item Use more figures/graphics. When you do, make sure they are \textit{original} works. They should be designed so they are legible when printed in black and white.
-	\item Make sure you discuss the \textit{merit} of your work. What is the real world benefit?
+	\item {\sc prior-to Feb.1}: Attempt real trials on the actual PR2.\vspace{3pt}
+	\item {\sc prior-to Mar.1}: Achieve a simple, successful drink mixing with the PR2.\vspace{3pt}
+	\item {\sc prior-to Apr.1}: Develop a more complex sequence of drink mixing with the PR2.\vspace{3pt}
+	\item {\sc completion tasks}: Verify that the PR2 can successfully mix a drink. Conduct accuracy testing. Complete write-up.\vspace{3pt}
+	\item {\sc if there's time} : Investigate ways to improve the PR2's ability to adapt and learn from different drink configurations.
 \end{itemize*}
 
-
-\section{Report Parameters}
-\label{app:report_params}
-Progress reports should be $6$--$8$ pages in length. There is no fixed requirement on the number of resources -- use good judgement. Poor reports will require revision, re-submission, and be penalized. Again, \textbf{do not plagiarize}.
+	% AW: We next move onto the bibliography.
+\bibliographystyle{plain} % Please do not change the bib-style
+\bibliography{progress_spec}  % Just the *.BIB filename
 
 \end{document} 
-
