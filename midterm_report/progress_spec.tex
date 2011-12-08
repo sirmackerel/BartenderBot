@@ -126,7 +126,16 @@ infrared projector and stereo RGB cameras to create a 3D scene image complete
 with depth information. It sends these raw video frames to ROS, which then
 forwards the feed to a processing node. This processing node analyzes the 
 video stream, identifies humanoid figures in the frames, and tracks these 
-figures' joints.
+figures' joints. The Kinect does have some shortcomings though in that it does 
+not reliably track wrist, finger, or head movements. We use separate 
+accelerometers to track these motions.
+
+We capture wrist motion by having the user hold one Nintendo Wiimote with 
+Wii MotionPlus in each hand. The Wiimote is a video game controller with 
+multiple buttons, a direction pad, and built-in accelerometers. In this sense,
+it is quite convenient. The user holds one Wiimote in each hand (this is 
+what they were designed for). The user now has convenient access to a number of
+control buttons and also has an accelerometer to track the wrist joints.
 
 Their use should feel natural and non-intrusive. 
 The design of a teleimmersive system should be simple
