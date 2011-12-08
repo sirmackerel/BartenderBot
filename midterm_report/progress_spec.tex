@@ -103,6 +103,15 @@ passively. After the initial setup phase, the user should be able to control
 the system with minimal effort; the system should just watch the user and
 translate the user's movements into control instructions for the PR2.
 
+\begin{figure}[htb] 
+	\begin{center}
+		\includegraphics[width=1.0\linewidth]{flowchart}
+	\end{center}
+	%\vspace{-24pt}
+	\caption{Block Diagram Summarizing System Model}
+	\label{fig:some_graph}
+\end{figure}
+
 To facilitate this process, we use a couple separate devices and some
 fairly sophisticated software stacks. While the
 devices mostly consist of cameras and accelerometers to track the users 
@@ -117,7 +126,7 @@ ROS abstracts over devices and I/O, providing a common interface for accessing
 any data stream or controlling any device. Using ROS, we can easily take
 data from the many tracking devices, process all the data to come up with
 movement plans for the PR2, and then actually command the PR2 to move in the
-desired manner.
+desired manner. This system architecture is shown Figure~\ref{fig:some_graph}.
 
 Other than the PR2 robot itself, the Microsoft Kinect is perhaps the most 
 prominent and obvious device in the teleimmersive operation system. The
@@ -137,33 +146,11 @@ it is quite convenient. The user holds one Wiimote in each hand (this is
 what they were designed for). The user now has convenient access to a number of
 control buttons and also has an accelerometer to track the wrist joints.
 
-Their use should feel natural and non-intrusive. 
-The design of a teleimmersive system should be simple
-Although one would think that the design of a teleimmersive system should be
-fairly complicated, it is actually quite surprising how modular and simple of
-a system it was possible to design. This was largely enabled by ROS, the Robot
-Operating System developed and supported Willow Garage. ROS follows the
-publisher-subscriber model. It abstracts over hardware, I/O, and computation
-services by making them visible as nodes which can send and receive messages.
-\\
-\\As is shown by Figure~\ref{fig:some_graph}, all communication between the 
-PR2 Robot and the controlling devices must pass through ROS. In one direction,
-ROS corrals the raw data from the various input devices, performs computations
-on it, and then dispatches motion commands to the robot. Going in the other
-direction, ROS follows the stream from the PR2's onboard video cameras and
-sends the frames to the user goggles.
-
-
- there are many components
-which must interact with each other to achieve teleimmersive operation.
-\begin{figure}[htb] 
-	\begin{center}
-		\includegraphics[width=1.0\linewidth]{flowchart}
-	\end{center}
-	%\vspace{-24pt}
-	\caption{Block Diagram Summarizing System Model}
-	\label{fig:some_graph}
-\end{figure}
+In order to track the user's head movements, we have the user wear a hat
+with a three-axis accelerometer. This can track the yaw, pitch, and roll of the
+user's neck joint and can therefore capture all head motions. The device is
+approximately the size of a quarter and can be attached to any surface via
+velcro.
 \section{System Implementation}
 
 \section{Project Proposal}
