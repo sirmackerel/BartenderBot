@@ -130,7 +130,15 @@ motion, there are a couple handheld button devices to allow the user to
 perform non-humanoid operations on the robot (such as freezing a joint or
 triggering certain routines).
 
-The true nexus of the system is ROS (Robot Operating System). Although the
+The most obvious component of the system is the actual PR2 robot. This is the
+device that user will be controlling by teleimmersive operation. The user will
+need to be able to control each of the PR2's motors, controlling the head,
+arms, hands, gripper, torso, and base of the robot. To make the teleoperation
+immersive, the user will need have a direct feed from the PR2's onboard
+camera system.
+
+While the PR2 may be the most apparent aspect of the system,
+the true nexus of the is ROS, the Robot Operating System. Although the
 user will never interact directly with ROS, all communication between the
 user and the PR2 (in the form of commands or feedback) must pass through ROS.
 ROS abstracts over devices and I/O, providing a common interface for accessing
