@@ -151,6 +151,18 @@ with a three-axis accelerometer. This can track the yaw, pitch, and roll of the
 user's neck joint and can therefore capture all head motions. The device is
 approximately the size of a quarter and can be attached to any surface via
 velcro.
+
+The final hardware device is a pair of Vuzix augmented reality glasses.
+Essentially, this is a pair of glasses with a mini LCD screen in each lens.
+We take the video feed from the PR2's onboard stereo cameras and pipe it
+directly into each eye. This is the immersive step which closes the loop.
+
+There is one other significant component to this system. This is what we have
+termed in Figure~\ref{fig:some_graph} the {\tt BERTRAM Analyzer}. This is a 
+software node residing in ROS. Its primary function is to stitch together the
+motion and position data from all the input devices (Kinect, Wiimotes, head 
+IMU). It collates all the information and then maps the user's motions
+into equivalent motions for the PR2.
 \section{System Implementation}
 
 \section{Project Proposal}
