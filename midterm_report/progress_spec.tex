@@ -147,14 +147,14 @@ translate the user's movements into control instructions for the PR2.
 
 To facilitate this process, we use a couple separate devices and some
 fairly sophisticated software stacks. While the
-devices mostly consist of cameras and accelerometers to track the users 
-motion, there are a couple handheld button devices to allow the user to
+devices mostly consist of cameras and accelerometers to track the user's 
+motion, there are a couple button devices which allow the user to
 perform non-humanoid operations on the robot (such as freezing a joint or
 triggering certain routines).
 
 The most obvious component of the system is the actual PR2 robot. This is the
-device that user will be controlling by teleimmersive operation. The user will
-need to be able to control each of the PR2's motors, controlling the head,
+device that user will be controlling by teleimmersive operation. The user must
+be able to control each of the PR2's motors, including those for the head,
 arms, hands, gripper, torso, and base of the robot. To make the teleoperation
 immersive, the user will need have a direct feed from the PR2's onboard
 camera system.
@@ -170,8 +170,9 @@ camera system.
 
 
 While the PR2 may be the most apparent aspect of the system,
-the true nexus of the is ROS, the Robot Operating System. Although the
-user will never interact directly with ROS, all communication between the
+the true nexus is ROS, the Robot Operating System. Although the
+user will never need to interact explicitly with ROS, all communication between
+the
 user and the PR2 (in the form of commands or feedback) must pass through ROS.
 ROS abstracts over devices and I/O, providing a common interface for accessing
 any data stream or controlling any device. Using ROS, we can easily take
@@ -188,14 +189,16 @@ forwards the feed to a processing node. This processing node analyzes the
 video stream, identifies humanoid figures in the frames, and tracks these 
 figures' joints. The Kinect does have some shortcomings though in that it does 
 not reliably track wrist, finger, or head movements. We use separate 
-accelerometers to track these motions.
+accelerometer units to track these motions.
 
 We capture wrist motion by having the user hold one Nintendo Wiimote with 
 Wii MotionPlus in each hand. The Wiimote is a video game controller with 
 multiple buttons, a direction pad, and built-in accelerometers. In this sense,
-it is quite convenient. The user holds one Wiimote in each hand (this is 
-what they were designed for). The user now has convenient access to a number of
-control buttons and also has an accelerometer to track the wrist joints.
+it is quite convenient. The user can comfortably hold one Wiimote in each hand,
+(as this is how they were intended to be used in video games). The user now has
+convenient access to a number of
+control buttons and also is carrying accelerometers to track each of the wrist 
+joints.
 
 In order to track the user's head movements, we have the user wear a hat
 with a three-axis accelerometer. This can track the yaw, pitch, and roll of the
@@ -230,8 +233,8 @@ function of this is to create a ROS node named {\tt openni\_tracker}. This
 node identifies the Kinect device on a USB port and requests data
 from it. It then attempts to identify people in the scene frame and start
 tracking them. Once it has done so, it will publish data on various
-topics (such as left\_shoulder, right\_elbow). These the messages contain
-joint angle transforms and are delivered to the {\tt BERTRAM Analyzer}.
+topics (such as {\tt left\_shoulder}, {\tt right\_elbow}). These the messages
+contain joint angle transforms and are delivered to the {\tt BERTRAM Analyzer}.
 
 The {\tt BERTRAM Analyzer} listens to the messages from the
  {\tt openni\_tracker}.
@@ -302,9 +305,18 @@ verified that it functions correctly using only a single camera source (such as
 the left camera). All that remains is to combine the left and right camera
 feeds together.
 \section{System Performance}
-\indent We are currently in the process of completing the immersive teleoperation system using the components described in previous sections. Upon completion, the system will be evaluated for its ability to both correctly imitate the actions of a human operator and for its ability potential as a learning tool for the PR2 to acquire new behavior.\\
+We are currently in the process of completing the immersive 
+teleoperation system using the components described in previous sections. Upon
+completion, the system will be evaluated both for its ability to correctly
+imitate the actions of a human operator as well as for its potential 
+as a learning tool for the PR2 to acquire new behavior.\\
 \subsection{Performance of Devices}
-\indent The PR2 has lived up to its expectations as a good choice of humanoid robot to use. Testing our existing code on the robot has been very straightforward, and the PR2 is fully capable of all of the arm motions, head motions, and grasping we require it to do. ROS has also done an excellent job in allowing the {\tt BERTRAM Analyzer} to easily communicate back and forth with the diverse assortment of devices that comprise the teleoperation system.\\
+The PR2 has lived up to its expectations as a good choice of humanoid robot to 
+use. Testing our existing code on the robot has been very straightforward, and 
+the PR2 is fully capable of all of the arm motions, head motions, and grasping
+we require it to do. ROS has also done an excellent job in allowing the 
+{\tt BERTRAM Analyzer} to easily communicate back and forth with the diverse 
+assortment of devices that comprise the teleoperation system.\\
 \indent Capturing motion with the Kinect has been a painless process. It requires virtually no setup time and can transmit live human motion data in real time without the need for any special clothing or markers to indicate human joints or body parts. The user can more or less move freely once the Kinect has `calibrated' its view onto a target, which takes only a few seconds. ROS makes receiving the data from the Kinect very simple. Communication with the Wiimotes has also worked as expected. The remotes transmit their data wirelessly and accurately report button presses, rotations, and accelerations up to one hundred times per second. They fit nicely in the palms of the human operators' hands since they are originally intended to be used as video game controllers.\\
 \indent The three-axis accelerometer for capturing head movement has been a little more difficult to deal with than originally anticipated. Although the device does report changes in its yaw, pitch, and roll, it is also prone to reporting errors if it receives sudden jolts or impacts. When these errors happen, the ROS software that interfaces with the device must be restarted to obtain accurate readings once more. We suspect that this problem will be alleviated once we mount it in a more stable fashion on to head gear for the human operator to wear. Ideally, the human operator can simply wear the head gear and not have to worr about adjusting the accelerometer. The video eyewear works as expected and can successfully display video output from cameras on the PR2.\\
 \subsection {Performance of the BERTRAM Analyzer}
