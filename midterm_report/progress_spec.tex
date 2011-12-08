@@ -114,6 +114,20 @@ passively. After the initial setup phase, the user should be able to control
 the system with minimal effort; the system should just watch the user and
 translate the user's movements into control instructions for the PR2.
 
+To facilitate this process, we use a couple separate devices and some
+fairly sophisticated software stacks. While the
+devices mostly consist of cameras and accelerometers to track the users 
+motion, there are a couple handheld button devices to allow the user to
+perform non-humanoid operations on the robot (such as freezing a joint or
+triggering certain routines).
+
+The most obvious component of the system is the actual PR2 robot. This is the
+device that user will be controlling by teleimmersive operation. The user will
+need to be able to control each of the PR2's motors, controlling the head,
+arms, hands, gripper, torso, and base of the robot. To make the teleoperation
+immersive, the user will need have a direct feed from the PR2's onboard
+camera system.
+
 \begin{figure}[htb] 
 	\begin{center}
 		\includegraphics[width=1.0\linewidth]{flowchart}
@@ -123,14 +137,9 @@ translate the user's movements into control instructions for the PR2.
 	\label{fig:some_graph}
 \end{figure}
 
-To facilitate this process, we use a couple separate devices and some
-fairly sophisticated software stacks. While the
-devices mostly consist of cameras and accelerometers to track the users 
-motion, there are a couple handheld button devices to allow the user to
-perform non-humanoid operations on the robot (such as freezing a joint or
-triggering certain routines).
 
-The true nexus of the system is ROS (Robot Operating System). Although the
+While the PR2 may be the most apparent aspect of the system,
+the true nexus of the is ROS, the Robot Operating System. Although the
 user will never interact directly with ROS, all communication between the
 user and the PR2 (in the form of commands or feedback) must pass through ROS.
 ROS abstracts over devices and I/O, providing a common interface for accessing
@@ -193,7 +202,8 @@ tracking them. Once it has done so, it will publish data on various
 topics (such as left\_shoulder, right\_elbow). These the messages contain
 joint angle transforms and are delivered to the {\tt BERTRAM Analyzer}.
 
-The {\tt BERTRAM Analyzer} listens to the messages from {\tt openni\_tracker}.
+The {\tt BERTRAM Analyzer} listens to the messages from the
+ {\tt openni\_tracker}.
 When it receives information for an altered joint position, it applies the
 appropriate transformations and instructs the PR2 on how to set its own joints
 so as to mimic the sensed movement of the user. This is done for the shoulder
@@ -207,13 +217,59 @@ is perpendicular to gravity). After connecting to the controlling computer via
 USB, a ROS node is run to read in the data from the sensor and republish it
 encapsulated in ROS messages. The {\tt BERTRAM Analyzer} is notified when these
 messages are published. It reads the roll, pitch, and yaw data in the message
-and sends the appropriate commands to the PR2. When feature which is not yet
+and sends the appropriate commands to the PR2. One feature which is not yet
 implemented relates to the initialization of the IMU. Since it uses a compass
 to track yaw, values are reported as angular deviations from magnetic north.
 Therefore, when tracking a user who does not begin by facing north, it is 
 important to find the unity position for the sensor (the bearing when 
 the user is facing forward) and to use this as an offset for all future angle
 readings.
+
+The Wiimote communication is handled in much the same manner as the head IMU.
+Instead of communicating via USB however, the Wiimotes communicate with the
+controlling computer via Bluetooth. After pairing, the Wiimote node
+sends a periodic stream of messages. Each message is a vector containing the
+status of each button and sensor of the Wiimote. The {\tt BERTRAM Analyzer}
+listens for these messages. It notes the state of each button it is watching
+and takes appropriate action (by sending commands to the PR2) if any are
+pressed. Additionally, it reads in the accelerometer data. The Wiimote
+provides only the actual angular velocities; it doesn't not translate the 
+values into roll, pitch, or yaw. We therefore integrate these with respect to 
+the publishing frequency to obtain an approximation of the actual roll, pitch,
+and yaw angles for the wrist. Finally, the angles are translated into the PR2's
+reference frame and then commands are sent instructing the PR2 to move. One 
+item of note is that the human wrist rotates in only two degrees (that is,
+the wrist does not rotate about the axis of the forearm). Although the PR2's 
+gripper can actually rotate indefinitely in this axis, we instead map the 
+rotation onto the forearm.
+
+One nontrivial implementation detail to discuss is the physical method of
+communication with the PR2. One option is to have the PR2's onboard computers
+act as the controllers. Since this is a teleimmersive operation system, we find
+this to be impractical, as the input devices may not be physically located
+near the PR2. In addition, it is impractical to attach all these input devices 
+directly to the PR2. The PR2 also contains multiple routers and hosts its
+own wireless network. So far, this is the method we have used most when
+communicating with the PR2 (based on simplicity). In a real system however,
+this runs into the same problem as the first method: the user and devices
+may be quite further away than a single WiFi source can reach. Fortunately,
+the PR2 can also connect and take IPs on other networks (either by WiFi or by
+Ethernet). Although we have had limited success with this method so far, we
+suspect it to be due to issues with our own computer rather than the PR2.
+In the long run, this is the method we intend to use when communicating with 
+the PR2.
+
+The final aspect of the system for which we need to discuss the implementation
+is the visual feedback from the PR2 to the user. We accomplish this using a
+pair of  Vuzix virtual reality goggles. The PR2 sends multiple image 
+streams to ROS. As the goggles are not truly 3D, we intend to combine the left 
+and right image. This will then be sent to a node which will display the image
+on the screen of the controlling computer. As the goggles accept a VGA input,
+we can then simply connect them to the VGA video out port of the computer to
+receive the image and display it to the user. We have test this concept and
+verified that it functions correctly using only a single camera source (such as
+the left camera). All that remains is to combine the left and right camera
+feeds together.
 \section{System Performance}
 \indent We are currently in the process of completing the immersive teleoperation system using the components described in previous sections. First and foremost, the PR2 has lived up to its expectations as a good choice of humanoid robot to use. Testing our existing code on the robot has been very straightforward, and the PR2 is fully capable of all of the arm motions, head motions, and grasping we require it to do. ROS has also done an excellent job in allowing the {\tt BERTRAM Analyzer} to easily communicate back and forth with the diverse assortment of devices that comprise the teleoperation system.\\
 \indent Capturing motion with the Kinect has been a painless process. It requires virtually no setup time and can transmit live human motion data in real time without the need for any special clothing or markers to indicate human joints or body parts. The user can more or less move freely once the Kinect has `calibrated' its view onto a target, which takes only a few seconds. ROS makes receiving the data from the Kinect very simple. Communication with the Wiimotes has also worked as expected. The remotes transmit their data wirelessly and accurately report button presses, rotations, and accelerations up to one hundred times per second. They fit nicely in the palms of the human operators' hands since they are originally intended to be used as video game controllers.\\
