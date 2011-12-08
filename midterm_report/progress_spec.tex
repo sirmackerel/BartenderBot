@@ -166,10 +166,12 @@ velcro.
 The final hardware device is a pair of Vuzix augmented reality glasses.
 Essentially, this is a pair of glasses with a mini LCD screen in each lens.
 We take the video feed from the PR2's onboard stereo cameras and pipe it
-directly into each eye. This is the immersive step which closes the loop.
+directly into each eye. This is the immersive step which closes the loop and
+helps place the user more fully into the system.
 
-There is one other significant component to this system. This is what we have
-termed in Figure~\ref{fig:some_graph} the {\tt BERTRAM Analyzer}. This is a 
+There is one other significant component to this system. This is the
+component we have
+termed in Figure~\ref{fig:some_graph} as the {\tt BERTRAM Analyzer}. This is a 
 software node residing in ROS. Its primary function is to stitch together the
 motion and position data from all the input devices (Kinect, Wiimotes, head 
 IMU). It collates all the information and then maps the user's motions
@@ -181,8 +183,15 @@ user and processes this data to generate commands for the robot. ROS provides
 bindings for both {\tt C++} and {\tt Python}. We chose to use Python due to our
 familiarity with the language and due to the relative verbosity of {\tt C++}.
 The analyzer registers for interrupt events from the Wiimotes and head-mounted
-IMU and actively polls the Kinect sensor.
+IMU and actively polls for Kinect events.
 
+ROS interfaces with the Kinect using the {\tt openni} Kinect stack. The primary
+function of this is to create a ROS node named {\tt openni\_tracker}. This
+node identifies the Kinect device on a USB port and requests data
+from it. It then attempts to identify people in the scene frame and start
+tracking them. Once it has done so, it will publish data on various
+topics (such as left\_shoulder, right\_elbow). These the messages contain
+joint angle transforms and are delivered to the {\tt BERTRAM Analyzer}.
 \section{System Performance}
 \subsection{Evaluation Criteria}
 \label{subsec:eval_criteria}
