@@ -102,14 +102,33 @@ end, a good portion of the control data captured from the user is captured
 passively. After the initial setup phase, the user should be able to control
 the system with minimal effort; the system should just watch the user and
 translate the user's movements into control instructions for the PR2.
-\\
-\\To facilitate this process, we use a couple separate devices. While the
+
+To facilitate this process, we use a couple separate devices and some
+fairly sophisticated software stacks. While the
 devices mostly consist of cameras and accelerometers to track the users 
 motion, there are a couple handheld button devices to allow the user to
 perform non-humanoid operations on the robot (such as freezing a joint or
 triggering certain routines).
-\\
-\\Their use should feel natural and non-intrusive. 
+
+The true nexus of the system is ROS (Robot Operating System). Although the
+user will never interact directly with ROS, all communication between the
+user and the PR2 (in the form of commands or feedback) must pass through ROS.
+ROS abstracts over devices and I/O, providing a common interface for accessing
+any data stream or controlling any device. Using ROS, we can easily take
+data from the many tracking devices, process all the data to come up with
+movement plans for the PR2, and then actually command the PR2 to move in the
+desired manner.
+
+Other than the PR2 robot itself, the Microsoft Kinect is perhaps the most 
+prominent and obvious device in the teleimmersive operation system. The
+hardware uses an 
+infrared projector and stereo RGB cameras to create a 3D scene image complete
+with depth information. It sends these raw video frames to ROS, which then
+forwards the feed to a processing node. This processing node analyzes the 
+video stream, identifies humanoid figures in the frames, and tracks these 
+figures' joints.
+
+Their use should feel natural and non-intrusive. 
 The design of a teleimmersive system should be simple
 Although one would think that the design of a teleimmersive system should be
 fairly complicated, it is actually quite surprising how modular and simple of
