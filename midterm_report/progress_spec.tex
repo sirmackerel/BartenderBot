@@ -43,28 +43,30 @@ human operator to impart a specific movement sequence to a robot. This paper det
 
 \section{Introduction}
 \label{sec:intro}
-\indent Constructing a fully autonomous and adaptive robot has been a long-time goal of robotics research.
-The possibility of a robotic butler is only one of many potential applications. However, real
-autonomous decision making (that is, free of direct control from a human operator) is an incredibly challenging process, for many different processes must 
-be coordinated to make this possible. For instance, visual information must be done quickly and accurately to respond to 
+\indent Constructing a fully autonomous and adaptive robot is one of the more
+elusive goals of robotics research.
+The possibility of a robotic butler is only one of many potential applications. However, true
+autonomous decision making (that is, free of direct control from a human operator) is an incredibly challenging process as many different systems must 
+be coordinated to make this possible. For instance, visual information must be processed quickly and accurately to respond to 
 changes in the environment, accurate path planning is needed to navigate the environment, and 
 precise motor coordination is needed to manipulate the environment. There have been many different 
 attempts at overcoming these challenges involved in developing an autonomous robot. \\
 \indent One major type of approach 
 that has been often explored involves the field of machine learning. The ability to learn can be a powerful intermediate 
 step towards autonomy, since learning can allow a robot to adapt to new, unforeseen scenarios on its own. 
-Teaching by human demonstration is a common approach to robot learning since it enables the 
-transmission of complex behavior in a manner far easier than individually planning the movement of each motor and joint. However, choosing how exactly how the demonstrated behavior is delivered to the 
+Teaching by human demonstration is a common approach to robot learning because it enables the 
+transmission of complex behavior in a manner far easier than individually planning the movement of each motor and joint. However, choosing exactly how the demonstrated behavior is delivered to the 
 robot in such a way that it can record and reproduce that behavior is still a very challenging task.\\ 
-\indent In this paper we report on our progress towards teaching the WillowGarage PR2 Robot how to mix and
-serve drinks by first implementing an immersive teleoperation system for controlling the PR2. By `teleoperation', we simply mean control from
+\indent In this paper we report on our progress towards teaching the WillowGarage PR2 Robot to mix and
+serve drinks by first implementing an immersive teleoperation system for controlling the PR2. By `teleoperation', we simply mean controlling the PR2 from
 a distance. By `immersive', we mean giving the human operator the illusion of being inside the PR2. The PR2 is a humanoid robot developed by  Willow Garage~\cite{pr2} for the purpose of robotics 
 research. It is omnidirectional and capable of telescoping height. What makes the PR2 especially attractive for robotics research is its pair of highly movable arms and grippers that allow grasping of many different kinds of objects. The PR2 also comes with a robust series of highly useful software development tools,
 including a versatile simulator that allows developers to perform trial runs on a virtual PR2 without
-risking damage to the actual robot. Institutions across the world have taught the PR2 a wide variety of human actions, such as baking 
+risking damage to the actual robot or environment. Institutions across the
+world have taught the PR2 a wide variety of human actions, such as baking 
 cookies~\cite{cookies}, scanning and bagging groceries~\cite{groceries}, and fetching a sandwich from 
-Subway~\cite{subway}. However, unlike these examples, we propose to teach the PR2 a new behavior not through advanced task planning, but through human
-demonstration. Thanks to the University of Pennsylvania's GRASP laboratory, we have access to a real PR2 (as shown in Figure~\ref{fig:pr2_photo}) that we can use to test the implementation of our system.\\
+Subway~\cite{subway}. However, unlike in these examples, we propose to teach the PR2 a new behavior not through advanced task planning, but rather through human
+demonstration. Thanks to the University of Pennsylvania's GRASP laboratory, we have access to a real PR2 (shown in Figure~\ref{fig:pr2_photo}) that we can use to test the implementation of our system.\\
 \begin{figure}[htb] 
 	\begin{center}
 		\includegraphics[width=0.75\linewidth]{graspy}
@@ -78,23 +80,52 @@ demonstration. Thanks to the University of Pennsylvania's GRASP laboratory, we h
 processing. Combined with various open source libraries~\cite{kinect}, the Kinect also works with 
 software that provides human motion sensing and tracking, which greatly simplifies the task of capturing human body movements.
 These Kinect libraries have already been used successfully in 
-many projects involving real-time tracking of human motion, many examples of which can be found online~\cite{freenect}.\\
+many projects involving real-time tracking of human motion, examples of which can be found online~\cite{freenect}.\\
 \indent We propose to use the Kinect as part of an immersive teleoperation system to teach the PR2 how to mix and pour different kinds of drinks.
 The Kinect sensor provides a convenient way to capture a human demonstration of desired behavior. The captured data can be relayed to the
-PR2 via ROS, an open-source Robot Operating System\cite{ros}. ROS provides a convenient framework for inter-process communication and
-coordination. Processes that perform computation are visualized as nodes in a graph, with inter-process communication representing the
+PR2 via ROS, an open-source Robot Operating System\cite{ros}. ROS provides a 
+convenient framework for device abstraction and inter-process communication. 
+Processes that perform computation are visualized as nodes in a graph, with inter-process communication representing the
 edges of the graph. Nodes send information to each other in the form of messages. Nodes that wish to send messages to other nodes can
 `publish' to a topic, and nodes wishing to receive these messages need only to `subscribe' to these topics. ROS enables relatively short
 programs to issue surprisingly sophisticated commands to the PR2, such as moving all of the arm joints to a specific position within a
 specified time frame. By using ROS along with the PR2 and the Kinect, we will construct a system for operating the PR2 remoting while
-giving the operator the feeling of being within the robot itself. The effectiveness of this system in teaching the PR2 new tasks will then be evaluated.\\
-\indent What follows is an overview of work related to implementation of teleoperation systems and teaching robots human-like tasks. We then describe the components of our proposed immersive teleoperation system before delving into the technical implementation of each component. After this will be an evaluation of the current performance of the system and a summary of remaining work.
+giving the operator the feeling of being within the robot itself. The effectiveness of this system in teaching the PR2 new tasks will then be evaluated.
+
+What follows is an overview of other work related to implementing of 
+teleoperation systems and teaching robots human-like tasks. We then describe 
+the components of our proposed immersive teleoperation system before delving 
+into the technical implementation of each component. After this is an 
+evaluation of the current performance of the system and a summary of remaining work.
 
 \section{Related Work}
 \label{sec:related_work}
-\indent There have been many previous teleoperation implementations for robotic systems. Kofman \textit{et al.}~\cite{robot_interface} devised a system for controlling a robotic arm via teleoperation and sending visual feedback to the user. The setup used in their work involves multiple cameras aimed at the human operator to capture 3-D information about the operator's arm movements. This data is then sent to a remote site containing the robotic arm and mapped to its joints so it can mimic the motion of the human arm. The human operator is able to see the robotic arm via cameras positioned at the remote site that send visual feeds of both the entire arm and of vision from the point of view of the tip of the robotic arm. Fortunately for us, the Kinect, when paired with ROS, provides a much simpler and less complicated setup to capture arm motion and send them to the PR2's arm. We are far from the first to implement teleoperation of a robot via the Kinect and ROS. In fact, Willow Garage has already tried integrating Kinect with ROS to control the PR2 remotely~\cite{willow_kinect}. However, our ultimate goal includes not only developing an immersive teleoperation system for the PR2, but also seeing how this system can be used to teach the PR2 new behavior, such as mixing and serving drinks.\\ 
-\indent Other institutions have conducted research involving autonomous robots and handling drinks. Hillenbrand \textit{et al.}~\cite{pouring_arm} designed a semi-autonomous hand-arm robot for this purpose. The hand-arm was capable of responding to user input by choosing a drink from a variety of different containers, opening the drink if necessary, pouring the liquid into a glass, and then offering the drink to the user. It was capable of not only picking up bottles and cups, but also of unscrewing bottle caps. Processing of visual data from cameras was combined with object recognition to identify the drinks, after which grasp planning was used to actually pick up and manipulate the drink. Srinivasa \textit{et al.}~\cite{herb} designed an autonomous robot capable of navigating a household-like environment and manipulating a wide variety of everyday objects. Consisting of an arm mounted on a segway, HERB used a powerful array of six multi-core processors to successfully traverse its environment and interact with objects around it, such as cups and drawers. By combining different processes for object recognition, task based planning, and caged grasping, HERB was able to autonomously carry out commands issued from a graphical user interface to perform simple kitchen tasks, such as placing an object in a recycling bin or lifting a mug. The approach taken to teach by both of these works relies primarily on heavy amounts of computation to carefully plan each action that the robot will execute ahead of time.  The chief difference in our system is that we intend to teach a robot to do these kinds of things more quickly and naturally by having a human operator of our teleoperatin system execute the actions first.\\
-\indent There has also been substantial work done in teaching the PR2 robot to perform various human tasks. Bohren \textit{et al.}~\cite{beer} used the PR2 and ROS to build a robotic system for retrieving a beer from a refrigerator. In their work, they developed a task-level execution system for rapidly prototyping different robotic applications. The PR2 had to navigate an obstacle map to reach the refrigerator, use object recognition and grasp planning to identify the door handle and the drinks, and ultimately use facial recognition to deliver the beer to a human recipient. Each step of the process contained detail planning and image processing in order to carry out the expected behavior. Klingbeil \textit{et al.}~\cite{groceries} developed a grasping algorithm to enable the PR2 to pick up objects and attempt to locate and scan the barcode. Their technique allowed the PR2 to devise a plan to grasp the object from only a single 3D snapshot. Their algorithm emphasized the importance of positiong the PR2's gripper such that its shape most closely matched the shape of the object it attempts to grasp. Saito \textit{et al.}~\cite{subway} devised a way for the PR2 to intelligently navigate large environments via semantic search. The PR2 attempts to find a specific object by first searching areas that would logically contain that item. When asked to retrieve a sandwich, the PR2 first inspected a nearby refrigerator in its environment. If it fails to find one there, it then determines the next most likely place a sandwich could be found. These approaches to teaching the PR2 emphasize complex algorithms used to enable the PR2 to devise a plan from scrach to act autonomously in a given environment. Our approach is simpler in that we plan to use recorded input data from our immersive teleoperation system to give the PR2 a general sequence of actions to follow that can later be refined through more complex learning techniques.\\ 
+\indent There have been many previous teleoperation implementations for robotic systems. Kofman \textit{et al.}~\cite{robot_interface} devised a system for controlling a robotic arm via teleoperation and sending visual feedback to the user. The setup used in their work involves multiple cameras aimed at the human operator to capture 3-D information about the operator's arm movements. This data is then sent to a remote site containing the robotic arm and mapped to its joints so it can mimic the motion of the human arm. The human operator is able to see the robotic arm via cameras positioned at the remote site that send visual feeds of both the entire arm and of vision from the point of view of the tip of the robotic arm. Fortunately for us, the Kinect, when paired with ROS, provides a much simpler and less complicated setup to capture arm motion and send them to the PR2's arm. We are far from the first to implement teleoperation of a robot via the Kinect and ROS. In fact, Willow Garage has already tried integrating Kinect with ROS to control the PR2 remotely~\cite{willow_kinect}. However, our ultimate goal includes not only developing an immersive teleoperation system for the PR2, but also investigating how this system can be used to teach the PR2 new behavior, such as mixing and serving drinks.
+
+Other institutions have conducted research involving autonomous robots handling
+drinks. Hillenbrand \textit{et al.}~\cite{pouring_arm} designed a 
+semi-autonomous hand-arm robot for this purpose. The hand-arm was capable of 
+responding to user input by choosing a drink from a variety of different 
+containers, opening the drink if necessary, pouring the liquid into a glass, 
+and then offering the cup to the user. It was capable of not only picking up 
+bottles and cups, but also of unscrewing bottle caps. Processing of visual data
+from cameras was combined with object recognition to identify the drinks, after
+which grasp planning was used to actually pick up and manipulate the drink. 
+Srinivasa \textit{et al.}~\cite{herb} designed an autonomous robot capable of 
+navigating a household-like environment and manipulating a wide variety of 
+everyday objects. Consisting of an arm mounted on a segway, HERB used a 
+powerful array of six multi-core processors to successfully traverse its 
+environment and interact with objects around it, such as cups and drawers. By 
+combining different processes for object recognition, task based planning, and 
+caged grasping, HERB was able to autonomously carry out commands issued from a 
+graphical user interface to perform simple kitchen tasks, such as placing an 
+object in a recycling bin or lifting a mug. The teaching approach taken by both
+of these works relies primarily on heavy amounts of computation to carefully 
+plan each action that the robot will execute ahead of time.  The chief 
+difference in our system is that we intend to teach a robot to do these kinds
+of things more quickly and naturally by first having a human operator of our 
+teleoperation system execute the actions.\\
+\indent There has also been substantial work done in teaching the PR2 robot to perform various human tasks. Bohren \textit{et al.}~\cite{beer} used the PR2 and ROS to build a robotic system for retrieving a beer from a refrigerator. In their work, they developed a task-level execution system for rapidly prototyping different robotic applications. The PR2 had to navigate an obstacle map to reach the refrigerator, use object recognition and grasp planning to identify the door handle and the drinks, and ultimately use facial recognition to deliver the beer to a human recipient. Each step of the process contained detail planning and image processing in order to carry out the expected behavior. Klingbeil \textit{et al.}~\cite{groceries} developed a grasping algorithm to enable the PR2 to pick up objects and attempt to locate and scan the barcode. Their technique allowed the PR2 to devise a plan to grasp the object from only a single 3D snapshot. Their algorithm emphasized the importance of positioning the PR2's gripper such that its shape most closely matched the shape of the object it attempts to grasp. Saito \textit{et al.}~\cite{subway} devised a way for the PR2 to intelligently navigate large environments via semantic search. The PR2 attempts to find a specific object by first searching areas that would logically contain that item. When asked to retrieve a sandwich, the PR2 first inspected a nearby refrigerator in its environment. If it fails to find one there, it then determines the next most likely place a sandwich could be found. These approaches to teaching the PR2 emphasize complex algorithms used to enable the PR2 to devise a plan from scrach to act autonomously in a given environment. Our approach is simpler in that we plan to use recorded input data from our immersive teleoperation system to give the PR2 a general sequence of actions to follow that can later be refined through more complex learning techniques.\\ 
 \indent There have also been other approaches involving data from human demonstration to allow a robot to perform specific tasks. In a relatively early attempt, Chalodhorn \textit{et al.}~\cite{walk_imitation} used motion capture to teach a bipedal humanoid robot how to walk by imitation. Joint angles obtained from motion capture data recorded from a human demonstrator wearing a motion capture suit were mapped to joint angles on the robot. This data was combined with predictions based on sensory information to reproduce a human-like gait in the robot. Kormushev \textit{et al.}~\cite{whiteboard} taught a robot new motor skills through kinesthetic teaching, which is teaching by physical contact. The robot had two distinct modes of operation: a learning phase and a reproduction phase. First, the robot was shown how to clean a whiteboard by direct human manipulation of the robot's joints, recording both position and force information. Subsequently, the robot would translate the learned information to its own frame of reference and attempt to duplicate the teacher's movement pattern on the whiteboard.  Kormushev \textit{et al.}~\cite{pancakes} also used kinesthetic learning to teach a robotic arm how to flip a pancake. A human teacher first moved the arm to demonstrate the movement required to flip a pancake 180 degrees in the air and catch it again. In subsequent trials, reinforcement learning techniques were applied such that the robot could evaluate the performance of its flips and attempt to adjust the motion of the arm for better future flips.\\
 \indent Our method has several advantages over these existing approaches. First of all, the Kinect sensor provides accurate real-time human
 motion tracking that can be mapped to specific movement in the PR2 thanks to ROS. The Kinect also provides motion capture without the need
