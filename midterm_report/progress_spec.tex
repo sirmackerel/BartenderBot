@@ -271,24 +271,59 @@ verified that it functions correctly using only a single camera source (such as
 the left camera). All that remains is to combine the left and right camera
 feeds together.
 \section{System Performance}
-\indent We are currently in the process of completing the immersive teleoperation system using the components described in previous sections. First and foremost, the PR2 has lived up to its expectations as a good choice of humanoid robot to use. Testing our existing code on the robot has been very straightforward, and the PR2 is fully capable of all of the arm motions, head motions, and grasping we require it to do. ROS has also done an excellent job in allowing the {\tt BERTRAM Analyzer} to easily communicate back and forth with the diverse assortment of devices that comprise the teleoperation system.\\
+\indent We are currently in the process of completing the immersive teleoperation system using the components described in previous sections. Upon completion, the system will be evaluated for its ability to both correctly imitate the actions of a human operator and for its ability potential as a learning tool for the PR2 to acquire new behavior.\\
+\subsection{Performance of Devices}
+\indent The PR2 has lived up to its expectations as a good choice of humanoid robot to use. Testing our existing code on the robot has been very straightforward, and the PR2 is fully capable of all of the arm motions, head motions, and grasping we require it to do. ROS has also done an excellent job in allowing the {\tt BERTRAM Analyzer} to easily communicate back and forth with the diverse assortment of devices that comprise the teleoperation system.\\
 \indent Capturing motion with the Kinect has been a painless process. It requires virtually no setup time and can transmit live human motion data in real time without the need for any special clothing or markers to indicate human joints or body parts. The user can more or less move freely once the Kinect has `calibrated' its view onto a target, which takes only a few seconds. ROS makes receiving the data from the Kinect very simple. Communication with the Wiimotes has also worked as expected. The remotes transmit their data wirelessly and accurately report button presses, rotations, and accelerations up to one hundred times per second. They fit nicely in the palms of the human operators' hands since they are originally intended to be used as video game controllers.\\
-\indent The three-axis accelerometer for capturing head movement has been a little more difficult to deal with than originally anticipated. Although the device does report changes in its yaw, pitch, and roll, it is also prone to reporting errors if it receives sudden jolts or impacts. When these errors happen, the ROS software that interfaces with the device must be restarted to obtain accurate readings once more. We suspect that this problem will be alleviated once we mount it in a more stable fashion on to head gear for the human operator to wear. Ideally, the human operator can simply wear the head gear and not have to worr about adjusting the accelerometer. The video eyewear works as expected and can successfully display video output from cameras on the PR2.
+\indent The three-axis accelerometer for capturing head movement has been a little more difficult to deal with than originally anticipated. Although the device does report changes in its yaw, pitch, and roll, it is also prone to reporting errors if it receives sudden jolts or impacts. When these errors happen, the ROS software that interfaces with the device must be restarted to obtain accurate readings once more. We suspect that this problem will be alleviated once we mount it in a more stable fashion on to head gear for the human operator to wear. Ideally, the human operator can simply wear the head gear and not have to worr about adjusting the accelerometer. The video eyewear works as expected and can successfully display video output from cameras on the PR2.\\
+\subsection {Performance of the BERTRAM Analyzer}
 \indent The performance of the {\tt BERTRAM Analyzer} still needs to be improved. Although the physical devices that comprise our immersive teleoperation system are easy to use and are relatively few in number, the analyzer code has somewhat mixed performance in translating data from these devices into actions to the PR2. Although the PR2 does move its arms in accordance to the arms of the human operator, the arm movement is very abrupt and prone to sudden, uneven movements. This lack of precision in movement makes it difficult for the human operator to precisely control the arms to the degree needed to fine motions like lifting cups or glasses. We have tried to smooth out the arm motion by threshholding the values sent by the Kinect. In other words, we only send new actions to the PR2 if we receive data from the Kinect indicating that the human's arms have moved a certain amount from their previous positions. Although this change has made it easier to keep the PR2's arms still, it has not smoothed actual motions themselves. We are currently trying to address this issue by investigating how to limit the maximum acceleration and velocity of the PR2 arm motions.\\
-\indent We have also run into some difficulty in mapping the rotation information from the Wiimote and three-axis accelerometer to the wrists and head of the PR2, respectively. The wrists and head do not always turn in a way that successfully imitates the wrist and head turns of the human operator. More work and experimentation with these components of the system need to be done before we can try and remedy this issue. 
+\indent We have also run into some difficulty in mapping the rotation information from the Wiimote and three-axis accelerometer to the wrists and head of the PR2, respectively. The wrists and head do not always turn in a way that successfully imitates the wrist and head turns of the human operator. More work and experimentation with these components of the system need to be done before we can try and fix this problem.
 
 \section{Remaining Work}
 \label{sec:remaining_work}
-
 \indent The most immediate goal is completion of the immersive teleoperation system. To achieve this, the arm movement of the PR2 needs to be smoothed out to allow fine-grained control. The wrist movement also must be improved to enable successful grasping of different objects. Once these two aspects of the PR2 are working well, additional work is required to correctly map head movement from the human operator to head movement of the PR2. This part is cruical for making the teleoperation feel immersive to the human operator of the system. Once the head motion is satisfactory, the human operator should be able to use the video eyewear to see from the PR2's perspective and operate the PR2 remotely without being in view of the actual robot. We estimate that we are currently about sixty percent done with the work needed to complete the immersive teleoperation system.\\
-\indent Once this immersive teleoperation system is complete, additional work will be done to see how the system can be used to teach the PR2 new behavior. The idea is to repeat a specific action using the system and have the PR2 learn this behavior by recording the input data it receives. In this way, a human can demonstrate an action to the PR2, which will then enable the PR2 to repeat this action on its own.
+\indent Once this immersive teleoperation system is complete, additional work will be done to see how the system can be used to teach the PR2 new behavior. The idea is to repeat a specific action using the system and have the PR2 learn this behavior by recording the input data it receives. In this way, a human can demonstrate an action to the PR2, which will then enable the PR2 to repeat this action on its own. If enough time remains, methods to improve upon and refine this recorded behavior will be explored.
 
+\subsection{Evaluation Critera}
+\indent The performance of the immersive teleoperation system will
+first be evaluated based on how well it can mimic the actions of
+the human operator. We will attempt to grasp and lift a variety of
+objects with the system to test the limits that the system allows in
+controlling the actions of the PR2. The accuracy of the teleoperation
+system can be measured with tests to determine with what level of precision
+the arms of the PR2 move in relation to how much the arms of the human user move.\\
+\indent Once the accuracy of the immersive teleoperation system has been verified, 
+we can experimentally determining how quickly
+and easily the PR2 can acquire new behavior from it. We will start
+with very simple motions, such as simply lifting and pouring
+a single cup or bottle. Once the PR2 is capable of completing
+these actions on its own without the need of a human operator,
+we can attempt to teach it increasingly complex sequences
+of mixing and pouring. We can measure the PR2’s success
+rate in repeating a recorded movement over multiple trials.
+This success rate can be then be correlated with the complexity
+of the demonstrated command. The goal here is to
+show that many different movement sequences of varying
+difficulty can be taught to the PR2 using the same motion
+capturing setup from the Kinect.\\
+\indent If time permits, we also plan to evaluate the PR2’s ability
+to adapt its learned behavior to changing conditions. For instance, we can
+measure how far a bottle can be moved from its expected
+position before the PR2 becomes unable to pick it up. The
+weight of the bottle can also be changed to see how well the
+PR2 can adapt to grasping nearly-full versus nearly-empty
+drink containers. The success rate of the PR2’s drink mixing
+can be analyzed as a function of these variables (distance
+moved, weight of drinks, etc).
+
+\subsection{Timeline}
 The following is a list of milestones we hope to reach as the spring semester progresses.
 	% The 'itemize' environment shown here, and its friend 'enumerate' (shown below), are used to create indented\bulleted\outline style lists.
 \begin{itemize*}
 	\item {\sc prior-to Feb.1}: Achieve smooth arm and wrist motion on the PR2.\vspace{3pt}
 	\item {\sc prior-to Mar.1}: Complete the immersive teleoperation system and attempt to mix drinks with the PR2.\vspace{3pt}
-	\item {\sc prior-to Apr.1}: Try to teach the PR2 how to mix a drink using the completed system.\vspace{3pt}
+	\item {\sc prior-to Apr.1}: Teach the PR2 how to mix a drink using the completed system.\vspace{3pt}
 	\item {\sc completion tasks}: Verify that the PR2 can successfully mix a drink, either autonomously or through human operation. Conduct accuracy testing. Complete write-up.\vspace{3pt}
 	\item {\sc if there's time} : Investigate ways for the PR2 to improve behavior learned from the immersive teleoperation system.
 \end{itemize*}
