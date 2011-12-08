@@ -207,8 +207,7 @@ convenient access to a number of
 control buttons. The remotes also carry accelerometers to track wrist movements.
 
 In order to track the user's head movements, the user wears a hat
-with an attached three-axis accelerometer. This accelerometer can track the yaw, pitch, and roll of the
-user's neck joint and can therefore relay all head motions to ROS. The device is
+with an attached Intertial Measurement Unit (IMU) that acts as three-axis accelerometer. The IMU can track the yaw, pitch, and roll of the user's neck joint and can therefore relay all head motions to ROS. The device is
 approximately the size of a quarter and can be attached to any surface via
 velcro.
 
@@ -251,13 +250,13 @@ appropriate transformations and instructs the PR2 on how to set its own joints
 so as to mimic the sensed movement of the user. This is done for the shoulder
 and elbow joints on both arms.
 
-A similar process occurs for the head IMU. The specific IMU used is
-the CHR-6dm Attitude and Heading Reference System. When lying flat, it uses
+A similar process occurs for the IMU on the user's head. The specific IMU used in our system is
+the CHR-6dm Attitude and Heading Reference System. When lying flat, it uses its
 accelerometers to capture roll and pitch. It also has a magnetic compass to 
 track yaw (necessary since the plane in which the yaw rotational motion occurs
-is perpendicular to the gravity vector). After connecting to the 
+is perpendicular to the force of gravity). After connecting to the 
 controlling computer via 
-USB, a ROS node is run to read in the data from the sensor and republish it
+USB, a ROS node is run to read in data from the sensor and republish this data
 encapsulated in ROS messages. The {\tt BERTRAM Analyzer} is notified when these
 messages are published. It reads the roll, pitch, and yaw data in the message
 and sends the appropriate commands to the PR2. One feature which is not yet
@@ -268,53 +267,55 @@ important to find the unity position for the sensor (the bearing when
 the user is facing forward) and to use this as an offset for all future angle
 readings.
 
-The Wiimote communication is handled in much the same manner as the head IMU.
-Instead of communicating via USB however, the Wiimotes communicate with the
+The Wiimote communication is handled in much the same manner as the IMU on the head.
+Instead of communicating via a USB port, however, the Wiimotes communicate wirelessly with the
 controlling computer via Bluetooth. After the Wiimote pairs with the system,
-ROS is used to create Wiimote node which 
+ROS is used to create a Wiimote node which 
 sends a periodic stream of messages. Each message is a vector containing the
-status of each button and sensor of the Wiimote. The {\tt BERTRAM Analyzer}
-listens for these messages. It notes the state of each button it is watching
-and takes the appropriate action (by sending commands to the PR2) if any are
-pressed. Additionally, it reads in the accelerometer data. The Wiimote
+status of each button and sensor readings from the Wiimote. The {\tt BERTRAM Analyzer}
+listens for these messages. It notes the state of each button (whether or not that button
+is pressed down)
+and takes the appropriate action by sending commands to the PR2. Additionally, 
+the {\tt BERTRAM Analyzer} also reads in the accelerometer data. The Wiimote
 provides only the actual angular velocities; it doesn't not translate the 
-values into roll, pitch, or yaw positions. We therefore integrate these with respect to 
-the publishing frequency to obtain an approximation of the actual roll, pitch,
-and yaw angles for the wrist. Finally, the angles are translated into the PR2's
-reference frame and then commands are sent instructing the PR2 to move. One 
+values into roll, pitch, or yaw positions. We therefore use these angular velocities along 
+with the publishing frequency to compute an approximation of the actual roll, pitch,
+and yaw angles of the human wrist. Finally, the angles are translated into the PR2's
+reference frame, and commands are sent to intstruct the PR2 to move. One 
 item of note is that the human wrist rotates in only two degrees (that is,
-the wrist does not rotate about the primary axis of the forearm). Although the PR2's 
-gripper can actually rotate indefinitely in this axis, we instead map the 
-rotation onto the forearm.
+the wrist does not rotate about the primary axis of the forearm). The PR2's 
+gripper can actually rotate indefinitely in this axis, so we instead map this wrist rotation 
+to the rotation of the PR2's forearm.
 
 One nontrivial implementation detail to discuss is the physical method of
 communication with the PR2. One option is to have the PR2's onboard computers
-act as the controllers. Since this is a teleimmersive operation system, we find
-this to be impractical, as the input devices may not be physically located
-near the PR2. In addition, it is impractical to attach all these input devices 
-directly to the PR2. The PR2 also contains multiple routers and hosts its
-own wireless network. So far, this is the method we have used most when
-communicating with the PR2 (for the sake of simplicity). In a real system however,
-this manner of communication suffers from the same main problem as the first method: the user and devices
-may be quite further away than a single WiFi source can reach. Fortunately,
+act as the controllers for sending actions to the PR2. Since this is a teleimmersive operation system, we find
+this to be impractical, as the input devices used to capture human motion may not be physically located
+near the PR2, thereby preventing the PR2's onboard computers to receive data from these devices. 
+In addition, it is impractical to attach all of these input devices 
+directly to the PR2. We have therefore ruled this option out. The PR2 also contains multiple routers and hosts its
+own wireless network. So far, this is the method we have used most often when
+communicating with the PR2 for the sake of simplicity. In a real system, however,
+this manner of communication suffers from the same main issue as the first method - the user and devices
+may be out of range of the WiFi source of the PR2. Fortunately,
 the PR2 can also connect to and take IPs on other networks (communicating either by WiFi or by
-Ethernet). Although we have so far run into complications when using this method, we
-suspect these are due to issues with the computer we are using to control the
+Ethernet). Although we have run into complications when using this method, we
+suspect these problems are due to issues with the computer we are using to control the
 system rather than the PR2 itself.
-In the long run, this is the method we intend to use when communicating with 
-the PR2.
+In the long run, this is the method we intend to use when communicating with the PR2.
 
-The final aspect of the system for which we need to discuss the implementation
-is the visual feedback from the PR2 to the user. We accomplish this using a
+The final aspect of the system that needs discussion is the method used to relay visual feedback from the PR2 to the user.
+We accomplish this using a
 pair of  Vuzix virtual reality goggles. The PR2 sends multiple image 
 streams to ROS. As the goggles are not truly 3D, we intend to combine the left 
 and right image feeds into one stream. This will then be sent to a node which will display the image
-on the screen of the controlling computer. As the goggles accept a VGA input,
-we can then simply connect them to the VGA video out port of the computer to
-receive the image and display it to the user. We have tested this concept and
+on the screen of the controlling computer. The video goggles can simply connect
+to the VGA video out port of the computer to
+receive the image and display it to the human operator. We have tested this concept and
 verified that it functions correctly using only a single camera source (such as
-the left camera). All that remains is to combine the left and right camera
+the left camera on the PR2's head). All that remains is to combine the left and right camera
 feeds together.
+
 \section{System Performance}
 We are currently in the process of completing the immersive 
 teleoperation system using the components described in previous sections. Upon
