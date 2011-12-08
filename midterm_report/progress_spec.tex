@@ -192,6 +192,28 @@ from it. It then attempts to identify people in the scene frame and start
 tracking them. Once it has done so, it will publish data on various
 topics (such as left\_shoulder, right\_elbow). These the messages contain
 joint angle transforms and are delivered to the {\tt BERTRAM Analyzer}.
+
+The {\tt BERTRAM Analyzer} listens to the messages from {\tt openni\_tracker}.
+When it receives information for an altered joint position, it applies the
+appropriate transformations and instructs the PR2 on how to set its own joints
+so as to mimic the sensed movement of the user. This is done for the shoulder
+and elbow joints on both arms.
+
+A similar process occurs for the head IMU. The specific IMU used is
+the CHR-6dm Attitude and Heading Reference System. When lying flat, it uses
+accelerometers to capture roll and pitch. It also has a magnetic compass to 
+track yaw (necessary since the plane in which the yaw rotational motion occurs
+is perpendicular to gravity). After connecting to the controlling computer via 
+USB, a ROS node is run to read in the data from the sensor and republish it
+encapsulated in ROS messages. The {\tt BERTRAM Analyzer} is notified when these
+messages are published. It reads the roll, pitch, and yaw data in the message
+and sends the appropriate commands to the PR2. When feature which is not yet
+implemented relates to the initialization of the IMU. Since it uses a compass
+to track yaw, values are reported as angular deviations from magnetic north.
+Therefore, when tracking a user who does not begin by facing north, it is 
+important to find the unity position for the sensor (the bearing when 
+the user is facing forward) and to use this as an offset for all future angle
+readings.
 \section{System Performance}
 \subsection{Evaluation Criteria}
 \label{subsec:eval_criteria}
