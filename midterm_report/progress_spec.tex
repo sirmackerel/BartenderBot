@@ -182,6 +182,13 @@ bindings for both {\tt C++} and {\tt Python}. We chose to use Python due to our
 familiarity with the language and due to the relative verbosity of {\tt C++}.
 The analyzer registers for interrupt events from the Wiimotes and head-mounted
 IMU and actively polls the Kinect sensor.
+
+\section{System Performance}
+\subsection{Evaluation Criteria}
+\label{subsec:eval_criteria}
+We will evaluate the performance of our proposed system to teach the PR2 by experimentally determining how quickly and easily the PR2
+can acquire new behavior. We will start with very simple motions, such as simply lifting and pouring a single cup or bottle. Once the PR2 is capable of completing those actions after shadowing a human demonstrator, we can attempt to teach it increasingly complex sequences of mixing and pouring. We can measure the PR2's success rate in repeating a recorded movement over multiple trials. This success rate can be then be correlated with the complexity of the demonstrated command. The goal here is to show that many different movement sequences of varying difficulty can be taught to the PR2 using the same motion capturing setup from the Kinect.\\
+If time permits, we also plan to evaluate the PR2's ability to adapt to variable conditions. For instance, we can measure how far a bottle can be moved from its expected position before the PR2 becomes unable to pick it up. The weight of the bottle can also be changed to see how well the PR2 can adapt to grasping nearly-full versus nearly-empty drink containers. The success rate of the PR2's drink mixing can be analyzed as a function of these variables (distance moved, weight of drinks, etc).
 \section{Project Proposal}
 
 \label{sec:project_proposal}We propose to teach a PR2 robot how to mix drinks via
@@ -238,14 +245,6 @@ are able to achieve.
 Rather, we expect the area of novel difficulty to be the combining of these
 two distinct systems into one coherent system which can be used for
 teleimmersive learning.
-\subsection{Evaluation Criteria}
-
-\section{System Performance}
-\label{subsec:eval_criteria}
-We will evaluate the performance of our proposed system to teach the PR2 by experimentally determining how quickly and easily the PR2
-can acquire new behavior. We will start with very simple motions, such as simply lifting and pouring a single cup or bottle. Once the PR2 is capable of completing those actions after shadowing a human demonstrator, we can attempt to teach it increasingly complex sequences of mixing and pouring. We can measure the PR2's success rate in repeating a recorded movement over multiple trials. This success rate can be then be correlated with the complexity of the demonstrated command. The goal here is to show that many different movement sequences of varying difficulty can be taught to the PR2 using the same motion capturing setup from the Kinect.\\
-If time permits, we also plan to evaluate the PR2's ability to adapt to variable conditions. For instance, we can measure how far a bottle can be moved from its expected position before the PR2 becomes unable to pick it up. The weight of the bottle can also be changed to see how well the PR2 can adapt to grasping nearly-full versus nearly-empty drink containers. The success rate of the PR2's drink mixing can be analyzed as a function of these variables (distance moved, weight of drinks, etc).
-
 \section{Remaining Work}
 \label{sec:remaining_work}
 The following is a list of milestones we hope to reach as the spring semester progresses.
