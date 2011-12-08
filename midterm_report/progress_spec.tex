@@ -167,8 +167,10 @@ into equivalent motions for the PR2.
 Most of the interesting work in this project takes place inside the
 {\tt BERTRAM Analyzer}, which collates all the captured motion data from the
 user and processes this data to generate commands for the robot. ROS provides
-bindings for both {\tt C++} and {\tt Python}.
-
+bindings for both {\tt C++} and {\tt Python}. We chose to use Python due to our
+familiarity with the language and due to the relative verbosity of {\tt C++}.
+The analyzer registers for interrupt events from the Wiimotes and head-mounted
+IMU and actively polls the Kinect sensor.
 \section{Project Proposal}
 
 \label{sec:project_proposal}We propose to teach a PR2 robot how to mix drinks via
