@@ -114,15 +114,6 @@ passively. After the initial setup phase, the user should be able to control
 the system with minimal effort; the system should just watch the user and
 translate the user's movements into control instructions for the PR2.
 
-\begin{figure}[htb] 
-	\begin{center}
-		\includegraphics[width=1.0\linewidth]{flowchart}
-	\end{center}
-	%\vspace{-24pt}
-	\caption{Block Diagram Summarizing System Model}
-	\label{fig:some_graph}
-\end{figure}
-
 To facilitate this process, we use a couple separate devices and some
 fairly sophisticated software stacks. While the
 devices mostly consist of cameras and accelerometers to track the users 
@@ -136,6 +127,16 @@ need to be able to control each of the PR2's motors, controlling the head,
 arms, hands, gripper, torso, and base of the robot. To make the teleoperation
 immersive, the user will need have a direct feed from the PR2's onboard
 camera system.
+
+\begin{figure}[htb] 
+	\begin{center}
+		\includegraphics[width=1.0\linewidth]{flowchart}
+	\end{center}
+	%\vspace{-24pt}
+	\caption{Block Diagram Summarizing System Model}
+	\label{fig:some_graph}
+\end{figure}
+
 
 While the PR2 may be the most apparent aspect of the system,
 the true nexus of the is ROS, the Robot Operating System. Although the
