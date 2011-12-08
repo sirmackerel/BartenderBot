@@ -202,7 +202,8 @@ tracking them. Once it has done so, it will publish data on various
 topics (such as left\_shoulder, right\_elbow). These the messages contain
 joint angle transforms and are delivered to the {\tt BERTRAM Analyzer}.
 
-The {\tt BERTRAM Analyzer} listens to the messages from {\tt openni\_tracker}.
+The {\tt BERTRAM Analyzer} listens to the messages from the
+ {\tt openni\_tracker}.
 When it receives information for an altered joint position, it applies the
 appropriate transformations and instructs the PR2 on how to set its own joints
 so as to mimic the sensed movement of the user. This is done for the shoulder
@@ -241,6 +242,22 @@ item of note is that the human wrist rotates in only two degrees (that is,
 the wrist does not rotate about the axis of the forearm). Although the PR2's 
 gripper can actually rotate indefinitely in this axis, we instead map the 
 rotation onto the forearm.
+
+One nontrivial implementation detail to discuss is the physical method of
+communication with the PR2. One option is to have the PR2's onboard computers
+act as the controllers. Since this is a teleimmersive operation system, we find
+this to be impractical, as the input devices may not be physically located
+near the PR2. In addition, it is impractical to attach all these input devices 
+directly to the PR2. The PR2 also contains multiple routers and hosts its
+own wireless network. So far, this is the method we have used most when
+communicating with the PR2 (based on simplicity). In a real system however,
+this runs into the same problem as the first method: the user and devices
+may be quite further away than a single WiFi source can reach. Fortunately,
+the PR2 can also connect and take IPs on other networks (either by WiFi or by
+Ethernet). Although we have had limited success with this method so far, we
+suspect it to be due to issues with our own computer rather than the PR2.
+In the long run, this is the method we intend to use when communicating with 
+the PR2.
 \section{System Performance}
 \subsection{Evaluation Criteria}
 \label{subsec:eval_criteria}
