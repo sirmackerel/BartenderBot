@@ -164,6 +164,10 @@ motion and position data from all the input devices (Kinect, Wiimotes, head
 IMU). It collates all the information and then maps the user's motions
 into equivalent motions for the PR2.
 \section{System Implementation}
+Most of the interesting work in this project takes place inside the
+{\tt BERTRAM Analyzer}, which collates all the captured motion data from the
+user and processes this data to generate commands for the robot. ROS provides
+bindings for both {\tt C++} and {\tt Python}.
 
 \section{Project Proposal}
 
