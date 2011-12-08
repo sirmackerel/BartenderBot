@@ -258,6 +258,18 @@ Ethernet). Although we have had limited success with this method so far, we
 suspect it to be due to issues with our own computer rather than the PR2.
 In the long run, this is the method we intend to use when communicating with 
 the PR2.
+
+The final aspect of the system for which we need to discuss the implementation
+is the visual feedback from the PR2 to the user. We accomplish this using a
+pair of  Vuzix virtual reality goggles. The PR2 sends multiple image 
+streams to ROS. As the goggles are not truly 3D, we intend to combine the left 
+and right image. This will then be sent to a node which will display the image
+on the screen of the controlling computer. As the goggles accept a VGA input,
+we can then simply connect them to the VGA video out port of the computer to
+receive the image and display it to the user. We have test this concept and
+verified that it functions correctly using only a single camera source (such as
+the left camera). All that remains is to combine the left and right camera
+feeds together.
 \section{System Performance}
 \subsection{Evaluation Criteria}
 \label{subsec:eval_criteria}
