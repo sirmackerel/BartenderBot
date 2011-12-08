@@ -247,7 +247,8 @@ A similar process occurs for the head IMU. The specific IMU used is
 the CHR-6dm Attitude and Heading Reference System. When lying flat, it uses
 accelerometers to capture roll and pitch. It also has a magnetic compass to 
 track yaw (necessary since the plane in which the yaw rotational motion occurs
-is perpendicular to gravity). After connecting to the controlling computer via 
+is perpendicular to the gravity vector). After connecting to the 
+controlling computer via 
 USB, a ROS node is run to read in the data from the sensor and republish it
 encapsulated in ROS messages. The {\tt BERTRAM Analyzer} is notified when these
 messages are published. It reads the roll, pitch, and yaw data in the message
@@ -261,19 +262,20 @@ readings.
 
 The Wiimote communication is handled in much the same manner as the head IMU.
 Instead of communicating via USB however, the Wiimotes communicate with the
-controlling computer via Bluetooth. After pairing, the Wiimote node
+controlling computer via Bluetooth. After the Wiimote pairs with the system,
+ROS is used to create Wiimote node which 
 sends a periodic stream of messages. Each message is a vector containing the
 status of each button and sensor of the Wiimote. The {\tt BERTRAM Analyzer}
 listens for these messages. It notes the state of each button it is watching
-and takes appropriate action (by sending commands to the PR2) if any are
+and takes the appropriate action (by sending commands to the PR2) if any are
 pressed. Additionally, it reads in the accelerometer data. The Wiimote
 provides only the actual angular velocities; it doesn't not translate the 
-values into roll, pitch, or yaw. We therefore integrate these with respect to 
+values into roll, pitch, or yaw positions. We therefore integrate these with respect to 
 the publishing frequency to obtain an approximation of the actual roll, pitch,
 and yaw angles for the wrist. Finally, the angles are translated into the PR2's
 reference frame and then commands are sent instructing the PR2 to move. One 
 item of note is that the human wrist rotates in only two degrees (that is,
-the wrist does not rotate about the axis of the forearm). Although the PR2's 
+the wrist does not rotate about the primary axis of the forearm). Although the PR2's 
 gripper can actually rotate indefinitely in this axis, we instead map the 
 rotation onto the forearm.
 
@@ -284,12 +286,13 @@ this to be impractical, as the input devices may not be physically located
 near the PR2. In addition, it is impractical to attach all these input devices 
 directly to the PR2. The PR2 also contains multiple routers and hosts its
 own wireless network. So far, this is the method we have used most when
-communicating with the PR2 (based on simplicity). In a real system however,
-this runs into the same problem as the first method: the user and devices
+communicating with the PR2 (for the sake of simplicity). In a real system however,
+this manner of communication suffers from the same main problem as the first method: the user and devices
 may be quite further away than a single WiFi source can reach. Fortunately,
-the PR2 can also connect and take IPs on other networks (either by WiFi or by
-Ethernet). Although we have had limited success with this method so far, we
-suspect it to be due to issues with our own computer rather than the PR2.
+the PR2 can also connect to and take IPs on other networks (communicating either by WiFi or by
+Ethernet). Although we have so far run into complications when using this method, we
+suspect these are due to issues with the computer we are using to control the
+system rather than the PR2 itself.
 In the long run, this is the method we intend to use when communicating with 
 the PR2.
 
@@ -297,10 +300,10 @@ The final aspect of the system for which we need to discuss the implementation
 is the visual feedback from the PR2 to the user. We accomplish this using a
 pair of  Vuzix virtual reality goggles. The PR2 sends multiple image 
 streams to ROS. As the goggles are not truly 3D, we intend to combine the left 
-and right image. This will then be sent to a node which will display the image
+and right image feeds into one stream. This will then be sent to a node which will display the image
 on the screen of the controlling computer. As the goggles accept a VGA input,
 we can then simply connect them to the VGA video out port of the computer to
-receive the image and display it to the user. We have test this concept and
+receive the image and display it to the user. We have tested this concept and
 verified that it functions correctly using only a single camera source (such as
 the left camera). All that remains is to combine the left and right camera
 feeds together.
