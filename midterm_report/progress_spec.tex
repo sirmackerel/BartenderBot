@@ -92,7 +92,43 @@ Other institutions have conducted research involving autonomous robots and handl
 There has also been substantial work done in teaching the PR2 robot to perform human tasks. Bohren \textit{et al.}~\cite{beer} used the PR2 and ROS to build a robotic system for retrieving a beer from a refrigerator. In their work, they developed a task-level execution system known as SMACH for rapidly prototyping robotic applications. The PR2 had to navigate an obstacle map to reach the refrigerator, use object recognition and grasp planning to identify the door handle and the drinks, and ultimately use facial recognition to deliver the beer to a human recipient. Each step of the process contained detail planning and image processing in order to carry out the expected behavior. Klingbeil \textit{et al.}~\cite{groceries} developed a grasping algorithm to enable the PR2 to pick up objects and attempt to locate and scan the barcode. Their technique bypassed the training phase by allowing the PR2 to devise a plan to grasp the object from only a single 3D snapshot. Their algorithm emphasized the importance of positiong the PR2's gripper such that its shape most closely matched the shape of the object it attempts to grasp. Saito \textit{et al.}~\cite{subway} devised a method for the PR2 to intelligently navigate large environments via semantic search. The PR2 attempts to find a specific object by first searching areas that would logically contain that item. When asked to retrieve a sandwich, the PR2 first inspected a nearby refrigerator in its environment.\\ 
 All of these robots relied on some combination of vision processing and path planning to carry out their tasks. However, there have been other approaches involving demonstration learning to allow a robot to perform a specific job. In a relatively early attempt, Chalodhorn \textit{et al.}~\cite{walk_imitation} used motion capturing to teach a bipedal humanoid robot how to walk by imitation. Joint angles from motion capture data from a human demonstrator wearing a motion capture suit were mapped to joint angles in the robot. This data was combined with predictions of future state based on sensory information to reproduce a human-like gait in the robot. Kormushev \textit{et al.}~\cite{whiteboard} taught a robot new motor skills through kinesthetic teaching. The robot had two distinct modes of operation: a learning phase and a reproduction phase. During the learning phase, the robot was shown how to clean a whiteboard by direct human manipulation of the robot's joints, recording both position and force information. During the reproduction phase, the robot would translate the learned information to its own reference frame and attempt to duplicate the teacher's movement pattern on the whiteboard.  Kormushev \textit{et al.}~\cite{pancakes} also used kinesthetic learning to teach a robotic arm how to flip a pancake. A human teacher first moved the arm to demonstrate the movement required to flip a pancake 180 degrees in the air and catch it again. In subsequent trials, reinforcement learning techniques were applied such that the robot could evaluate the performance of its flips and attempt to adjust the motion of the arm for better future flips.
 
+\section{System Model}
+Specifically because a teleimmersive system is meant to be used by human 
+operators to control a robot, the external/visible part of this
+design must be simple. The number of devices used to get input from the user 
+and to deliver feedback should be minimal, and these devices should require
+minimal effort to use. Their use should feel natural and non-intrusive.
+\\
+\\The design of a teleimmersive system should be simple
+Although one would think that the design of a teleimmersive system should be
+fairly complicated, it is actually quite surprising how modular and simple of
+a system it was possible to design. This was largely enabled by ROS, the Robot
+Operating System developed and supported Willow Garage. ROS follows the
+publisher-subscriber model. It abstracts over hardware, I/O, and computation
+services by making them visible as nodes which can send and receive messages.
+\\
+\\As is shown by Figure~\ref{fig:some_graph}, all communication between the 
+PR2 Robot and the controlling devices must pass through ROS. In one direction,
+ROS corrals the raw data from the various input devices, performs computations
+on it, and then dispatches motion commands to the robot. Going in the other
+direction, ROS follows the stream from the PR2's onboard video cameras and
+sends the frames to the user goggles.
+
+
+ there are many components
+which must interact with each other to achieve teleimmersive operation.
+\begin{figure}[htb] 
+	\begin{center}
+		\includegraphics[width=1.0\linewidth]{flowchart}
+	\end{center}
+	%\vspace{-24pt}
+	\caption{Block Diagram Summarizing System Model}
+	\label{fig:some_graph}
+\end{figure}
+\section{System Implementation}
+
 \section{Project Proposal}
+
 \label{sec:project_proposal}We propose to teach a PR2 robot how to mix drinks via
 teleimmersive demonstration learning methods. One of our major goals is to have the PR2
 be able to reproduce different drink mixing recipes acquired from watching
@@ -154,15 +190,6 @@ can acquire new behavior. We will start with very simple motions, such as simply
 If time permits, we also plan to evaluate the PR2's ability to adapt to variable conditions. For instance, we can measure how far a bottle can be moved from its expected position before the PR2 becomes unable to pick it up. The weight of the bottle can also be changed to see how well the PR2 can adapt to grasping nearly-full versus nearly-empty drink containers. The success rate of the PR2's drink mixing can be analyzed as a function of these variables (distance moved, weight of drinks, etc).
 \subsection{Block Diagram}
 \label{subsec:block_diagram}
-
-\begin{figure}[h!] 
-	\begin{center}
-		\includegraphics[width=1.0\linewidth]{flowchart}
-	\end{center}
-	%\vspace{-24pt}
-	\caption{Block Diagram Summarizing System Model}
-	\label{fig:some_graph}
-\end{figure}
 
 \section{Remaining Work}
 \label{sec:remaining_work}
