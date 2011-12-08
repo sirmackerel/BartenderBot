@@ -216,13 +216,31 @@ is perpendicular to gravity). After connecting to the controlling computer via
 USB, a ROS node is run to read in the data from the sensor and republish it
 encapsulated in ROS messages. The {\tt BERTRAM Analyzer} is notified when these
 messages are published. It reads the roll, pitch, and yaw data in the message
-and sends the appropriate commands to the PR2. When feature which is not yet
+and sends the appropriate commands to the PR2. One feature which is not yet
 implemented relates to the initialization of the IMU. Since it uses a compass
 to track yaw, values are reported as angular deviations from magnetic north.
 Therefore, when tracking a user who does not begin by facing north, it is 
 important to find the unity position for the sensor (the bearing when 
 the user is facing forward) and to use this as an offset for all future angle
 readings.
+
+The Wiimote communication is handled in much the same manner as the head IMU.
+Instead of communicating via USB however, the Wiimotes communicate with the
+controlling computer via Bluetooth. After pairing, the Wiimote node
+sends a periodic stream of messages. Each message is a vector containing the
+status of each button and sensor of the Wiimote. The {\tt BERTRAM Analyzer}
+listens for these messages. It notes the state of each button it is watching
+and takes appropriate action (by sending commands to the PR2) if any are
+pressed. Additionally, it reads in the accelerometer data. The Wiimote
+provides only the actual angular velocities; it doesn't not translate the 
+values into roll, pitch, or yaw. We therefore integrate these with respect to 
+the publishing frequency to obtain an approximation of the actual roll, pitch,
+and yaw angles for the wrist. Finally, the angles are translated into the PR2's
+reference frame and then commands are sent instructing the PR2 to move. One 
+item of note is that the human wrist rotates in only two degrees (that is,
+the wrist does not rotate about the axis of the forearm). Although the PR2's 
+gripper can actually rotate indefinitely in this axis, we instead map the 
+rotation onto the forearm.
 \section{System Performance}
 \subsection{Evaluation Criteria}
 \label{subsec:eval_criteria}
