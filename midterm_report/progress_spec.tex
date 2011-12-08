@@ -96,10 +96,21 @@ All of these robots relied on some combination of vision processing and path pla
 Specifically because a teleimmersive system is meant to be used by human 
 operators to control a robot, the external/visible part of this
 design must be simple. The number of devices used to get input from the user 
-and to deliver feedback should be minimal, and these devices should require
-minimal effort to use. Their use should feel natural and non-intrusive.
+and to deliver feedback should be small, and these devices should require
+minimal effort to use. To that
+end, a good portion of the control data captured from the user is captured
+passively. After the initial setup phase, the user should be able to control
+the system with minimal effort; the system should just watch the user and
+translate the user's movements into control instructions for the PR2.
 \\
-\\The design of a teleimmersive system should be simple
+\\To facilitate this process, we use a couple separate devices. While the
+devices mostly consist of cameras and accelerometers to track the users 
+motion, there are a couple handheld button devices to allow the user to
+perform non-humanoid operations on the robot (such as freezing a joint or
+triggering certain routines).
+\\
+\\Their use should feel natural and non-intrusive. 
+The design of a teleimmersive system should be simple
 Although one would think that the design of a teleimmersive system should be
 fairly complicated, it is actually quite surprising how modular and simple of
 a system it was possible to design. This was largely enabled by ROS, the Robot
