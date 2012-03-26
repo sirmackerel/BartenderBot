@@ -372,16 +372,30 @@ assortment of devices that comprise the teleoperation system.\\
 \label{sec:future_work}
 
 \section{Ethics}
-\label{sec:ethics}There are two main ethical aspects to evaulate when
-considering a teleoperation teaching system.\\
-\indent Accountability for software.
-Make sure software is faithful, no bugs etc. fail safes. software
-does not cause damage via malfunction. Make sure acquired movements are
-used only in appropriate situations (don't try to shake hands when 
-in the middle of chopping vegetables with knife in hand)\\
-\indent Accountability for users. Make sure users do not train robot 
-inappropriately (either by accident or intentionally). do not teach
-''bad'' movements
+\label{sec:ethics}As with robotics in general, there are multiple ethical
+points to consider when examining a teleoperation system. (TODO - combine)
+There are two main entities which merit consideration 
+when evaulating a teleoperation teaching system in terms of ethics. \\
+\indent First and foremost, the behavior of the teleoperation system itself 
+must examined. It must be ensured that the system is accurate in its mimicry
+of the operator in live settings and that the system is accurate when
+recording commands for future playback. The necessity of trusting in the
+accuracy of the system is clear (consider for example robot-assisted surgery).
+It is imperative that the PR2 not cause unintended harm to its environment
+(including the operator during training). To that end, it will be important
+for the system to provide a mechanism that clearly segregates actions recorded 
+under different scenario assumptions. As an example, the PR2 should attempt to 
+perform a physical handshake with a user while  in the middle of a routine
+that cuts vegetables. (TODO, too specific?)The teleoperation system should also
+prevent actions which would stress the PR2's capabilities or otherwise
+damage the PR2.\\
+\indent Considering another aspect of the system, it is important to ensure
+accountability 
+for user actions. As the PR2 is primarily controlled via WiFi, it is important
+to make sure that unauthorized individuals cannot send commands to (or 
+otherwise control) the PR2. Likewise, it should be ensured that users are
+not able to corrupt previously recorded motion sequences, whether by accident 
+or intentionally.
 
 \section{Conclusions}
 \label{sec:conclusions}
