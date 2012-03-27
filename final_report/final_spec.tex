@@ -473,13 +473,23 @@ assortment of devices that comprise the teleoperation system.\\
 \section{Future Work}
 \label{sec:future_work} Perhaps the most obvious direction to pursue with
 future work is the use of the recorded motion sequences as training data
-for a learning planner. Current planners are very slow to calculate, but
-(TODO, mikephil?) have already demonstrated significant improvements in
-efficiency by creating a planner which uses paths it has already computed
-as a basis whenever it is requested to find a new path. If it could instead be
-made to learn from recorded teleoperation data,
-it is possible could learn more 'natural' motions for and paths for common
-tasks.
+for a machine learning-driven planner. Current planners can take multiple 
+minutes to 
+calculate even simple paths. Significant improvements in efficiency have 
+already been demonstrated with planners using previously computed paths as a 
+basis for new planning requests (the planner teaches itself). It would be
+very interesting to explore training such a planner with recorded teleoperation
+data, perhaps establishing more efficient and/or natural motions to serve as
+a basis for future planning.
+
+Another interesting avenue to pursue in the future would be to give the 
+operator control over the movement of the PR2's base. Currently, only
+the operator's head and arm movements are translated into PR2 commands. As the
+Kinect also captures leg data, it is certainly possible to use different
+motions or stances to instruct the PR2 to move in a certain direction.
+Using actual walking motions would require sufficient space for both the PR2
+and observation system however, while 
+using stances would detract from the immersive aspect of the system.
 
 \section{Ethics}
 \label{sec:ethics}All the ethical considerations which apply to robotics in 
@@ -511,11 +521,6 @@ not able to corrupt previously recorded motion sequences, whether by
 intentionally or by accident.
 \section{Conclusions}
 \label{sec:conclusions}
-
-\section{Remaining Work}
-\label{sec:remaining_work}
-\indent The most immediate goal is completion of the immersive teleoperation system. To achieve this, the arm movement of the PR2 needs to be smoothed out to allow fine-grained control. The wrist movement also must be improved to enable successful grasping of different objects. Once these two aspects of the PR2 are working well, additional work is required to correctly map head movement from the human operator to head movement of the PR2. This part is cruical for making the teleoperation feel immersive to the human operator of the system. Once the head motion is satisfactory, the human operator should be able to use the video eyewear to see from the PR2's perspective and operate the PR2 remotely without being in view of the actual robot. We estimate that we are currently about sixty percent done with the work needed to complete the immersive teleoperation system.\\
-\indent Once this immersive teleoperation system is complete, additional work will be done to see how the system can be used to teach the PR2 new behavior. The idea is to repeat a specific action using the system and have the PR2 learn this behavior by recording the input data it receives. In this way, a human can demonstrate an action to the PR2, which will then enable the PR2 to repeat this action on its own. If enough time remains, methods to improve upon and refine this recorded behavior will be explored.
 
 \subsection{Evaluation Critera}
 \indent The performance of the immersive teleoperation system will
