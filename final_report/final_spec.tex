@@ -222,11 +222,11 @@ passively. After the initial setup phase, the user should be able to control
 the system with minimal effort; the system should just watch the user and
 translate the user's movements into control instructions for the PR2.
 
-To facilitate this process, few separate devices and some
+To facilitate this process, a few separate devices and some
 fairly sophisticated software stacks were used. These devices will be discussed
 in the upcoming section. The chief component of the system is the PR2 robot (Section~\ref{sec:model_PR2}) that
-the user controls. ROS (Section~\ref{sec:model_ros}) is the component responsible for coordinating messages
-and sending data between all of the pieces of the {\tt PROTOS} system.While the
+the user controls. ROS (Section~\ref{sec:model_ros}) is the component responsible for interfacing with devices and coordinating all the pieces of the
+{\tt PROTOS} system by passing data between them as messages. While the
 Microsoft Kinect is used to perform most of the motion capture, an additional
 devices and accelerometers are needed to capture motions of the head and hands (Section~\ref{sec:model_motion}). 
 In particular, there are a few button devices which allow the user to
@@ -260,19 +260,19 @@ the user and the PR2 (in the form of commands or feedback) must pass through ROS
 ROS abstracts over devices and I/O, providing a common interface for accessing
 any data stream or controlling any device. Processes that perform computation are visualized as nodes in a graph, with inter-process communication representing the
 edges of the graph. Nodes send information to each other in the form of messages. Nodes that wish to send messages to other nodes can
-`publish' to a topic, and nodes wishing to receive these messages need only to `subscribe' to these topics. ROS enables relatively short
+`publish' to a topic, and nodes wishing to receive these messages need only to `subscribe' to these topics. ROS enables building relatively short
 programs to issue surprisingly sophisticated commands to the PR2, such as moving all of the arm joints to a specific position within a
 specified time frame.
 
-By using ROS, the syste can easily coordinate
-data coming the many tracking devices, process all this data to come up with
-movement plans for the PR2, and then send these commands to the PR2 to move in the
+By using ROS, the system can easily coordinate
+data coming from the many tracking devices, process all this data and generate
+movement plans for the PR2, and then send commands to make the PR2 to move in the
 desired manner. This system architecture is shown Figure~\ref{fig:some_graph}.
 
 \subsection{Motion Control}
 \label{sec:model_motion}
 Other than the PR2 robot itself, the Microsoft Kinect is perhaps the most 
-prominent and obvious device in the teleimmersive operation system. ROS has 
+prominent and important device in the teleimmersive operation system. ROS has 
 existing Kinect libraries that allow
 data from a Kinect to be handled as easily as any other message transmitted across the ROS network. A screenshot
 of these libraries in action can be seen in Figure~\ref{fig:kinect_screenshot}.
