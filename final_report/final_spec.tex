@@ -69,7 +69,7 @@ Teaching by human demonstration is a common approach to robot learning because i
 transmission of complex behavior in a manner far easier than individually planning the movement of each motor and joint. However, choosing exactly how the demonstrated behavior is delivered to the robot in such a way that it can record and reproduce that behavior is still a very challenging task.
 
 \subsection{Approach}
-\indent The PROTOS system is designed to be an immersive teleoperation system for controlling the WillowGarage PR2 humanoid robot. `Teleoperation' means controlling the PR2 from
+\indent The {\tt PROTOS} system is designed to be an immersive teleoperation system for controlling the WillowGarage PR2 humanoid robot. `Teleoperation' means controlling the PR2 from
 a distance. `Immersive', means giving the human operator the illusion of being inside the PR2.
 
 \indent The PR2 is a humanoid robot developed by  Willow Garage~\cite{pr2} for the purpose of robotics 
@@ -79,7 +79,7 @@ including a versatile simulator that allows developers to perform trial runs on 
 risking damage to the actual robot or environment. Institutions across the
 world have taught the PR2 a wide variety of human actions, such as baking 
 cookies~\cite{cookies}, scanning and bagging groceries~\cite{groceries}, and fetching a sandwich~\cite{subway}.
- However, unlike in these examples, the proposed PROTOS system will ideally enable the PR2 to acquire new behavior not through advanced task planning,
+ However, unlike in these examples, the proposed {\tt PROTOS} system will ideally enable the PR2 to acquire new behavior not through advanced task planning,
 but rather through human demonstration. Thanks to the University of Pennsylvania's GRASP Laboratory, a real PR2 (shown in Figure~\ref{fig:pr2_photo}) can be used to test the
 system implementation.
 
@@ -92,7 +92,7 @@ system implementation.
 	\label{fig:pr2_photo}
 \end{figure}
 
-\indent The chief component of the PROTOS teleoperation system is the Microsoft XBox Kinect sensor. This sensor provides depth information at real-time speeds
+\indent The chief component of the {\tt PROTOS} teleoperation system is the Microsoft XBox Kinect sensor. This sensor provides depth information at real-time speeds
 (30 frames per second), also performing the computation that would have been required for stereo 
 processing. Combined with various open source libraries~\cite{kinect}, the Kinect also works with 
 software that provides human motion sensing and tracking, greatly simplifying the task of capturing human body movements.
@@ -102,12 +102,12 @@ to a PR2.
 The Kinect sensor provides a convenient way to capture the human operator performing the desired behavior. The captured data can be relayed to the
 PR2 via ROS, the open-source Robot Operating System~\cite{ros}. ROS provides a 
 convenient framework for device abstraction, inter-process communication, and message recording.
-By using ROS along with the PR2 and the Kinect, the PROTOS system will allow remote operation of the PR2 while
+By using ROS along with the PR2 and the Kinect, the {\tt PROTOS} system will allow remote operation of the PR2 while
 allowing the operator to see the PR2's surroundings from the PR2's onboard cameras. The effectiveness of this system in performing simple tasks with the PR2 
 was then evaluated.
 
 \subsection{Results}
-\indent The PROTOS system was tested by having the human operator attempt to pick up a cup with the PR2. The PR2 was able to successfully pick up a cup and 
+\indent The {\tt PROTOS} system was tested by having the human operator attempt to pick up a cup with the PR2. The PR2 was able to successfully pick up a cup and 
 place it back down in its original starting location. This motion was also successfully recorded, and was able to be played back later without the help of a human operator.
 The cup pick and drop motion was replayed fifteen times in succession before the PR2 finally failed to pick up the cup again, as the cup was knocked slightly out of
 the PR2's reach.
@@ -117,7 +117,7 @@ the PR2's reach.
 teleoperation systems and teaching robots human-like tasks (Section~\ref{sec:related_work}). We then describe 
 the components of the immersive teleoperation system (Section~\ref{sec:system_model}) before delving 
 into the technical implementation of each component (Section~\ref{sec:system_implementation}). What follows is an 
-evaluation of results obtained from the PROTOS system (Section~\ref{sec:results}) and a description of future work to be
+evaluation of results obtained from the {\tt PROTOS} system (Section~\ref{sec:results}) and a description of future work to be
 done on the system (Section~\ref{sec:future_work}) The remainder of the paper deals with the ethics involved in using an immersive teleoperation
 system (Section~\ref{sec:ethics}) and summarizes the conclusions drawn from implementing and testing the system (Section~\ref{sec:conclusions}).
 
@@ -136,14 +136,14 @@ motion of the human arm. The human operator is able to see the robotic arm via c
 vision from the point of view of the tip of the robotic arm. Fortunately, the Kinect, when paired with ROS, provides a much simpler and cost efficient setup to 
 capture arm motion and transmit data to the PR2. The Kinect requires almost no work to setup, and can be purchased at little cost compared to a complex motion capture setup
 involving multiple cameras. Willow Garage has already 
-tried integrating Kinect with ROS to control the PR2 remotely~\cite{willow_kinect}. However, the PROTOS system uses immersion as a tool to help the user teleoperate
+tried integrating Kinect with ROS to control the PR2 remotely~\cite{willow_kinect}. However, the {\tt PROTOS} system uses immersion as a tool to help the user teleoperate
 the PR2, which is something that the Willow Garage implementaton appears to lack.
 
 \subsection{Autonomous Robots}
 \label{sec:autobots}
 \indent A common approach to autonomous robot action relies primarily on heavy amounts of computation to carefully 
 plan each action that the robot will execute ahead of time.  The chief 
-advantage that the PROTOS system intends to provide over these methods is that it 
+advantage that the {\tt PROTOS} system intends to provide over these methods is that it 
 not only serves as an immersive teleoperation system with which a robot can be used to
 execute tasks, but also as a provider of demonstration data
 that can be used to teach a robot to do these kinds
@@ -183,7 +183,7 @@ technique allowed the PR2 to devise a plan to grasp the object from only a singl
 Saito \textit{et al.}~\cite{subway} devised a way for the PR2 to intelligently 
 navigate large environments via semantic search. The PR2 attempts to find a specific object by first searching areas that would logically contain that item.
 
-\indent The PROTOS system will hopefully simplify teaching methods by enabling use of recorded input data from immersive teleoperation to give the PR2 
+\indent The {\tt PROTOS} system will hopefully simplify teaching methods by enabling use of recorded input data from immersive teleoperation to give the PR2 
 a general sequence of actions  to follow that can later be refined through more complex learning techniques.
 
 \subsection{Teaching by Demonstration}
@@ -199,14 +199,14 @@ teach a robotic arm how to flip a pancake.
 Reinforcement learning techniques were applied such that the robot could evaluate the performance of its flips and attempt to adjust the motion 
 of the arm for better future flips.
 
-\indent The PROTOS system has several advantages over these existing approaches. First of all, the Kinect sensor provides accurate real-time human
+\indent The {\tt PROTOS} system has several advantages over these existing approaches. First of all, the Kinect sensor provides accurate real-time human
 motion tracking that can be mapped to specific movement in the PR2 thanks to ROS. The Kinect also provides motion capture without the need
 of complicated setups involving motion capture suits or multiple cameras. Secondly, an immersive scheme for controlling the robot
 enables a human operator to more naturally move the robot in a given situation compared to manipulating the robot directly by physical
 contact or through a joystick-based control scheme. Immersive teleoperation also enables direct control of robots that cannot be easily
 subject to demonstration through physical contact, such as very large or very small robots. This sytem, if successful, would allow for rapid demonstration of different 
 sequences of behavior to the PR2, which could be stored and queued up for later reproduction and enhancement. This technique could be generalized to other humanoid robots 
-besides the PR2 to teach them different kinds of behavior. Any humanoid robot could potentially be controlled with PROTOS with some slight modification to the source code.
+besides the PR2 to teach them different kinds of behavior. Any humanoid robot could potentially be controlled with {\tt PROTOS} with some slight modification to the source code.
 The tasks also need not be restricted to lifting simple objects, as the system can capture data from the human user's entire body.
 
 \section{System Model}
@@ -225,7 +225,7 @@ To facilitate this process, few separate devices and some
 fairly sophisticated software stacks were used. These devices will be discussed
 in the upcoming section. The chief component of the system is the PR2 robot (Section~\ref{sec:model_PR2}) that
 the user controls. ROS (Section~\ref{sec:model_ros}) is the component responsible for coordinating messages
-and sending data between all of the pieces of the PROTOS system.While the
+and sending data between all of the pieces of the {\tt PROTOS} system.While the
 Microsoft Kinect is used to perform most of the motion capture, an additional
 devices and accelerometers are needed to capture motions of the head and hands (Section~\ref{sec:model_motion}). 
 In particular, there are a few button devices which allow the user to
@@ -345,14 +345,14 @@ the the relative verbosity of {\tt C++}.
 The software runs as a node within ROS, and listens for interrupt events from the Wiimotes and head-mounted
 IMU while actively polling for events from the Kinect. These events contain data
 from these devices that report on the user's current actions and position. Figure~\ref{fig:human_model} shows
-a human operator using the devices that comprise the PROTOS system (minus the Kinect).
+a human operator using the devices that comprise the {\tt PROTOS} system (minus the Kinect).
 
 \begin{figure}[htb] 
 	\begin{center}
 		\includegraphics[width=0.8\linewidth]{pr2model}
 	\end{center}
 	%\vspace{-24pt}
-	\caption{Photograph of a human operator using the PROTOS system.}
+	\caption{Photograph of a human operator using the {\tt PROTOS} system.}
 	\label{fig:human_model}
 \end{figure}
 
@@ -423,7 +423,7 @@ directly to the PR2. This option was therefore ruled out early on in the impleme
 
 \indent The PR2 also contains multiple routers and hosts its
 own wireless network. Therefore, remote communication with the PR2 became method of choice for interfacing
-with the PR2 for the sake of simplicity. In a large scale, real world implementation of the PROTOS system, however,
+with the PR2 for the sake of simplicity. In a large scale, real world implementation of the {\tt PROTOS} system, however,
 this manner of communication suffers from the same main issue as the first method - the user and devices
 may be out of range of the WiFi source of the PR2. Fortunately,
 the PR2 can also connect to other networks and aquire a public IP
@@ -446,7 +446,7 @@ to the left and right lenses would be ideal.
 
 \section{System Performance}
 \label{sec:system_performance}
-\indent The PROTOS system has been evaluated both for its ability to correctly
+\indent The {\tt PROTOS} system has been evaluated both for its ability to correctly
 imitate the actions of a human operator as well as for its potential 
 to capture and reproduce useful data that can be used to aid demonstrative learning
 attempts to allow the PR2 to acquire new behavior.
@@ -454,7 +454,7 @@ attempts to allow the PR2 to acquire new behavior.
 \subsection{Performance of Devices}
 \indent The PR2 has lived up to its expectations as a good choice of humanoid robot to 
 <<<<<<< HEAD
-use as a target for the PROTOS system. The 
+use as a target for the {\tt PROTOS} system. The 
 PR2 is fully capable of all of the arm motions, head motions, and grasping
 required for a variety of tasks, such as grasping simple objects. ROS has also been a superb framework that allows the 
 {\tt PROTOS software} to easily communicate back and forth with the diverse 
@@ -467,7 +467,7 @@ The Wiimotes transmit their data wirelessly and accurately report button presses
 nicely in the palms of the human operators' hands since they are originally intended to be used as video game controllers. The three-axis accelerometer for capturing head 
 movement has worked very well in reporting the operator's head tilts and rotations.
 
-\subsection {Performance of the PROTOS Software}
+\subsection {Performance of the {\tt PROTOS} Software}
 \indent The performance of the {\tt PROTOS Software} has undergone numerous improvements since its conception. 
 Although the physical devices that comprise the immersive teleoperation system 
 are easy to use and are relatively few in number, the software has had an uneven performance history in translating data from these devices 
@@ -497,7 +497,7 @@ assortment of devices that comprise the teleoperation system.\\
 \label{sec:results}
 
 \subsection{Grasping Tasks}
-\indent The performance of the PROTOS immersive teleoperation system was first
+\indent The performance of the {\tt PROTOS} immersive teleoperation system was first
 evaluated based on how well it could translate actions of
 the human operator to commands for the PR2. A human operator attempted to grasp a variety of cups and stuffed animal toys 
 with the PR2 using the system. These small objects were placed near the PR2 on a raised surface (such as a desk or table), and the user was given the challenge of
@@ -513,21 +513,21 @@ transmitting directions to the PR2's grippers.
 was able to keep the PR2's head mounted cameras focused on the object to be grasped. A framerate issue arose with the virtual reality goggles. Although the PR2's head movements
 matched those of the user's, the rate at which images from the PR2's cameras were displayed to the goggles could not keep up with the rate at which new video was coming
 in from the cameras. The user's view became choppy, which made grasping the objects more difficult. However, this issue can likely be remedied by simply using a more
-powerful computer with which to run the PROTOS system.
+powerful computer with which to run the {\tt PROTOS} system.
 
 \subsection{Recording and Playback}
-\indent Once the accuracy of the PROTOS teleoperation system was improved, successful grasping trials were recorded by the PROTOS system. ROS provides a very
+\indent Once the accuracy of the {\tt PROTOS} teleoperation system was improved, successful grasping trials were recorded by the {\tt PROTOS} system. ROS provides a very
 convenient method for saving all messages that get transmitted by a ROS node. By using this mechanism, all of the commands issued by the {\tt PROTOS Software} to the PR2
 can be stored in a file called a bagfile. These bagfiles can later be replayed to transmit the exact same sequence of commands to the PR2. The successful grasping trials
 were replayed faithfully by the bagfile, and the PR2 was able to pick up the cup again without any outside help. However, the replay depends on the environment being setup
 in exactly the same way as the time the recording was made. A depiction of the setup used for the recording and playback is pictured in Figure~\ref{fig:evaluation}. A cup
-was placed on a desk next to the PR2. A human operator used the PROTOS system to pick up the cup, move it around in the air, and then place it back down in the same location.
+was placed on a desk next to the PR2. A human operator used the {\tt PROTOS} system to pick up the cup, move it around in the air, and then place it back down in the same location.
 The entire process was recorded, and later played back without a human user involved. The PR2 was able to pick up the same cup and place it down fifteen consecutive times
 before the cup was pushed out of the PR2's reach.
 
 \indent The success of the recording and playback is promising for demonstration learning purposes, as motion sequences from the
  human operator can be recorded with a high degree of
-accuracy. Any learning framework that can read in the rosbag files will be able to use these human sequences as demonstration data. The ease with which the PROTOS system can 
+accuracy. Any learning framework that can read in the rosbag files will be able to use these human sequences as demonstration data. The ease with which the {\tt PROTOS} system can 
 produce these recordings makes it an ideal tool to augment a demonstration learning framework. The variety of motion sequences capable of being produced is not restricted
 to only grasping, as any task involving the PR2's arms and head can be successfully performed and recorded.
 
@@ -536,7 +536,7 @@ to only grasping, as any task involving the PR2's arms and head can be successfu
 		\includegraphics[width=0.8\linewidth]{evaluation}
 	\end{center}
 	%\vspace{-24pt}
-	\caption{The PR2 was able to continously pick up and place the same cup fifteen consecutive times by replaying data recorded from the PROTOS system.}
+	\caption{The PR2 was able to continously pick up and place the same cup fifteen consecutive times by replaying data recorded from the {\tt PROTOS} system.}
 	\label{fig:evaluation}
 \end{figure}
 
