@@ -172,7 +172,7 @@ object in a recycling bin or lifting a mug.
 
 \subsection{Teaching the PR2}
 \label{sec:teach_pr2}
-\indent There is substantial work in teaching the PR2 robot to perform various human tasks.  These approaches to teaching the PR2 emphasize complex algorithms used 
+\indent Substantial work has been done in teaching the PR2 robot to perform various human tasks.  These approaches to teaching the PR2 emphasize complex algorithms used 
 to enable the PR2 to devise a plan from scrach to act autonomously in a 
 given environment.  Bohren \textit{et al.}~\cite{beer} used the PR2 and ROS to build a robotic 
 system for retrieving beverages from a refrigerator. In their work, they developed a task-level execution system for rapidly prototyping different robotic applications. 
@@ -202,11 +202,12 @@ of the arm for better future flips.
 \indent The {\tt PROTOS} system has several advantages over these existing approaches. First of all, the Kinect sensor provides accurate real-time human
 motion tracking that can be mapped to specific movement in the PR2 thanks to ROS. The Kinect also provides motion capture without the need
 of complicated setups involving motion capture suits or multiple cameras. Secondly, an immersive scheme for controlling the robot
-enables a human operator to more naturally move the robot in a given situation compared to manipulating the robot directly by physical
+enables a human operator to more naturally move the robot in a given situation,
+especially compared to manipulating the robot directly by physical
 contact or through a joystick-based control scheme. Immersive teleoperation also enables direct control of robots that cannot be easily
 subject to demonstration through physical contact, such as very large or very small robots. This sytem, if successful, would allow for rapid demonstration of different 
 sequences of behavior to the PR2, which could be stored and queued up for later reproduction and enhancement. This technique could be generalized to other humanoid robots 
-besides the PR2 to teach them different kinds of behavior. Any humanoid robot could potentially be controlled with {\tt PROTOS} with some slight modification to the source code.
+besides the PR2 to teach them different kinds of behavior. Any humanoid robot could potentially be controlled with {\tt PROTOS} with relatively minor modification to the source code.
 The tasks also need not be restricted to lifting simple objects, as the system can capture data from the human user's entire body.
 
 \section{System Model}
