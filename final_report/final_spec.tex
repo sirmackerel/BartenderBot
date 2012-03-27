@@ -29,7 +29,7 @@ computation due to the demands of visual data processing, path planning, and mot
 coordination. One alternative to these computationally-intense methods is to use 
 human demonstration to introduce a sequence 
 of moves to a robot. This has been attempted
-through both kinesthetic teaching (teaching through direct physical 
+through both kinesthetic teaching (teaching via direct physical 
 manipulation of the robot's limbs) and visual observation. Another way to teach through demonstration
 can potentially be achieved by the development of an immersive
 teleoperation system for controlling humanoid robots. Building on previous attempts to
@@ -38,9 +38,9 @@ operator with an `immersive' experience by providing a view of
 the environment from the robot's perspective.}
 
 \textit{\indent The effectiveness of the system will be tested and evaluated by its ability to allow a human operator
-to handle simple manipulating tasks, such as picking up cups.
-Following the implementation of this system, its performanced will be evaluated in two ways: first, the ease with which
-it can allow a human operator to perform a given task, and second, the accuracy with which the system can record
+to perform simple manipulation tasks with the robot, such as picking up a cup.
+Following the implementation of this system, its performanced will be evaluated in two ways: the ease with which
+a human operator can perform a given task, and the accuracy with which the system can record
 the operator's movements and replay them faithfully at a later time.
 If successful, the immersive teleoperation system will present a novel and natural method for a
 human operator to demonstrate a specific movement sequence to a humanoid robot.}
@@ -51,18 +51,22 @@ human operator to demonstrate a specific movement sequence to a humanoid robot.}
 \subsection{Background}
 \indent Constructing a fully autonomous and adaptive robot is one of the more
 elusive goals of robotics research.
-The possibility of a robotic butler is only one of many potential applications. However, true
-autonomous decision making (that is, free of direct control from a human operator) is an incredibly challenging process as many different systems must 
-be coordinated to make this possible. For instance, visual information must be processed quickly and accurately to respond to 
-changes in the environment, accurate path planning is needed to navigate the environment, and 
-precise motor coordination is needed to manipulate the environment. There have been many different 
-attempts at overcoming these challenges involved in developing an autonomous robot.
+The possibility of a robotic butler is only one of many potential applications.
+However, true autonomous decision making (that is, behavior free of direct 
+control from a human operator) is an incredibly challenging process since many 
+different systems must 
+be coordinated to make this possible. Visual information must be processed 
+quickly and accurately to respond to changes in the environment in a timely
+manner. Robots also need accurate path planning to navigate their environment,
+ and precise motor coordination to manipulate objects in the environment. 
+ There have been many different attempts at overcoming these challenges 
+involved in developing an autonomous robot.
 
 \indent One major type of approach 
 that has been often explored involves the field of machine learning. The ability to learn can be a powerful intermediate 
 step towards autonomy, since learning can allow a robot to adapt to new, unforeseen scenarios on its own. 
 Teaching by human demonstration is a common approach to robot learning because it enables the 
-transmission of complex behavior in a manner far easier than individually planning the movement of each motor and joint. However, choosing exactly how the demonstrated behavioris delivered to the robot in such a way that it can record and reproduce that behavior is still a very challenging task.
+transmission of complex behavior in a manner far easier than individually planning the movement of each motor and joint. However, choosing exactly how the demonstrated behavior is delivered to the robot in such a way that it can record and reproduce that behavior is still a very challenging task.
 
 \subsection{Approach}
 \indent The PROTOS system is designed to be an immersive teleoperation system for controlling the WillowGarage PR2 humanoid robot. By `teleoperation', we simply mean controlling the PR2 from
@@ -267,7 +271,8 @@ desired manner. This system architecture is shown Figure~\ref{fig:some_graph}.
 \subsection{Motion Control}
 \label{sec:model_motion}
 Other than the PR2 robot itself, the Microsoft Kinect is perhaps the most 
-prominent and obvious device in the teleimmersive operation system. ROS has an existing Kinect libraries that allows
+prominent and obvious device in the teleimmersive operation system. ROS has 
+existing Kinect libraries that allow
 data from a Kinect to be handled as easily as any other message transmitted across the ROS network. A screenshot
 of these libraries in action can be seen in Figure~\ref{fig:kinect_screenshot}.
 These Kinect libraries have already been used successfully in 
