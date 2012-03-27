@@ -74,13 +74,13 @@ a distance. `Immersive', means giving the human operator the illusion of being i
 
 \indent The PR2 is a humanoid robot developed by  Willow Garage~\cite{pr2} for the purpose of robotics 
 research. It is omnidirectional and capable of telescoping height. The PR2 has a pair of highly movable arms and grippers
-that allow grasping of many different kinds of objects. The PR2 also comes with a robust series of highly useful software development tools,
+that allow grasping of many different kinds of objects. The PR2 also comes with a robust set of highly useful software development tools,
 including a versatile simulator that allows developers to perform trial runs on a virtual PR2 without
 risking damage to the actual robot or environment. Institutions across the
 world have taught the PR2 a wide variety of human actions, such as baking 
 cookies~\cite{cookies}, scanning and bagging groceries~\cite{groceries}, and fetching a sandwich~\cite{subway}.
  However, unlike in these examples, the proposed PROTOS system will ideally enable the PR2 to acquire new behavior not through advanced task planning,
-but rather through human demonstration. Thanks to the University of Pennsylvania's GRASP laboratory, a real PR2 (shown in Figure~\ref{fig:pr2_photo}) can be used to test the
+but rather through human demonstration. Thanks to the University of Pennsylvania's GRASP Laboratory, a real PR2 (shown in Figure~\ref{fig:pr2_photo}) can be used to test the
 system implementation.
 
 \begin{figure}[htb] 
@@ -93,14 +93,14 @@ system implementation.
 \end{figure}
 
 \indent The chief component of the PROTOS teleoperation system is the Microsoft XBox Kinect sensor. This sensor provides depth information at real-time speeds
-(30 frames per second), which performs the computation that would have been required for stereo 
+(30 frames per second), also performing the computation that would have been required for stereo 
 processing. Combined with various open source libraries~\cite{kinect}, the Kinect also works with 
-software that provides human motion sensing and tracking, which greatly simplifies the task of capturing human body movements.
+software that provides human motion sensing and tracking, greatly simplifying the task of capturing human body movements.
 
 \indent The Kinect will be used as part of an immersive teleoperation system to allow a human operator to easily demonstrate sequences of actions
 to a PR2.
 The Kinect sensor provides a convenient way to capture the human operator performing the desired behavior. The captured data can be relayed to the
-PR2 via ROS, an open-source Robot Operating System~\cite{ros}. ROS provides a 
+PR2 via ROS, the open-source Robot Operating System~\cite{ros}. ROS provides a 
 convenient framework for device abstraction, inter-process communication, and message recording.
 By using ROS along with the PR2 and the Kinect, the PROTOS system will allow remote operation of the PR2 while
 allowing the operator to see the PR2's surroundings from the PR2's onboard cameras. The effectiveness of this system in performing simple tasks with the PR2 
