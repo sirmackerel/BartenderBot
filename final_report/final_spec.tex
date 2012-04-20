@@ -35,8 +35,9 @@ can potentially be achieved by the development of an immersive
 teleoperation system for controlling humanoid robots. Building on previous attempts to
 control the PR2 from a distance (`teleoperation'), the system also aims provide the
 operator with an `immersive' experience by providing a view of 
-the environment from the robot's perspective. \\
-\indent The effectiveness of the system will be tested and evaluated by its ability to allow a human operator
+the environment from the robot's perspective.}
+
+\textit{\indent The effectiveness of the system will be tested and evaluated by its ability to allow a human operator
 to handle simple manipulating tasks, such as picking up cups.
 Following the implementation of this system, its performanced will be evaluated in two ways: first, the ease with which
 it can allow a human operator to perform a given task, and second, the accuracy with which the system can record
@@ -55,7 +56,8 @@ autonomous decision making (that is, free of direct control from a human operato
 be coordinated to make this possible. For instance, visual information must be processed quickly and accurately to respond to 
 changes in the environment, accurate path planning is needed to navigate the environment, and 
 precise motor coordination is needed to manipulate the environment. There have been many different 
-attempts at overcoming these challenges involved in developing an autonomous robot. \\
+attempts at overcoming these challenges involved in developing an autonomous robot.
+
 \indent One major type of approach 
 that has been often explored involves the field of machine learning. The ability to learn can be a powerful intermediate 
 step towards autonomy, since learning can allow a robot to adapt to new, unforeseen scenarios on its own. 
@@ -64,7 +66,8 @@ transmission of complex behavior in a manner far easier than individually planni
 
 \subsection{Approach}
 \indent The PROTOS system is designed to be an immersive teleoperation system for controlling the WillowGarage PR2 humanoid robot. By `teleoperation', we simply mean controlling the PR2 from
-a distance. By `immersive', we mean giving the human operator the illusion of being inside the PR2.\\
+a distance. By `immersive', we mean giving the human operator the illusion of being inside the PR2.
+
 \indent The PR2 is a humanoid robot developed by  Willow Garage~\cite{pr2} for the purpose of robotics 
 research. It is omnidirectional and capable of telescoping height. The PR2 has a pair of highly movable arms and grippers
 that allow grasping of many different kinds of objects. The PR2 also comes with a robust series of highly useful software development tools,
@@ -74,22 +77,21 @@ world have taught the PR2 a wide variety of human actions, such as baking
 cookies~\cite{cookies}, scanning and bagging groceries~\cite{groceries}, and fetching a sandwich~\cite{subway}.
  However, unlike in these examples, the proposed PROTOS system will ideally enable the PR2 to acquire new behavior not through advanced task planning,
 but rather through human demonstration. Thanks to the University of Pennsylvania's GRASP laboratory, a real PR2 (shown in Figure~\ref{fig:pr2_photo}) can be used to test the
-system implementation.\\
+system implementation.
+
 \begin{figure}[htb] 
 	\begin{center}
-		\includegraphics[width=0.75\linewidth]{graspy}
+		\includegraphics[width=0.8\linewidth]{graspy}
 	\end{center}
 	%\vspace{-24pt}
 	\caption{PR2 robot at the University of Pennsylvania, nicknamed `GRASPY'}
 	\label{fig:pr2_photo}
 \end{figure}
+
 \indent The chief component of the PROTOS teleoperation system is the Microsoft XBox Kinect sensor. This sensor provides depth information at real-time speeds
 (30 frames per second), which performs the computation that would have been required for stereo 
 processing. Combined with various open source libraries~\cite{kinect}, the Kinect also works with 
-software that provides human motion sensing and tracking, which greatly simplifies the task of capturing human body movements.\\
-
-These Kinect libraries have already been used successfully in 
-many projects involving real-time tracking of human motion, examples of which can be found online~\cite{freenect}.\\
+software that provides human motion sensing and tracking, which greatly simplifies the task of capturing human body movements.
 
 \indent The Kinect will be used as part of an immersive teleoperation system to allow a human operator to easily demonstrate sequences of actions
 to a PR2.
@@ -98,13 +100,7 @@ PR2 via ROS, an open-source Robot Operating System~\cite{ros}. ROS provides a
 convenient framework for device abstraction, inter-process communication, and message recording.
 By using ROS along with the PR2 and the Kinect, the PROTOS system will allow remote operation of the PR2 while
 allowing the operator to see the PR2's surroundings from the PR2's onboard cameras. The effectiveness of this system in performing simple tasks with the PR2 
-will then be evaluated. \\
-
-Processes that perform computation are visualized as nodes in a graph, with inter-process communication representing the
-edges of the graph. Nodes send information to each other in the form of messages. Nodes that wish to send messages to other nodes can
-`publish' to a topic, and nodes wishing to receive these messages need only to `subscribe' to these topics. ROS enables relatively short
-programs to issue surprisingly sophisticated commands to the PR2, such as moving all of the arm joints to a specific position within a
-specified time frame. \\
+will then be evaluated.
 
 \subsection{Results}
 \indent The PROTOS system was tested by having the human operator attempt to pick up a cup with the PR2. The PR2 was able to successfully pick up a cup and 
@@ -124,15 +120,33 @@ system (Section~\ref{sec:ethics}) and summarizes the conclusions drawn from impl
 \section{Related Work}
 \label{sec:related_work}
 \indent  Related work will now be discussed. First, work releated to teleoperation (Section~\ref{sec:teleop}) will be presented in general, followed by a look at
-autonomous robots (Section~\ref{sec:autobots}) and teaching the PR2 (Section~\ref{sec:teach_pr2}). The section concludes with an analysis of different teaching methods by demonstration (Section~\ref{sec:demo_teach}).
+autonomous robots (Section~\ref{sec:autobots}) and teaching the PR2 (Section~\ref{sec:teach_pr2}). The section concludes with an analysis of different teaching methods 
+by demonstration (Section~\ref{sec:demo_teach}).
 
 \subsection{Teleoperation}
 \label{sec:teleop}
-\indent There have been many previous teleoperation implementations for robotic systems. Kofman \textit{et al.}~\cite{robot_interface} devised a system for controlling a robotic arm via teleoperation and sending visual feedback to the user. The setup used in their work involves multiple cameras aimed at the human operator to capture 3-D information about the operator's arm movements. This data is then sent to a remote site containing the robotic arm and mapped to its joints so it can mimic the motion of the human arm. The human operator is able to see the robotic arm via cameras positioned at the remote site that send visual feeds of both the entire arm and of vision from the point of view of the tip of the robotic arm. Fortunately for us, the Kinect, when paired with ROS, provides a much simpler and less complicated setup to capture arm motion and send them to the PR2's arm. We are far from the first to implement teleoperation of a robot via the Kinect and ROS. In fact, Willow Garage has already tried integrating Kinect with ROS to control the PR2 remotely~\cite{willow_kinect}. However, our ultimate goal includes not only developing an immersive teleoperation system for the PR2, but also investigating how this system can be used to teach the PR2 new behavior, such as mixing and serving drinks.
+\indent There have been many previous teleoperation implementations for robotic systems. Kofman \textit{et al.}~\cite{robot_interface} devised a teleimmersive system for
+controlling a robotic arm via teleoperation and sending visual feedback to the user. The setup used in their work involves multiple cameras aimed at the human operator to 
+capture 3-D information about the operator's arm movements. This data is then sent to a remote site containing the robotic arm and mapped to its joints so it can mimic the 
+motion of the human arm. The human operator is able to see the robotic arm via cameras positioned at the remote site that send visual feeds of both the entire arm and of 
+vision from the point of view of the tip of the robotic arm. Fortunately, the Kinect, when paired with ROS, provides a much simpler and cost efficient setup to 
+capture arm motion and transmit data to the PR2. The Kinect requires almost no work to setup, and can be purchased at little cost compared to a complex motion capture setup
+involving multiple cameras. Willow Garage has already 
+tried integrating Kinect with ROS to control the PR2 remotely~\cite{willow_kinect}. However, the PROTOS system uses immersion as a tool to help the user teleoperate
+the PR2, which is something that the Willow Garage implementaton appears to lack.
 
 \subsection{Autonomous Robots}
 \label{sec:autobots}
-Other institutions have conducted research involving autonomous robots handling
+\indent A common approach to autonomous robot action relies primarily on heavy amounts of computation to carefully 
+plan each action that the robot will execute ahead of time.  The chief 
+advantage that the PROTOS system intends to provide over these methods is that it 
+not only serves as an immersive teleoperation system with which a robot can be used to
+execute tasks, but also as a provider of demonstration data
+that can be used to teach a robot to do these kinds
+of things more quickly and naturally by using data from a human operator using the 
+teleoperation system execute the actions.
+
+\indent Other institutions have conducted research involving autonomous robots handling
 drinks. Hillenbrand \textit{et al.}~\cite{pouring_arm} designed a 
 semi-autonomous hand-arm robot for this purpose. The hand-arm was capable of 
 responding to user input by choosing a drink from a variety of different 
@@ -140,8 +154,9 @@ containers, opening the drink if necessary, pouring the liquid into a glass,
 and then offering the cup to the user. It was capable of not only picking up 
 bottles and cups, but also of unscrewing bottle caps. Processing of visual data
 from cameras was combined with object recognition to identify the drinks, after
-which grasp planning was used to actually pick up and manipulate the drink. 
-Srinivasa \textit{et al.}~\cite{herb} designed an autonomous robot capable of 
+which grasp planning was used to actually pick up and manipulate the drink.
+
+\indent Srinivasa \textit{et al.}~\cite{herb} designed an autonomous robot capable of 
 navigating a household-like environment and manipulating a wide variety of 
 everyday objects. Consisting of an arm mounted on a segway, HERB used a 
 powerful array of six multi-core processors to successfully traverse its 
@@ -149,30 +164,50 @@ environment and interact with objects around it, such as cups and drawers. By
 combining different processes for object recognition, task based planning, and 
 caged grasping, HERB was able to autonomously carry out commands issued from a 
 graphical user interface to perform simple kitchen tasks, such as placing an 
-object in a recycling bin or lifting a mug. The teaching approach taken by both
-of these works relies primarily on heavy amounts of computation to carefully 
-plan each action that the robot will execute ahead of time.  The chief 
-difference in our system is that we intend to teach a robot to do these kinds
-of things more quickly and naturally by first having a human operator of our 
-teleoperation system execute the actions.
+object in a recycling bin or lifting a mug.
 
 \subsection{Teaching the PR2}
 \label{sec:teach_pr2}
-\indent There is substantial work in teaching the PR2 robot to perform various human tasks. Bohren \textit{et al.}~\cite{beer} used the PR2 and ROS to build a robotic system for retrieving a beer from a refrigerator. In their work, they developed a task-level execution system for rapidly prototyping different robotic applications. The PR2 had to navigate an obstacle map to reach the refrigerator, use object recognition and grasp planning to identify the door handle and the drinks, and ultimately use facial recognition to deliver the beer to a human recipient. Each step of the process contained detail planning and image processing in order to carry out the expected behavior. Klingbeil \textit{et al.}~\cite{groceries} developed a grasping algorithm to enable the PR2 to pick up objects and attempt to locate and scan the barcode. Their technique allowed the PR2 to devise a plan to grasp the object from only a single 3D snapshot. Their algorithm emphasized the importance of positioning the PR2's gripper such that its shape most closely matched the shape of the object it attempts to grasp. Saito \textit{et al.}~\cite{subway} devised a way for the PR2 to intelligently navigate large environments via semantic search. The PR2 attempts to find a specific object by first searching areas that would logically contain that item. When asked to retrieve a sandwich, the PR2 first inspected a nearby refrigerator in its environment. If it fails to find one there, it then determines the next most likely place a sandwich could be found. These approaches to teaching the PR2 emphasize complex algorithms used to enable the PR2 to devise a plan from scrach to act autonomously in a given environment. Our approach is simpler in that we plan to use recorded input data from our immersive teleoperation system to give the PR2 a general sequence of actions to follow that can later be refined through more complex learning techniques.
+\indent There is substantial work in teaching the PR2 robot to perform various human tasks.  These approaches to teaching the PR2 emphasize complex algorithms used 
+to enable the PR2 to devise a plan from scrach to act autonomously in a 
+given environment.  Bohren \textit{et al.}~\cite{beer} used the PR2 and ROS to build a robotic 
+system for retrieving beverages from a refrigerator. In their work, they developed a task-level execution system for rapidly prototyping different robotic applications. 
+The PR2 had to navigate an obstacle map to reach the refrigerator, use object recognition and grasp planning to identify the door handle and the drinks, and ultimately use 
+facial recognition to deliver the beverage to a human recipient. 
+Klingbeil \textit{et al.}~\cite{groceries} developed a grasping algorithm to enable the PR2 to pick up objects and attempt to locate and scan the barcode. Their 
+technique allowed the PR2 to devise a plan to grasp the object from only a single 3D snapshot.
+Saito \textit{et al.}~\cite{subway} devised a way for the PR2 to intelligently 
+navigate large environments via semantic search. The PR2 attempts to find a specific object by first searching areas that would logically contain that item.
+
+\indent The PROTOS system will hopefully simplify teaching methods by enabling use of recorded input data from immersive teleoperation to give the PR2 
+a general sequence of actions  to follow that can later be refined through more complex learning techniques.
 
 \subsection{Teaching by Demonstration}
 \label{sec:demo_teach}
-\indent Various approaches involving data from human demonstration have been explored to allow a robot to perform specific tasks. In a relatively early attempt, Chalodhorn \textit{et al.}~\cite{walk_imitation} used motion capture to teach a bipedal humanoid robot how to walk by imitation. Joint angles obtained from motion capture data recorded from a human demonstrator wearing a motion capture suit were mapped to joint angles on the robot. This data was combined with predictions based on sensory information to reproduce a human-like gait in the robot. Kormushev \textit{et al.}~\cite{whiteboard} taught a robot new motor skills through kinesthetic teaching, which is teaching by physical contact. The robot had two distinct modes of operation: a learning phase and a reproduction phase. First, the robot was shown how to clean a whiteboard by direct human manipulation of the robot's joints, recording both position and force information. Subsequently, the robot would translate the learned information to its own frame of reference and attempt to duplicate the teacher's movement pattern on the whiteboard.  Kormushev \textit{et al.}~\cite{pancakes} also used kinesthetic learning to teach a robotic arm how to flip a pancake. A human teacher first moved the arm to demonstrate the movement required to flip a pancake 180 degrees in the air and catch it again. In subsequent trials, reinforcement learning techniques were applied such that the robot could evaluate the performance of its flips and attempt to adjust the motion of the arm for better future flips.
-\indent Our method has several advantages over these existing approaches. First of all, the Kinect sensor provides accurate real-time human
+\indent Various approaches involving data from human demonstration have been explored to allow a robot to perform specific tasks. In a relatively early attempt, 
+Chalodhorn \textit{et al.}~\cite{walk_imitation} used motion capture to teach a bipedal humanoid robot how to walk by imitation. Joint angles obtained from motion capture 
+data recorded from a human demonstrator wearing a motion capture suit were mapped to joint angles on the robot.
+Kormushev \textit{et al.}~\cite{whiteboard} taught a robot new motor skills through kinesthetic teaching, which is 
+teaching by physical contact. The robot had two distinct modes of operation: a learning phase and a reproduction phase. First, the robot was shown how to clean a whiteboard 
+by direct human manipulation of the robot's joints, recording both position and force information. Subsequently, the robot would translate the learned information to its own 
+frame of reference and attempt to duplicate the teacher's movement pattern on the whiteboard.  Kormushev \textit{et al.}~\cite{pancakes} also used kinesthetic learning to 
+teach a robotic arm how to flip a pancake. 
+Reinforcement learning techniques were applied such that the robot could evaluate the performance of its flips and attempt to adjust the motion 
+of the arm for better future flips.
+
+\indent The PROTOS system has several advantages over these existing approaches. First of all, the Kinect sensor provides accurate real-time human
 motion tracking that can be mapped to specific movement in the PR2 thanks to ROS. The Kinect also provides motion capture without the need
 of complicated setups involving motion capture suits or multiple cameras. Secondly, an immersive scheme for controlling the robot
 enables a human operator to more naturally move the robot in a given situation compared to manipulating the robot directly by physical
 contact or through a joystick-based control scheme. Immersive teleoperation also enables direct control of robots that cannot be easily
-subject to demonstration through physical contact, such as very large or very small robots. Our method, if successful, would allow for rapid demonstration of different sequences of behavior to the PR2, which could be stored and queued up for later reproduction and enhancement. This technique could be generalized to other humanoid robots besides the PR2 to teach them different kinds of behavior.
+subject to demonstration through physical contact, such as very large or very small robots. This sytem, if successful, would allow for rapid demonstration of different 
+sequences of behavior to the PR2, which could be stored and queued up for later reproduction and enhancement. This technique could be generalized to other humanoid robots 
+besides the PR2 to teach them different kinds of behavior. Any humanoid robot could potentially be controlled with PROTOS with some slight modification to the source code.
+The tasks also need not be restricted to lifting simple objects, as the system can capture data from the human user's entire body.
 
 \section{System Model}
 \label{sec:system_model}
-Specifically because a teleimmersive system is meant to be used by a human 
+Because a teleimmersive system is meant to be used by a human 
 operator to control a robot, the external/visible part of this
 design must be simple. The number of devices used to get input from the user 
 and to deliver feedback should be small, and these devices should require
@@ -182,191 +217,258 @@ passively. After the initial setup phase, the user should be able to control
 the system with minimal effort; the system should just watch the user and
 translate the user's movements into control instructions for the PR2.
 
-To facilitate this process, we use a few separate devices and some
-fairly sophisticated software stacks. While the
-devices mostly consist of cameras and accelerometers to track the user's 
-motion, there are a few button devices which allow the user to
+To facilitate this process, few separate devices and some
+fairly sophisticated software stacks were used. These devices will be discussed
+in the upcoming section. The chief component of the system is the PR2 robot (Section~\ref{sec:model_PR2}) that
+the user controls. ROS (Section~\ref{sec:model_ros}) is the component responsible for coordinating messages
+and sending data between all of the pieces of the PROTOS system.While the
+Microsoft Kinect is used to perform most of the motion capture, an additional
+devices and accelerometers are needed to capture motions of the head and hands (Section~\ref{sec:model_motion}). 
+In particular, there are a few button devices which allow the user to
 perform non-humanoid operations on the robot (such as freezing a joint or
 triggering certain actions capable only by the robot).
 
+\subsection{PR2}
+\label{sec:model_PR2}
 The most obvious component of the system is the actual PR2 robot. This is the
 device that user will control through teleimmersive operation. The user must
 be able to control each of the PR2's motors, including those for the head,
 arms, hands, gripper, torso, and base of the robot. To make the teleoperation
-immersive, the user will need have a direct feed from the PR2's onboard
+immersive, the user will need to receive a direct feed from the PR2's onboard
 camera system.
 
 \begin{figure}[htb] 
 	\begin{center}
-		\includegraphics[width=1.0\linewidth]{flowchart}
+		\includegraphics[width=0.8\linewidth]{block}
 	\end{center}
 	%\vspace{-24pt}
-	\caption{Block Diagram Summarizing System Model}
+	\caption{Block diagram summarizing system model}
 	\label{fig:some_graph}
 \end{figure}
 
+\subsection{ROS}
+\label{sec:model_ros}
 While the PR2 may be the most apparent aspect of the system,
 the true nexus is ROS, the Robot Operating System. Although the
 user will never need to interact explicitly with ROS, all communication between
 the user and the PR2 (in the form of commands or feedback) must pass through ROS.
 ROS abstracts over devices and I/O, providing a common interface for accessing
-any data stream or controlling any device. Using ROS, we can easily take
-data from the many tracking devices, process all the data to come up with
-movement plans for the PR2, and then actually command the PR2 to move in the
+any data stream or controlling any device. Processes that perform computation are visualized as nodes in a graph, with inter-process communication representing the
+edges of the graph. Nodes send information to each other in the form of messages. Nodes that wish to send messages to other nodes can
+`publish' to a topic, and nodes wishing to receive these messages need only to `subscribe' to these topics. ROS enables relatively short
+programs to issue surprisingly sophisticated commands to the PR2, such as moving all of the arm joints to a specific position within a
+specified time frame.
+
+By using ROS, the syste can easily coordinate
+data coming the many tracking devices, process all this data to come up with
+movement plans for the PR2, and then send these commands to the PR2 to move in the
 desired manner. This system architecture is shown Figure~\ref{fig:some_graph}.
 
+\subsection{Motion Control}
+\label{sec:model_motion}
 Other than the PR2 robot itself, the Microsoft Kinect is perhaps the most 
-prominent and obvious device in the teleimmersive operation system. The
-hardware uses an 
+prominent and obvious device in the teleimmersive operation system. ROS has an existing Kinect libraries that allows
+data from a Kinect to be handled as easily as any other message transmitted across the ROS network. A screenshot
+of these libraries in action can be seen in Figure~\ref{fig:kinect_screenshot}.
+These Kinect libraries have already been used successfully in 
+many projects involving real-time tracking of human motion, examples of which can be found online~\cite{freenect}.
+The hardware uses an 
 infrared projector and stereo RGB cameras to create a 3D scene image complete
 with depth information. It sends these raw video frames to ROS, which then
 forwards the feed to a processing node. This processing node analyzes the 
 video stream, identifies humanoid figures in the frames, and tracks these 
 figures' joints. The Kinect does have some shortcomings in that it does 
-not reliably track wrist, finger, or head movements. We use separate 
-accelerometer units to track these motions.
+not reliably track wrist, finger, or head movements. Separate 
+accelerometer units are used to track these motions.
 
-Wrist motion is captured by having the user hold one Nintendo Wiimote with 
+\begin{figure}[htb] 
+	\begin{center}
+		\includegraphics[width=0.8\linewidth]{kinect}
+	\end{center}
+	%\vspace{-24pt}
+	\caption{Screenshot~\cite{kinect_pic} showing Kinect's tracking capabilities. The tracking software runs as a ROS node.}
+	\label{fig:kinect_screenshot}
+\end{figure}
+
+\indent Wrist motion is captured by having the user hold one Nintendo Wiimote with 
 Wii MotionPlus in each hand. The Wiimote is a video game controller with 
-multiple buttons, a direction pad, and built-in accelerometers. In this sense,
-it is quite convenient. The user can comfortably hold one Wiimote in each hand,
+multiple buttons, a direction pad, and built-in accelerometers. 
+The user can comfortably hold one Wiimote in each hand,
 (as this is how they were intended to be used in video games). and now has
 convenient access to a number of
-control buttons. The remotes also carry accelerometers to track wrist movements.
+control buttons. These control buttons are used to perform a variety of actions
+involving the PR2's wrists and grippers, such as opening/closing the grippers and
+rotating/flexing the wrists. The remotes also carry accelerometers that could potentially be used
+to track wrist movements. 
 
-In order to track the user's head movements, the user wears a hat
+\indent In order to track the user's head movements, the user wears a hat
 with an attached Intertial Measurement Unit (IMU) that acts as three-axis accelerometer. The IMU can track the yaw, pitch, and roll of the user's neck joint and can therefore relay all head motions to ROS. The device is
-approximately the size of a quarter and can be attached to any surface via
-velcro.
+approximately the size of a quarter and can be attached to any surface via velcro or tape. This tracking of head movement is critical to the immersive aspect of the system
+because it allows the PR2's head orientation to match that of the user's, which ensures that the visual feedback the user receives is correct.
 
+\subsection{Immersive Feedback}
+\label{sec:model_feedback}
 The final hardware device is a pair of Vuzix augmented reality glasses.
-Essentially, this is a pair of glasses with a mini LCD screen in each lens.
-The video feed from the PR2's onboard stereo cameras is piped
-directly into each lens of the glasses. This is the immersive step which closes the loop and
-helps place the user more fully into the system.
+Essentially, this is a pair of glasses with a mini LCD screen in each lens. The glasses act as
+an external monitor that is mirrored across both screens. 
+The video feed from the PR2's onboard camera is piped
+directly into the glasses. This is the immersive step which closes the loop and
+helps place the user more fully into the system. One technical limitation of the glasses is
+the inability for the glasses to display true 3-D images to the user, since the same image is
+shown on both lenses.
 
+\subsection{Software}
+\label{sec:model_software}
 There is one other significant component to this system. This is the
 component we have
-termed in Figure~\ref{fig:some_graph} as the {\tt BERTRAM Analyzer}. This is a 
+termed in Figure~\ref{fig:some_graph} as the {\tt PROTOS Software}. This is a 
 software node residing in ROS. Its primary function is to stitch together the
 motion and position data from all the input devices (Kinect, Wiimotes, head 
 IMU) and send commands to the robot. It processes all the information to map the user's motions
-into equivalent motions for the PR2.
+into equivalent motions for the PR2. The commands issued by the software can also be easily recorded by 
+ROS and stored in a file. These files can be archived, and later replayed to cause the PR2 to repeat an action.
+These stored actions can be played one after another to potentially chain together simpler actions into
+more complex command sequences.
 
 \section{System Implementation}
 \label{sec:system_implementation}
 Most of the interesting work in this project takes place inside the
-{\tt BERTRAM Analyzer}, which aggregates all the captured motion data from the
+{\tt PROTOS Software}, which aggregates all the captured motion data from the
 user and processes this data to generate commands for the robot. ROS provides
-bindings for both {\tt C++} and {\tt Python}. We chose to use {\tt Python} due to our
-greater familiarity with the language and due to the relative verbosity of {\tt C++}.
-The analyzer listens for interrupt events from the Wiimotes and head-mounted
-IMU and actively polls for events from the Kinect. These events contain data
-from these devices that report on the user's current actions and position.
+bindings for both {\tt C++} and {\tt Python}. {\tt Python} was the language of choice due to avoid
+the the relative verbosity of {\tt C++}.
+The software runs as a node within ROS, and listens for interrupt events from the Wiimotes and head-mounted
+IMU while actively polling for events from the Kinect. These events contain data
+from these devices that report on the user's current actions and position. Figure~\ref{fig:human_model} shows
+a human operator using the devices that comprise the PROTOS system (minus the Kinect).
 
-ROS interfaces with the Kinect using the {\tt openni} Kinect software stack. The primary
-function of this is to create a ROS node named {\tt openni\_tracker}. This
+\begin{figure}[htb] 
+	\begin{center}
+		\includegraphics[width=0.8\linewidth]{pr2model}
+	\end{center}
+	%\vspace{-24pt}
+	\caption{Photograph of a human operator using the PROTOS system.}
+	\label{fig:human_model}
+\end{figure}
+
+\subsection{Handling Kinect Input}
+\indent ROS interfaces with the Kinect using the {\tt openni} Kinect software stack. The primary
+function of this stack is to create a ROS node named {\tt openni\_tracker}. This
 node identifies the Kinect device on a USB port and requests data
 from it. It then attempts to identify people in the scene frame and start
 tracking them. Once it has done so, it will publish data on various
 topics (such as {\tt left\_shoulder}, {\tt right\_elbow}). These messages
-contain joint angle transforms that are delivered to the {\tt BERTRAM Analyzer}.
+contain joint angle transforms that are delivered to the {\tt PROTOS Software}.
 
-The {\tt BERTRAM Analyzer} listens to the messages from the
+\indent The {\tt PROTOS Software} receives messages from the
  {\tt openni\_tracker}.
 When it receives information for an altered joint position, it applies the
 appropriate transformations and instructs the PR2 on how to set its own joints
 so as to mimic the sensed movement of the user. This is done for the shoulder
 and elbow joints on both arms.
 
-A similar process occurs for the IMU on the user's head. The specific IMU used in our system is
-the CHR-6dm Attitude and Heading Reference System. When lying flat, it uses its
+\subsection{Handling IMU Input}
+\indent A similar process occurs for the IMU on the user's head. The specific IMU used in our system is
+the CHR-6dm Attitude and Heading Reference System~\cite{imu_chr}. When lying flat, it uses its
 accelerometers to capture roll and pitch. It also has a magnetic compass to 
 track yaw (necessary since the plane in which the yaw rotational motion occurs
 is perpendicular to the force of gravity). After connecting to the 
-controlling computer via 
-USB, a ROS node is run to read in data from the sensor and republish this data
-encapsulated in ROS messages. The {\tt BERTRAM Analyzer} is notified when these
+controlling computer via USB, a ROS node is run to read in data from the sensor and republish this data
+encapsulated in ROS messages. The {\tt PROTOS Software} is notified when these
 messages are published. It reads the roll, pitch, and yaw data in the message
-and sends the appropriate commands to the PR2. One feature which is not yet
-implemented relates to the initialization of the IMU. Since it uses a compass
+and sends the appropriate commands to the PR2.
+
+\indent The IMU must first be initialized before orientation information can be transmitted. Since the IMU uses a compass
 to track yaw, values are reported as angular deviations from magnetic north.
 Therefore, when tracking a user who does not begin by facing north, it is 
 important to find the unity position for the sensor (the bearing when 
 the user is facing forward) and to use this as an offset for all future angle
 readings.
 
+\subsection{Handling Wiimote Input}
 The Wiimote communication is handled in much the same manner as the IMU on the head.
 Instead of communicating via a USB port, however, the Wiimotes communicate wirelessly with the
 controlling computer via Bluetooth. After the Wiimote pairs with the system,
 ROS is used to create a Wiimote node which 
 sends a periodic stream of messages. Each message is a vector containing the
-status of each button and sensor readings from the Wiimote. The {\tt BERTRAM Analyzer}
+status of each button and sensor readings from the Wiimote. The {\tt PROTOS Software}
 listens for these messages. It notes the state of each button (whether or not that button
 is pressed down)
-and takes the appropriate action by sending commands to the PR2. Additionally, 
-the {\tt BERTRAM Analyzer} also reads in the accelerometer data. The Wiimote
-provides only the actual angular velocities; it doesn't not translate the 
-values into roll, pitch, or yaw positions. We therefore use these angular velocities along 
-with the publishing frequency to compute an approximation of the actual roll, pitch,
-and yaw angles of the human wrist. Finally, the angles are translated into the PR2's
-reference frame, and commands are sent to intstruct the PR2 to move. One 
-item of note is that the human wrist rotates in only two degrees (that is,
-the wrist does not rotate about the primary axis of the forearm). The PR2's 
-gripper can actually rotate indefinitely in this axis, so we instead map this wrist rotation 
-to the rotation of the PR2's forearm.
+and takes the appropriate action by sending commands to the PR2. 
 
-One nontrivial implementation detail to discuss is the physical method of
-communication with the PR2. One option is to have the PR2's onboard computers
-act as the controllers for sending actions to the PR2. Since this is a teleimmersive operation system, we find
-this to be impractical, as the input devices used to capture human motion may not be physically located
-near the PR2, thereby preventing the PR2's onboard computers to receive data from these devices. 
+\indent Additionally,  the {\tt PROTOS Software} can also read in accelerometer data from the Wiimote. The Wiimote
+provides only the actual angular velocities; it doesn't not translate the 
+values into roll, pitch, or yaw positions. Early builds of the system attempted to use these angular velocities along 
+with the publishing frequency to compute an approximation of the actual roll, pitch,
+and yaw angles of the human wrist. The angles were translated into the PR2's
+reference frame, and commands were sent to instruct the PR2 to move its wrists accordingly. However,
+this approach was ultimately sidelined in favor of using the Wiimote's buttons to control the PR2's
+wrist and forearm movements. The translation process from the Wiimote's acceleration readings to the PR2's
+wrist motions proved more difficult than anticipated due to the challenge in decoupling actual wrist movement
+from more general arm movements.
+
+\subsection{Physical Communication with the PR2}
+\indent The physical method of
+communication with the PR2 also merits discussion. One option was to have the PR2's onboard computers
+act as the controllers for sending actions to the PR2. Since this is a teleimmersive operation system, this method is impractical, 
+as the input devices used to capture human motion may not be physically located
+near the PR2, thereby preventing the PR2's onboard computers from receiving data from these devices. 
 In addition, it is impractical to attach all of these input devices 
-directly to the PR2. We have therefore ruled this option out. The PR2 also contains multiple routers and hosts its
-own wireless network. So far, this is the method we have used most often when
-communicating with the PR2 for the sake of simplicity. In a real system, however,
+directly to the PR2. This option was therefore ruled out early on in the implementation process. 
+
+\indent The PR2 also contains multiple routers and hosts its
+own wireless network. Therefore, remote communication with the PR2 became method of choice for interfacing
+with the PR2 for the sake of simplicity. In a large scale, real world implementation of the PROTOS system, however,
 this manner of communication suffers from the same main issue as the first method - the user and devices
 may be out of range of the WiFi source of the PR2. Fortunately,
 the PR2 can also connect to and take IPs on other networks (communicating either by WiFi or by
-Ethernet). Although we have run into complications when using this method, we
-suspect these problems are due to issues with the computer we are using to control the
-system rather than the PR2 itself.
-In the long run, this is the method we intend to use when communicating with the PR2.
+Ethernet). Although network complications have arisen when using this method,
+these problems likely are due to issues with the computer used to run the system software 
+rather than issues with the PR2's onboard routers.
 
-The final aspect of the system that needs discussion is the method used to relay visual feedback from the PR2 to the user.
-We accomplish this using a
-pair of  Vuzix virtual reality goggles. The PR2 sends multiple image 
-streams to ROS. As the goggles are not truly 3D, we intend to combine the left 
-and right image feeds into one stream. This will then be sent to a node which will display the image
+\subsection{Visual Feedback}
+\indent The final aspect of the system is the method used to relay visual feedback from the PR2 to the user.
+A pair of  Vuzix virtual reality goggles is used to provide this feedback to the user. The PR2 sends multiple image 
+streams to ROS from its multiple on-board cameras. As the goggles are not truly 3D, only one of the camera feeds
+can be sent to the goggles. The images from the PR2's right head camera are sent to a node which displays the image
 on the screen of the controlling computer. The video goggles can simply connect
 to the VGA video out port of the computer to
-receive the image and display it to the human operator. We have tested this concept and
-verified that it functions correctly using only a single camera source (such as
-the left camera on the PR2's head). All that remains is to combine the left and right camera
-feeds together.
+receive the image and display it to the human operator. This video feed is sufficient
+for performing simple tasks, but more complex ones will require some way to provide stereo vision feedback
+to the user. A pair of goggles that contain true 3D capabilities that allow different images to be streamed
+to the left and right lenses would be ideal.
 
 \section{System Performance}
 \label{sec:system_performance}
-We are currently in the process of completing the immersive 
-teleoperation system using the components described in previous sections. Upon
-completion, the system will be evaluated both for its ability to correctly
+\indent The PROTOS system has been evaluated both for its ability to correctly
 imitate the actions of a human operator as well as for its potential 
-as a learning tool for the PR2 to acquire new behavior.\\
+to capture and reproduce useful data that can be used to aid demonstrative learning
+attempts to allow the PR2 to acquire new behavior.
+
 \subsection{Performance of Devices}
-The PR2 has lived up to its expectations as a good choice of humanoid robot to 
+\indent The PR2 has lived up to its expectations as a good choice of humanoid robot to 
 use. Testing our existing code on the robot has been very straightforward, and 
 the PR2 is fully capable of all of the arm motions, head motions, and grasping
 we require it to do. ROS has also done an excellent job in allowing the 
 {\tt BERTRAM Analyzer} to easily communicate back and forth with the diverse 
 assortment of devices that comprise the teleoperation system.\\
 \indent Capturing motion with the Kinect has been a painless process. It requires virtually no setup time and can transmit live human motion data in real time without the need for any special clothing or markers to indicate human joints or body parts. The user can more or less move freely once the Kinect has `calibrated' its view onto a target, which takes only a few seconds. ROS makes receiving the data from the Kinect very simple. Communication with the Wiimotes has also worked as expected. The remotes transmit their data wirelessly and accurately report button presses, rotations, and accelerations up to one hundred times per second. They fit nicely in the palms of the human operators' hands since they are originally intended to be used as video game controllers.\\
-\indent The three-axis accelerometer for capturing head movement has been a little more difficult to deal with than originally anticipated. Although the device does report changes in its yaw, pitch, and roll, it is also prone to reporting errors if it receives sudden jolts or impacts. When these errors happen, the ROS software that interfaces with the device must be restarted to obtain accurate readings once more. We suspect that this problem will be alleviated once we mount it in a more stable fashion on to head gear for the human operator to wear. Ideally, the human operator can simply wear the head gear and not have to worr about adjusting the accelerometer. The video eyewear works as expected and can successfully display video output from cameras on the PR2.\\
+\indent The three-axis accelerometer for capturing head movement has been a little more difficult to deal with than originally anticipated. Although the device does report changes in its yaw, pitch, and roll, it is also prone to reporting errors if it receives sudden jolts or impacts. When these errors happen, the ROS software that interfaces with the device must be restarted to obtain accurate readings once more. We suspect that this problem will be alleviated once we mount it in a more stable fashion on to head gear for the human operator to wear. Ideally, the human operator can simply wear the head gear and not have to worry about adjusting the accelerometer. The video eyewear works as expected and can successfully display video output from cameras on the PR2.\\
 \subsection {Performance of the BERTRAM Analyzer}
 \indent The performance of the {\tt BERTRAM Analyzer} still needs to be improved. Although the physical devices that comprise our immersive teleoperation system are easy to use and are relatively few in number, the analyzer code has somewhat mixed performance in translating data from these devices into actions for the PR2. Although the PR2 does move its arms in accordance to the arms of the human operator, the arm motion is very abrupt and prone to sudden, uneven movements. This lack of precision in movement makes it difficult for the human operator to precisely control the arms to the degree needed for fine motions such as lifting cups or glasses. We have tried to smooth out the arm motion by threshholding the values sent by the Kinect, essentially trying to remove noise. In other words, we only send new actions to the PR2 if we receive data from the Kinect indicating that the human's arms have moved a certain amount from their previous positions. Although this change has made it easier to keep the PR2's arms still, it has not smoothed actual motions themselves. We are currently trying to address this issue by investigating how to limit the maximum acceleration and velocity of the PR2 arm motions.\\
 \indent We have also run into some difficulty in mapping the rotation information from the Wiimote and three-axis accelerometer to the wrists and head of the PR2, respectively. The wrists and head do not always turn in a way that successfully imitates the wrist and head turns of the human operator. More work and experimentation with these components of the system needs to be done before we can fix this problem and have the devices accurately mapped to the PR2.
 
 \section{Results}
 \label{sec:results}
+
+\begin{figure}[htb] 
+	\begin{center}
+		\includegraphics[width=0.8\linewidth]{evaluation}
+	\end{center}
+	%\vspace{-24pt}
+	\caption{The PR2 was able to continously pick up and place the same cup fifteen consecutive times by replaying data recorded from the PROTOS system.}
+	\label{fig:evaluation}
+\end{figure}
 
 \section{Future Work}
 \label{sec:future_work}
