@@ -471,11 +471,44 @@ assortment of devices that comprise the teleoperation system.\\
 \end{figure}
 
 \section{Future Work}
-\label{sec:future_work}
+\label{sec:future_work} Perhaps the most obvious direction to pursue with
+future work is the use of the recorded motion sequences as training data
+for a learning planner. Current planners are very slow to calculate, but
+(TODO, mikephil?) have already demonstrated significant improvements in
+efficiency by creating a planner which uses paths it has already computed
+as a basis whenever it is requested to find a new path. If it could instead be
+made to learn from recorded teleoperation data,
+it is possible could learn more 'natural' motions for and paths for common
+tasks.
 
 \section{Ethics}
-\label{sec:ethics}
-
+\label{sec:ethics}All the ethical considerations which apply to robotics in 
+general are certainly still relevant when examining teleoperation systems.
+Also, there are two aspects of teleoperations systems which merit additional
+consideration when evaulating these systems in terms of ethics. \\
+\indent First and foremost, the behavior of the teleoperation system itself 
+must examined. It must be ensured that the system is accurate in its mimicry
+of the operator in live settings and that the system is accurate when
+recording commands for future playback. The necessity of trusting in the
+accuracy of the system is clear (consider for example robot-assisted surgery).
+It is imperative that the PR2 not cause unintended harm to its environment
+(including the operator during training). To that end, it will be important
+for the system to provide a mechanism that clearly segregates actions recorded 
+under different scenario assumptions. As an example, the PR2 should attempt to 
+perform a physical handshake with a user while  in the middle of a routine
+that cuts vegetables. (TODO, too specific?)The teleoperation system should also
+prevent actions which would stress the PR2's capabilities or otherwise
+damage the PR2.\\
+\indent Considering another aspect of the system, it is important to ensure
+accountability 
+for user actions. As the PR2 is primarily controlled via WiFi, it is important
+to make sure that unauthorized individuals cannot send commands to (or 
+otherwise control) the PR2. Any device which operates on a public IP should 
+have safeguards in place, but this is especially when it is a device such as
+the PR2 which can have such a significant effect on its environment.
+Likewise, it should be ensured that users are
+not able to corrupt previously recorded motion sequences, whether by 
+intentionally or by accident.
 \section{Conclusions}
 \label{sec:conclusions}
 
