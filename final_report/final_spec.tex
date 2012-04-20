@@ -11,7 +11,7 @@
 \usepackage[section]{placeins}
 \begin{document} 
 
-\title{BERTRAM: A Bartending Robot}
+\title{PROTOS: A PR2 Open Tele-Operation System}
 
 \subtitle{Dept. of CIS - Senior Design 2011-2012}
 \numberofauthors{3}
@@ -26,19 +26,23 @@
 \textit{\indent Programming a robot to autonomously perform human tasks has been a 
 long-time goal of robotics. Such endeavors have typically involved heavy 
 computation due to the demands of visual data processing, path planning, and motor 
-coordination. Human demonstration has often been used to introduce a sequence 
-of moves to a robot, in the form of both kinesthetic teaching (teaching through direct physical 
-manipulation of the robot's limbs) and visual observation. Here we 
-investigate teaching robotic motion through the development of an immersive
-teleoperation system for controlling the PR2. Unlike previous attempts to
-control the PR2 from a distance (`teleoperation'), we propose to also provide the
-operator with an `immersive' experience by allowing the operator to experience 
+coordination. One alternative to these computationally-intense methods is to use 
+human demonstration to introduce a sequence 
+of moves to a robot. This has been attempted
+through both kinesthetic teaching (teaching through direct physical 
+manipulation of the robot's limbs) and visual observation. Another way to teach through demonstration
+can potentially be achieved by the development of an immersive
+teleoperation system for controlling humanoid robots. Building on previous attempts to
+control the PR2 from a distance (`teleoperation'), the system also aims provide the
+operator with an `immersive' experience by providing a view of 
 the environment from the robot's perspective. \\
-\indent We plan to evaluate the effectiveness of the system
-by attempting to mix and serve drinks with a Willow Garage PR2 
-humanoid robot controlled by a user of this immersive teleoperation system. Following the implementation of this system, we will evaluate how it can be used to allow
-the PR2 (or any robot for that matter) to rapidly acquire new behavior within a specific environment. If successful, we will have demonstrated a novel and natural method for a
-human operator to impart a specific movement sequence to a robot. This paper details our progress in regards to implementing the immersive teleoperation system and our plans to use it to teach the PR2.}
+\indent The effectiveness of the system will be tested and evaluated by its ability to allow a human operator
+to handle simple manipulating tasks, such as picking up cups.
+Following the implementation of this system, its performanced will be evaluated in two ways: first, the ease with which
+it can allow a human operator to perform a given task, and second, the accuracy with which the system can record
+the operator's movements and replay them faithfully at a later time.
+If successful, the immersive teleoperation system will present a novel and natural method for a
+human operator to demonstrate a specific movement sequence to a humanoid robot.}
 \end{abstract}
 
 \section{Introduction}
@@ -56,20 +60,21 @@ attempts at overcoming these challenges involved in developing an autonomous rob
 that has been often explored involves the field of machine learning. The ability to learn can be a powerful intermediate 
 step towards autonomy, since learning can allow a robot to adapt to new, unforeseen scenarios on its own. 
 Teaching by human demonstration is a common approach to robot learning because it enables the 
-transmission of complex behavior in a manner far easier than individually planning the movement of each motor and joint. However, choosing exactly how the demonstrated behavior is delivered to the 
-robot in such a way that it can record and reproduce that behavior is still a very challenging task.
+transmission of complex behavior in a manner far easier than individually planning the movement of each motor and joint. However, choosing exactly how the demonstrated behavioris delivered to the robot in such a way that it can record and reproduce that behavior is still a very challenging task.
 
 \subsection{Approach}
-\indent In this paper we report on our progress towards teaching the WillowGarage PR2 Robot to mix and
-serve drinks by first implementing an immersive teleoperation system for controlling the PR2. By `teleoperation', we simply mean controlling the PR2 from
-a distance. By `immersive', we mean giving the human operator the illusion of being inside the PR2. The PR2 is a humanoid robot developed by  Willow Garage~\cite{pr2} for the purpose of robotics 
-research. It is omnidirectional and capable of telescoping height. What makes the PR2 especially attractive for robotics research is its pair of highly movable arms and grippers that allow grasping of many different kinds of objects. The PR2 also comes with a robust series of highly useful software development tools,
+\indent The PROTOS system is designed to be an immersive teleoperation system for controlling the WillowGarage PR2 humanoid robot. By `teleoperation', we simply mean controlling the PR2 from
+a distance. By `immersive', we mean giving the human operator the illusion of being inside the PR2.\\
+\indent The PR2 is a humanoid robot developed by  Willow Garage~\cite{pr2} for the purpose of robotics 
+research. It is omnidirectional and capable of telescoping height. The PR2 has a pair of highly movable arms and grippers
+that allow grasping of many different kinds of objects. The PR2 also comes with a robust series of highly useful software development tools,
 including a versatile simulator that allows developers to perform trial runs on a virtual PR2 without
 risking damage to the actual robot or environment. Institutions across the
 world have taught the PR2 a wide variety of human actions, such as baking 
-cookies~\cite{cookies}, scanning and bagging groceries~\cite{groceries}, and fetching a sandwich from 
-Subway~\cite{subway}. However, unlike in these examples, we propose to teach the PR2 a new behavior not through advanced task planning, but rather through human
-demonstration. Thanks to the University of Pennsylvania's GRASP laboratory, we have access to a real PR2 (shown in Figure~\ref{fig:pr2_photo}) that we can use to test the implementation of our system.\\
+cookies~\cite{cookies}, scanning and bagging groceries~\cite{groceries}, and fetching a sandwich~\cite{subway}.
+ However, unlike in these examples, the proposed PROTOS system will ideally enable the PR2 to acquire new behavior not through advanced task planning,
+but rather through human demonstration. Thanks to the University of Pennsylvania's GRASP laboratory, a real PR2 (shown in Figure~\ref{fig:pr2_photo}) can be used to test the
+system implementation.\\
 \begin{figure}[htb] 
 	\begin{center}
 		\includegraphics[width=0.75\linewidth]{graspy}
@@ -78,35 +83,55 @@ demonstration. Thanks to the University of Pennsylvania's GRASP laboratory, we h
 	\caption{PR2 robot at the University of Pennsylvania, nicknamed `GRASPY'}
 	\label{fig:pr2_photo}
 \end{figure}
-\indent The chief component of our teleoperation system is the Microsoft XBox Kinect sensor. This sensor provides depth information at real-time speeds
-(30 frames per second), which essentially performs the computation that would have been required for stereo 
+\indent The chief component of the PROTOS teleoperation system is the Microsoft XBox Kinect sensor. This sensor provides depth information at real-time speeds
+(30 frames per second), which performs the computation that would have been required for stereo 
 processing. Combined with various open source libraries~\cite{kinect}, the Kinect also works with 
-software that provides human motion sensing and tracking, which greatly simplifies the task of capturing human body movements.
+software that provides human motion sensing and tracking, which greatly simplifies the task of capturing human body movements.\\
+
 These Kinect libraries have already been used successfully in 
 many projects involving real-time tracking of human motion, examples of which can be found online~\cite{freenect}.\\
-\indent We propose to use the Kinect as part of an immersive teleoperation system to teach the PR2 how to mix and pour different kinds of drinks.
-The Kinect sensor provides a convenient way to capture a human demonstration of desired behavior. The captured data can be relayed to the
+
+\indent The Kinect will be used as part of an immersive teleoperation system to allow a human operator to easily demonstrate sequences of actions
+to a PR2.
+The Kinect sensor provides a convenient way to capture the human operator performing the desired behavior. The captured data can be relayed to the
 PR2 via ROS, an open-source Robot Operating System~\cite{ros}. ROS provides a 
-convenient framework for device abstraction and inter-process communication. 
+convenient framework for device abstraction, inter-process communication, and message recording.
+By using ROS along with the PR2 and the Kinect, the PROTOS system will allow remote operation of the PR2 while
+allowing the operator to see the PR2's surroundings from the PR2's onboard cameras. The effectiveness of this system in performing simple tasks with the PR2 
+will then be evaluated. \\
+
 Processes that perform computation are visualized as nodes in a graph, with inter-process communication representing the
 edges of the graph. Nodes send information to each other in the form of messages. Nodes that wish to send messages to other nodes can
 `publish' to a topic, and nodes wishing to receive these messages need only to `subscribe' to these topics. ROS enables relatively short
 programs to issue surprisingly sophisticated commands to the PR2, such as moving all of the arm joints to a specific position within a
-specified time frame. By using ROS along with the PR2 and the Kinect, we will construct a system for operating the PR2 remotely while
-giving the operator the feeling of being within the robot itself. The effectiveness of this system in teaching the PR2 new tasks will then be evaluated.
+specified time frame. \\
 
-What follows is an overview of other work related to implementation of 
-teleoperation systems and teaching robots human-like tasks. We then describe 
-the components of our proposed immersive teleoperation system before delving 
-into the technical implementation of each component. After this is an 
-evaluation of the current performance of the system and a summary of remaining work.
+\subsection{Results}
+\indent The PROTOS system was tested by having the human operator attempt to pick up a cup with the PR2. The PR2 was able to successfully pick up a cup and 
+place it back down in its original starting location. This motion was also successfully recorded, and was able to be played back later without the help of a human operator.
+The cup pick and drop motion was replayed fifteen times in succession before the PR2 finally failed to pick up the cup again, as the cup was knocked slightly out of
+the PR2's reach.
+
+\subsection{Organization}
+\indent What follows is an overview of other work related to implementation of 
+teleoperation systems and teaching robots human-like tasks (Section~\ref{sec:related_work}). We then describe 
+the components of the immersive teleoperation system (Section~\ref{sec:system_model}) before delving 
+into the technical implementation of each component (Section~\ref{sec:system_implementation}). What follows is an 
+evaluation of results obtained from the PROTOS system (Section~\ref{sec:results}) and a description of future work to be
+done on the system (Section~\ref{sec:future_work}) The remainder of the paper deals with the ethics involved in using an immersive teleoperation
+system (Section~\ref{sec:ethics}) and summarizes the conclusions drawn from implementing and testing the system (Section~\ref{sec:conclusions}).
 
 \section{Related Work}
 \label{sec:related_work}
+\indent  Related work will now be discussed. First, work releated to teleoperation (Section~\ref{sec:teleop}) will be presented in general, followed by a look at
+autonomous robots (Section~\ref{sec:autobots}) and teaching the PR2 (Section~\ref{sec:teach_pr2}). The section concludes with an analysis of different teaching methods by demonstration (Section~\ref{sec:demo_teach}).
+
 \subsection{Teleoperation}
+\label{sec:teleop}
 \indent There have been many previous teleoperation implementations for robotic systems. Kofman \textit{et al.}~\cite{robot_interface} devised a system for controlling a robotic arm via teleoperation and sending visual feedback to the user. The setup used in their work involves multiple cameras aimed at the human operator to capture 3-D information about the operator's arm movements. This data is then sent to a remote site containing the robotic arm and mapped to its joints so it can mimic the motion of the human arm. The human operator is able to see the robotic arm via cameras positioned at the remote site that send visual feeds of both the entire arm and of vision from the point of view of the tip of the robotic arm. Fortunately for us, the Kinect, when paired with ROS, provides a much simpler and less complicated setup to capture arm motion and send them to the PR2's arm. We are far from the first to implement teleoperation of a robot via the Kinect and ROS. In fact, Willow Garage has already tried integrating Kinect with ROS to control the PR2 remotely~\cite{willow_kinect}. However, our ultimate goal includes not only developing an immersive teleoperation system for the PR2, but also investigating how this system can be used to teach the PR2 new behavior, such as mixing and serving drinks.
 
 \subsection{Autonomous Robots}
+\label{sec:autobots}
 Other institutions have conducted research involving autonomous robots handling
 drinks. Hillenbrand \textit{et al.}~\cite{pouring_arm} designed a 
 semi-autonomous hand-arm robot for this purpose. The hand-arm was capable of 
@@ -132,9 +157,11 @@ of things more quickly and naturally by first having a human operator of our
 teleoperation system execute the actions.
 
 \subsection{Teaching the PR2}
+\label{sec:teach_pr2}
 \indent There is substantial work in teaching the PR2 robot to perform various human tasks. Bohren \textit{et al.}~\cite{beer} used the PR2 and ROS to build a robotic system for retrieving a beer from a refrigerator. In their work, they developed a task-level execution system for rapidly prototyping different robotic applications. The PR2 had to navigate an obstacle map to reach the refrigerator, use object recognition and grasp planning to identify the door handle and the drinks, and ultimately use facial recognition to deliver the beer to a human recipient. Each step of the process contained detail planning and image processing in order to carry out the expected behavior. Klingbeil \textit{et al.}~\cite{groceries} developed a grasping algorithm to enable the PR2 to pick up objects and attempt to locate and scan the barcode. Their technique allowed the PR2 to devise a plan to grasp the object from only a single 3D snapshot. Their algorithm emphasized the importance of positioning the PR2's gripper such that its shape most closely matched the shape of the object it attempts to grasp. Saito \textit{et al.}~\cite{subway} devised a way for the PR2 to intelligently navigate large environments via semantic search. The PR2 attempts to find a specific object by first searching areas that would logically contain that item. When asked to retrieve a sandwich, the PR2 first inspected a nearby refrigerator in its environment. If it fails to find one there, it then determines the next most likely place a sandwich could be found. These approaches to teaching the PR2 emphasize complex algorithms used to enable the PR2 to devise a plan from scrach to act autonomously in a given environment. Our approach is simpler in that we plan to use recorded input data from our immersive teleoperation system to give the PR2 a general sequence of actions to follow that can later be refined through more complex learning techniques.
 
 \subsection{Teaching by Demonstration}
+\label{sec:demo_teach}
 \indent Various approaches involving data from human demonstration have been explored to allow a robot to perform specific tasks. In a relatively early attempt, Chalodhorn \textit{et al.}~\cite{walk_imitation} used motion capture to teach a bipedal humanoid robot how to walk by imitation. Joint angles obtained from motion capture data recorded from a human demonstrator wearing a motion capture suit were mapped to joint angles on the robot. This data was combined with predictions based on sensory information to reproduce a human-like gait in the robot. Kormushev \textit{et al.}~\cite{whiteboard} taught a robot new motor skills through kinesthetic teaching, which is teaching by physical contact. The robot had two distinct modes of operation: a learning phase and a reproduction phase. First, the robot was shown how to clean a whiteboard by direct human manipulation of the robot's joints, recording both position and force information. Subsequently, the robot would translate the learned information to its own frame of reference and attempt to duplicate the teacher's movement pattern on the whiteboard.  Kormushev \textit{et al.}~\cite{pancakes} also used kinesthetic learning to teach a robotic arm how to flip a pancake. A human teacher first moved the arm to demonstrate the movement required to flip a pancake 180 degrees in the air and catch it again. In subsequent trials, reinforcement learning techniques were applied such that the robot could evaluate the performance of its flips and attempt to adjust the motion of the arm for better future flips.
 \indent Our method has several advantages over these existing approaches. First of all, the Kinect sensor provides accurate real-time human
 motion tracking that can be mapped to specific movement in the PR2 thanks to ROS. The Kinect also provides motion capture without the need
@@ -144,6 +171,7 @@ contact or through a joystick-based control scheme. Immersive teleoperation also
 subject to demonstration through physical contact, such as very large or very small robots. Our method, if successful, would allow for rapid demonstration of different sequences of behavior to the PR2, which could be stored and queued up for later reproduction and enhancement. This technique could be generalized to other humanoid robots besides the PR2 to teach them different kinds of behavior.
 
 \section{System Model}
+\label{sec:system_model}
 Specifically because a teleimmersive system is meant to be used by a human 
 operator to control a robot, the external/visible part of this
 design must be simple. The number of devices used to get input from the user 
@@ -226,6 +254,7 @@ IMU) and send commands to the robot. It processes all the information to map the
 into equivalent motions for the PR2.
 
 \section{System Implementation}
+\label{sec:system_implementation}
 Most of the interesting work in this project takes place inside the
 {\tt BERTRAM Analyzer}, which aggregates all the captured motion data from the
 user and processes this data to generate commands for the robot. ROS provides
@@ -317,6 +346,7 @@ the left camera on the PR2's head). All that remains is to combine the left and 
 feeds together.
 
 \section{System Performance}
+\label{sec:system_performance}
 We are currently in the process of completing the immersive 
 teleoperation system using the components described in previous sections. Upon
 completion, the system will be evaluated both for its ability to correctly
@@ -334,6 +364,18 @@ assortment of devices that comprise the teleoperation system.\\
 \subsection {Performance of the BERTRAM Analyzer}
 \indent The performance of the {\tt BERTRAM Analyzer} still needs to be improved. Although the physical devices that comprise our immersive teleoperation system are easy to use and are relatively few in number, the analyzer code has somewhat mixed performance in translating data from these devices into actions for the PR2. Although the PR2 does move its arms in accordance to the arms of the human operator, the arm motion is very abrupt and prone to sudden, uneven movements. This lack of precision in movement makes it difficult for the human operator to precisely control the arms to the degree needed for fine motions such as lifting cups or glasses. We have tried to smooth out the arm motion by threshholding the values sent by the Kinect, essentially trying to remove noise. In other words, we only send new actions to the PR2 if we receive data from the Kinect indicating that the human's arms have moved a certain amount from their previous positions. Although this change has made it easier to keep the PR2's arms still, it has not smoothed actual motions themselves. We are currently trying to address this issue by investigating how to limit the maximum acceleration and velocity of the PR2 arm motions.\\
 \indent We have also run into some difficulty in mapping the rotation information from the Wiimote and three-axis accelerometer to the wrists and head of the PR2, respectively. The wrists and head do not always turn in a way that successfully imitates the wrist and head turns of the human operator. More work and experimentation with these components of the system needs to be done before we can fix this problem and have the devices accurately mapped to the PR2.
+
+\section{Results}
+\label{sec:results}
+
+\section{Future Work}
+\label{sec:future_work}
+
+\section{Ethics}
+\label{sec:ethics}
+
+\section{Conclusions}
+\label{sec:conclusions}
 
 \section{Remaining Work}
 \label{sec:remaining_work}
