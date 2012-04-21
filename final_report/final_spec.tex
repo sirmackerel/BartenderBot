@@ -29,7 +29,7 @@ computation due to the demands of visual data processing, path planning, and mot
 coordination. One alternative to these computationally-intense methods is to use 
 human demonstration to introduce a sequence 
 of moves to a robot. This has been attempted
-through both kinesthetic teaching (teaching through direct physical 
+through both kinesthetic teaching (teaching via direct physical 
 manipulation of the robot's limbs) and visual observation. Another way to teach through demonstration
 can potentially be achieved by the development of an immersive
 teleoperation system for controlling humanoid robots. Building on previous attempts to
@@ -38,9 +38,9 @@ operator with an `immersive' experience by providing a view of
 the environment from the robot's perspective.}
 
 \textit{\indent The effectiveness of the system will be tested and evaluated by its ability to allow a human operator
-to handle simple manipulating tasks, such as picking up cups.
-Following the implementation of this system, its performanced will be evaluated in two ways: first, the ease with which
-it can allow a human operator to perform a given task, and second, the accuracy with which the system can record
+to perform simple manipulation tasks with the robot, such as picking up a cup.
+Following the implementation of this system, its performanced will be evaluated in two ways: the ease with which
+a human operator can perform a given task, and the accuracy with which the system can record
 the operator's movements and replay them faithfully at a later time.
 If successful, the immersive teleoperation system will present a novel and natural method for a
 human operator to demonstrate a specific movement sequence to a humanoid robot.}
@@ -51,18 +51,22 @@ human operator to demonstrate a specific movement sequence to a humanoid robot.}
 \subsection{Background}
 \indent Constructing a fully autonomous and adaptive robot is one of the more
 elusive goals of robotics research.
-The possibility of a robotic butler is only one of many potential applications. However, true
-autonomous decision making (that is, free of direct control from a human operator) is an incredibly challenging process as many different systems must 
-be coordinated to make this possible. For instance, visual information must be processed quickly and accurately to respond to 
-changes in the environment, accurate path planning is needed to navigate the environment, and 
-precise motor coordination is needed to manipulate the environment. There have been many different 
-attempts at overcoming these challenges involved in developing an autonomous robot.
+The possibility of a robotic butler is only one of many potential applications.
+However, true autonomous decision making (that is, behavior free of direct 
+control from a human operator) is an incredibly challenging process since many 
+different systems must 
+be coordinated to make this possible. Visual information must be processed 
+quickly and accurately to respond to changes in the environment in a timely
+manner. Robots also need accurate path planning to navigate their environment,
+ and precise motor coordination to manipulate objects in the environment. 
+ There have been many different attempts at overcoming these challenges 
+involved in developing an autonomous robot.
 
 \indent One major type of approach 
 that has been often explored involves the field of machine learning. The ability to learn can be a powerful intermediate 
 step towards autonomy, since learning can allow a robot to adapt to new, unforeseen scenarios on its own. 
 Teaching by human demonstration is a common approach to robot learning because it enables the 
-transmission of complex behavior in a manner far easier than individually planning the movement of each motor and joint. However, choosing exactly how the demonstrated behavioris delivered to the robot in such a way that it can record and reproduce that behavior is still a very challenging task.
+transmission of complex behavior in a manner far easier than individually planning the movement of each motor and joint. However, choosing exactly how the demonstrated behavior is delivered to the robot in such a way that it can record and reproduce that behavior is still a very challenging task.
 
 \subsection{Approach}
 \indent The PROTOS system is designed to be an immersive teleoperation system for controlling the WillowGarage PR2 humanoid robot. `Teleoperation' means controlling the PR2 from
@@ -267,7 +271,8 @@ desired manner. This system architecture is shown Figure~\ref{fig:some_graph}.
 \subsection{Motion Control}
 \label{sec:model_motion}
 Other than the PR2 robot itself, the Microsoft Kinect is perhaps the most 
-prominent and obvious device in the teleimmersive operation system. ROS has an existing Kinect libraries that allows
+prominent and obvious device in the teleimmersive operation system. ROS has 
+existing Kinect libraries that allow
 data from a Kinect to be handled as easily as any other message transmitted across the ROS network. A screenshot
 of these libraries in action can be seen in Figure~\ref{fig:kinect_screenshot}.
 These Kinect libraries have already been used successfully in 
@@ -294,7 +299,7 @@ accelerometer units are used to track these motions.
 Wii MotionPlus in each hand. The Wiimote is a video game controller with 
 multiple buttons, a direction pad, and built-in accelerometers. 
 The user can comfortably hold one Wiimote in each hand,
-(as this is how they were intended to be used in video games). and now has
+as this is how they were intended to be used in video games. and now has
 convenient access to a number of
 control buttons. These control buttons are used to perform a variety of actions
 involving the PR2's wrists and grippers, such as opening/closing the grippers and
@@ -421,7 +426,8 @@ own wireless network. Therefore, remote communication with the PR2 became method
 with the PR2 for the sake of simplicity. In a large scale, real world implementation of the PROTOS system, however,
 this manner of communication suffers from the same main issue as the first method - the user and devices
 may be out of range of the WiFi source of the PR2. Fortunately,
-the PR2 can also connect to and take IPs on other networks (communicating either by WiFi or by
+the PR2 can also connect to other networks and aquire a public IP
+(communicating either by WiFi or by
 Ethernet). Although network complications have arisen when using this method,
 these problems likely are due to issues with the computer used to run the system software 
 rather than issues with the PR2's onboard routers.
@@ -447,6 +453,7 @@ attempts to allow the PR2 to acquire new behavior.
 
 \subsection{Performance of Devices}
 \indent The PR2 has lived up to its expectations as a good choice of humanoid robot to 
+<<<<<<< HEAD
 use as a target for the PROTOS system. The 
 PR2 is fully capable of all of the arm motions, head motions, and grasping
 required for a variety of tasks, such as grasping simple objects. ROS has also been a superb framework that allows the 
@@ -474,6 +481,19 @@ number of commands at a more reasonable rate (30 times per second, down from 60-
 was causing the PR2's current goal to be interrupted, thus producing shaky movement.
 
 \section{Results and Evaluation}
+=======
+use. Testing existing code on the robot has been very straightforward, and 
+the PR2 is fully capable of all of the arm motions, head motions, and grasping
+we require it to do. ROS has also done an excellent job in allowing the 
+{\tt BERTRAM Analyzer} to easily communicate back and forth with the diverse 
+assortment of devices that comprise the teleoperation system.\\
+\indent Capturing motion with the Kinect has been a painless process. It requires virtually no setup time and can transmit live human motion data in real time without the need for any special clothing or markers to indicate human joints or body parts. The user can more or less move freely once the Kinect has `calibrated' its view onto a target, which takes only a few seconds. ROS makes receiving the data from the Kinect very simple. Communication with the Wiimotes has also worked as expected. The remotes transmit their data wirelessly and accurately report button presses, rotations, and accelerations up to one hundred times per second. They fit nicely in the palms of the human operators' hands since they are originally intended to be used as video game controllers.\\
+\indent The three-axis accelerometer for capturing head movement has been a little more difficult to deal with than originally anticipated. Although the device does report changes in its yaw, pitch, and roll, it is also prone to reporting errors if it receives sudden jolts or impacts. When these errors happen, the ROS software that interfaces with the device must be restarted to obtain accurate readings once more. We suspect that this problem will be alleviated once we mount it in a more stable fashion on to head gear for the human operator to wear. Ideally, the human operator can simply wear the head gear and not have to worry about adjusting the accelerometer. The video eyewear works as expected and can successfully display video output from cameras on the PR2.\\
+\subsection {Performance of the BERTRAM Analyzer}
+\indent The performance of the {\tt BERTRAM Analyzer} still needs to be improved. Although the physical devices that comprise our immersive teleoperation system are easy to use and are relatively few in number, the analyzer code has somewhat mixed performance in translating data from these devices into actions for the PR2. Although the PR2 does move its arms in accordance to the arms of the human operator, the arm motion is very abrupt and prone to sudden, uneven movements. This lack of precision in movement makes it difficult for the human operator to precisely control the arms to the degree needed for fine motions such as lifting cups or glasses. We have tried to smooth out the arm motion by threshholding the values sent by the Kinect, essentially trying to remove noise. In other words, we only send new actions to the PR2 if we receive data from the Kinect indicating that the human's arms have moved a certain amount from their previous positions. Although this change has made it easier to keep the PR2's arms still, it has not smoothed actual motions themselves. We are currently trying to address this issue by investigating how to limit the maximum acceleration and velocity of the PR2 arm motions.\\
+\indent We have also run into some difficulty in mapping the rotation information from the Wiimote and three-axis accelerometer to the wrists and head of the PR2, respectively. The wrists and head do not always turn in a way that successfully imitates the wrist and head turns of the human operator. More work and experimentation with these components of the system needs to be done before we can fix this problem and have the devices accurately mapped to the PR2.
+
+\section{Results}
 \label{sec:results}
 
 \subsection{Grasping Tasks}
@@ -523,13 +543,23 @@ to only grasping, as any task involving the PR2's arms and head can be successfu
 \section{Future Work}
 \label{sec:future_work} Perhaps the most obvious direction to pursue with
 future work is the use of the recorded motion sequences as training data
-for a learning planner. Current planners are very slow to calculate, but
-(TODO, mikephil?) have already demonstrated significant improvements in
-efficiency by creating a planner which uses paths it has already computed
-as a basis whenever it is requested to find a new path. If it could instead be
-made to learn from recorded teleoperation data,
-it is possible could learn more 'natural' motions for and paths for common
-tasks.
+for a machine learning-driven planner. Current planners can take multiple 
+minutes to 
+calculate even simple paths. Significant improvements in efficiency have 
+already been demonstrated with planners using previously computed paths as a 
+basis for new planning requests (the planner teaches itself). It would be
+very interesting to explore training such a planner with recorded teleoperation
+data, perhaps establishing more efficient and/or natural motions to serve as
+a basis for future planning.
+
+Another interesting avenue to pursue in the future would be to give the 
+operator control over the movement of the PR2's base. Currently, only
+the operator's head and arm movements are translated into PR2 commands. As the
+Kinect also captures leg data, it is certainly possible to use different
+motions or stances to instruct the PR2 to move in a certain direction.
+Using actual walking motions would require sufficient space for both the PR2
+and observation system however, while 
+using stances would detract from the immersive aspect of the system.
 
 \section{Ethics}
 \label{sec:ethics}All the ethical considerations which apply to robotics in 
@@ -561,11 +591,6 @@ not able to corrupt previously recorded motion sequences, whether by
 intentionally or by accident.
 \section{Conclusions}
 \label{sec:conclusions}
-
-\section{Remaining Work}
-\label{sec:remaining_work}
-\indent The most immediate goal is completion of the immersive teleoperation system. To achieve this, the arm movement of the PR2 needs to be smoothed out to allow fine-grained control. The wrist movement also must be improved to enable successful grasping of different objects. Once these two aspects of the PR2 are working well, additional work is required to correctly map head movement from the human operator to head movement of the PR2. This part is cruical for making the teleoperation feel immersive to the human operator of the system. Once the head motion is satisfactory, the human operator should be able to use the video eyewear to see from the PR2's perspective and operate the PR2 remotely without being in view of the actual robot. We estimate that we are currently about sixty percent done with the work needed to complete the immersive teleoperation system.\\
-\indent Once this immersive teleoperation system is complete, additional work will be done to see how the system can be used to teach the PR2 new behavior. The idea is to repeat a specific action using the system and have the PR2 learn this behavior by recording the input data it receives. In this way, a human can demonstrate an action to the PR2, which will then enable the PR2 to repeat this action on its own. If enough time remains, methods to improve upon and refine this recorded behavior will be explored.
 
 	% AW: We next move onto the bibliography.
 \bibliographystyle{plain} % Please do not change the bib-style
