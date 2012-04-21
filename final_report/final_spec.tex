@@ -65,8 +65,8 @@ Teaching by human demonstration is a common approach to robot learning because i
 transmission of complex behavior in a manner far easier than individually planning the movement of each motor and joint. However, choosing exactly how the demonstrated behavioris delivered to the robot in such a way that it can record and reproduce that behavior is still a very challenging task.
 
 \subsection{Approach}
-\indent The PROTOS system is designed to be an immersive teleoperation system for controlling the WillowGarage PR2 humanoid robot. By `teleoperation', we simply mean controlling the PR2 from
-a distance. By `immersive', we mean giving the human operator the illusion of being inside the PR2.
+\indent The PROTOS system is designed to be an immersive teleoperation system for controlling the WillowGarage PR2 humanoid robot. `Teleoperation' means controlling the PR2 from
+a distance. `Immersive', means giving the human operator the illusion of being inside the PR2.
 
 \indent The PR2 is a humanoid robot developed by  Willow Garage~\cite{pr2} for the purpose of robotics 
 research. It is omnidirectional and capable of telescoping height. The PR2 has a pair of highly movable arms and grippers
@@ -447,19 +447,69 @@ attempts to allow the PR2 to acquire new behavior.
 
 \subsection{Performance of Devices}
 \indent The PR2 has lived up to its expectations as a good choice of humanoid robot to 
-use. Testing our existing code on the robot has been very straightforward, and 
-the PR2 is fully capable of all of the arm motions, head motions, and grasping
-we require it to do. ROS has also done an excellent job in allowing the 
-{\tt BERTRAM Analyzer} to easily communicate back and forth with the diverse 
-assortment of devices that comprise the teleoperation system.\\
-\indent Capturing motion with the Kinect has been a painless process. It requires virtually no setup time and can transmit live human motion data in real time without the need for any special clothing or markers to indicate human joints or body parts. The user can more or less move freely once the Kinect has `calibrated' its view onto a target, which takes only a few seconds. ROS makes receiving the data from the Kinect very simple. Communication with the Wiimotes has also worked as expected. The remotes transmit their data wirelessly and accurately report button presses, rotations, and accelerations up to one hundred times per second. They fit nicely in the palms of the human operators' hands since they are originally intended to be used as video game controllers.\\
-\indent The three-axis accelerometer for capturing head movement has been a little more difficult to deal with than originally anticipated. Although the device does report changes in its yaw, pitch, and roll, it is also prone to reporting errors if it receives sudden jolts or impacts. When these errors happen, the ROS software that interfaces with the device must be restarted to obtain accurate readings once more. We suspect that this problem will be alleviated once we mount it in a more stable fashion on to head gear for the human operator to wear. Ideally, the human operator can simply wear the head gear and not have to worry about adjusting the accelerometer. The video eyewear works as expected and can successfully display video output from cameras on the PR2.\\
-\subsection {Performance of the BERTRAM Analyzer}
-\indent The performance of the {\tt BERTRAM Analyzer} still needs to be improved. Although the physical devices that comprise our immersive teleoperation system are easy to use and are relatively few in number, the analyzer code has somewhat mixed performance in translating data from these devices into actions for the PR2. Although the PR2 does move its arms in accordance to the arms of the human operator, the arm motion is very abrupt and prone to sudden, uneven movements. This lack of precision in movement makes it difficult for the human operator to precisely control the arms to the degree needed for fine motions such as lifting cups or glasses. We have tried to smooth out the arm motion by threshholding the values sent by the Kinect, essentially trying to remove noise. In other words, we only send new actions to the PR2 if we receive data from the Kinect indicating that the human's arms have moved a certain amount from their previous positions. Although this change has made it easier to keep the PR2's arms still, it has not smoothed actual motions themselves. We are currently trying to address this issue by investigating how to limit the maximum acceleration and velocity of the PR2 arm motions.\\
-\indent We have also run into some difficulty in mapping the rotation information from the Wiimote and three-axis accelerometer to the wrists and head of the PR2, respectively. The wrists and head do not always turn in a way that successfully imitates the wrist and head turns of the human operator. More work and experimentation with these components of the system needs to be done before we can fix this problem and have the devices accurately mapped to the PR2.
+use as a target for the PROTOS system. The 
+PR2 is fully capable of all of the arm motions, head motions, and grasping
+required for a variety of tasks, such as grasping simple objects. ROS has also been a superb framework that allows the 
+{\tt PROTOS software} to easily communicate back and forth with the diverse 
+assortment of devices that comprise the teleoperation system.
 
-\section{Results}
+\indent  ROS makes receiving the data from the various devices incredibly simple. Capturing motion with the Kinect has been a painless process. 
+The Kinect requires virtually no setup time and can transmit live human motion data in real time without the 
+need for any special clothing or markers to indicate human joint locations.
+The Wiimotes transmit their data wirelessly and accurately report button presses, rotations, and accelerations up to one hundred times per second. They fit 
+nicely in the palms of the human operators' hands since they are originally intended to be used as video game controllers. The three-axis accelerometer for capturing head 
+movement has worked very well in reporting the operator's head tilts and rotations.
+
+\subsection {Performance of the PROTOS Software}
+\indent The performance of the {\tt PROTOS Software} has undergone numerous improvements since its conception. 
+Although the physical devices that comprise the immersive teleoperation system 
+are easy to use and are relatively few in number, the software has had an uneven performance history in translating data from these devices 
+into appropriate actions for the PR2. The arm motion used to be very abrupt and prone to sudden, uneven movements. This lack of 
+precision in movement maked it difficult for the human operator to precisely control the arms to the degree needed for fine motions such as lifting cups or glasses. This
+issue was remedied in two ways. First, the software now smooths out the arm motion by threshholding the joint angles received from the Kinect.
+This is done to essentially remove noise from the Kinect output picked up by unintentional arm shaking or wobbling. New actions are only sent to the PR2 if data received 
+from the Kinect indicates that the operator's arms have moved a certain amount from their previous positions. Second, a reduction in the number of times per second that the
+{\tt PROTOS Software} sends commands to the PR2 was reduced, which has improved performance in not only the arm movements, but the head movements as well. Sending the 
+number of commands at a more reasonable rate (30 times per second, down from 60-100 per second) has greatly smoothed the PR2's movements, as the previous flood of commands
+was causing the PR2's current goal to be interrupted, thus producing shaky movement.
+
+\section{Results and Evaluation}
 \label{sec:results}
+
+\subsection{Grasping Tasks}
+\indent The performance of the PROTOS immersive teleoperation system was first
+evaluated based on how well it could translate actions of
+the human operator to commands for the PR2. A human operator attempted to grasp a variety of cups and stuffed animal toys 
+with the PR2 using the system. These small objects were placed near the PR2 on a raised surface (such as a desk or table), and the user was given the challenge of
+picking that object up, moving it around in the air, and then placing the object back down in the same spot.
+
+\indent Although the arms responded well to movements along the sides of the user, the movements became more
+muddled when attempting to move in the area in front of the user's body. This is likely an artifact of the Kinect's inability to properly distinguish the operator's arm 
+joint angles when they are bunched close together in front of the operator's body. Therefore, grasping objects directly in front of the PR2 was difficult, but grasping
+objects to the side was still feasible. The Wiimotes responded well with no real hindrances to the grasping process. The buttons feel responsive and almost lagless in
+transmitting directions to the PR2's grippers.
+
+\indent The IMU was very responsive and provided accurate tracking of the human operator's head movements, which translated very well to the PR2's head movements. The user 
+was able to keep the PR2's head mounted cameras focused on the object to be grasped. A framerate issue arose with the virtual reality goggles. Although the PR2's head movements
+matched those of the user's, the rate at which images from the PR2's cameras were displayed to the goggles could not keep up with the rate at which new video was coming
+in from the cameras. The user's view became choppy, which made grasping the objects more difficult. However, this issue can likely be remedied by simply using a more
+powerful computer with which to run the PROTOS system.
+
+\subsection{Recording and Playback}
+\indent Once the accuracy of the PROTOS teleoperation system was improved, successful grasping trials were recorded by the PROTOS system. ROS provides a very
+convenient method for saving all messages that get transmitted by a ROS node. By using this mechanism, all of the commands issued by the {\tt PROTOS Software} to the PR2
+can be stored in a file called a bagfile. These bagfiles can later be replayed to transmit the exact same sequence of commands to the PR2. The successful grasping trials
+were replayed faithfully by the bagfile, and the PR2 was able to pick up the cup again without any outside help. However, the replay depends on the environment being setup
+in exactly the same way as the time the recording was made. A depiction of the setup used for the recording and playback is pictured in Figure~\ref{fig:evaluation}. A cup
+was placed on a desk next to the PR2. A human operator used the PROTOS system to pick up the cup, move it around in the air, and then place it back down in the same location.
+The entire process was recorded, and later played back without a human user involved. The PR2 was able to pick up the same cup and place it down fifteen consecutive times
+before the cup was pushed out of the PR2's reach.
+
+\indent The success of the recording and playback is promising for demonstration learning purposes, as motion sequences from the
+ human operator can be recorded with a high degree of
+accuracy. Any learning framework that can read in the rosbag files will be able to use these human sequences as demonstration data. The ease with which the PROTOS system can 
+produce these recordings makes it an ideal tool to augment a demonstration learning framework. The variety of motion sequences capable of being produced is not restricted
+to only grasping, as any task involving the PR2's arms and head can be successfully performed and recorded.
 
 \begin{figure}[htb] 
 	\begin{center}
@@ -516,51 +566,6 @@ intentionally or by accident.
 \label{sec:remaining_work}
 \indent The most immediate goal is completion of the immersive teleoperation system. To achieve this, the arm movement of the PR2 needs to be smoothed out to allow fine-grained control. The wrist movement also must be improved to enable successful grasping of different objects. Once these two aspects of the PR2 are working well, additional work is required to correctly map head movement from the human operator to head movement of the PR2. This part is cruical for making the teleoperation feel immersive to the human operator of the system. Once the head motion is satisfactory, the human operator should be able to use the video eyewear to see from the PR2's perspective and operate the PR2 remotely without being in view of the actual robot. We estimate that we are currently about sixty percent done with the work needed to complete the immersive teleoperation system.\\
 \indent Once this immersive teleoperation system is complete, additional work will be done to see how the system can be used to teach the PR2 new behavior. The idea is to repeat a specific action using the system and have the PR2 learn this behavior by recording the input data it receives. In this way, a human can demonstrate an action to the PR2, which will then enable the PR2 to repeat this action on its own. If enough time remains, methods to improve upon and refine this recorded behavior will be explored.
-
-\subsection{Evaluation Critera}
-\indent The performance of the immersive teleoperation system will
-first be evaluated based on how well it can mimic the actions of
-the human operator. We will attempt to grasp and lift a variety of
-objects with the system to test the limits that the system allows in
-controlling the actions of the PR2. The accuracy of the teleoperation
-system can be measured with tests to determine with what level of precision
-the arms of the PR2 move in relation to how much the arms of the human user move.\\
-\indent Once the accuracy of the immersive teleoperation system has been verified, 
-we can experimentally determine how quickly
-and easily the PR2 can acquire new behavior from it. We will start
-with very simple motions, such as lifting or pouring
-a single cup or bottle. Once the PR2 is capable of completing
-these actions on its own without the need of a human operator,
-we can attempt to teach it increasingly complex sequences
-of lifting, pouring, and mixing. We can measure the PR2's success
-rate in repeating a recorded movement over multiple trials.
-This success rate can be then be correlated with the complexity
-of the demonstrated command. The goal here is to
-show that many different movement sequences of varying
-difficulty can be taught to the PR2 using the same motion
-capturing setup developed for teleimmersive operation.\\
-\indent If time permits, we also plan to evaluate the PR2's ability
-to adapt its learned behavior to changing conditions. For instance, we can
-measure how far a bottle can be moved from its expected
-position before the PR2 becomes unable to pick it up. The
-weight of the bottle can also be changed to see how well the
-PR2 can adapt to grasping nearly-full versus nearly-empty
-drink containers. The success rate of the PR2's drink mixing
-can be analyzed as a function of these variables (distance
-moved, weight of drinks, etc).
-
-\subsection{Timeline}
-The following is a list of milestones we hope to reach as the spring semester progresses.
-	% The 'itemize' environment shown here, and its friend 'enumerate' (shown below), are used to create indented\bulleted\outline style lists.
-\begin{itemize*}
-        \item {\sc Already Completed}: Map arm motion of a human operator to the arm motion of the PR2. Begin integration
-          of different devices into one immersive teleoperation system.\vspace{3pt}
-	\item {\sc prior-to Feb.1}: Achieve smooth arm and wrist motion on the PR2.\vspace{3pt}
-	\item {\sc prior-to Mar.1}: Complete the immersive teleoperation system and attempt to mix drinks with the PR2.\vspace{3pt}
-	\item {\sc prior-to Apr.1}: Teach the PR2 how to mix a drink using the completed system.\vspace{3pt}
-	\item {\sc completion tasks}: Verify that the PR2 can successfully mix a drink, either autonomously or through human operation. Conduct accuracy testing. Complete write-up.\vspace{3pt}
-	\item {\sc if there's time} : Investigate ways for the PR2 to improve behavior learned from the immersive teleoperation system.
-\end{itemize*}
 
 	% AW: We next move onto the bibliography.
 \bibliographystyle{plain} % Please do not change the bib-style
