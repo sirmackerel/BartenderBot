@@ -373,7 +373,7 @@ so as to mimic the sensed movement of the user. This is done for the shoulder
 and elbow joints on both arms.
 
 \subsection{Handling IMU Input}
-\indent A similar process occurs for the IMU on the user's head. The specific IMU used in our system is
+\indent A similar process occurs for the IMU on the user's head (see Figure~\ref{fig:imu}). The specific IMU used in our system is
 the CHR-6dm Attitude and Heading Reference System~\cite{imu_chr}. When lying flat, it uses its
 accelerometers to capture roll and pitch. It also has a magnetic compass to 
 track yaw (necessary since the plane in which the yaw rotational motion occurs
@@ -389,6 +389,15 @@ Therefore, when tracking a user who does not begin by facing north, it is
 important to find the unity position for the sensor (the bearing when 
 the user is facing forward) and to use this as an offset for all future angle
 readings.
+
+\begin{figure}[htb] 
+	\begin{center}
+		\includegraphics[width=0.6\linewidth]{imu}
+	\end{center}
+	%\vspace{-24pt}
+	\caption{Photograph of a human operator wearing the IMU mounted on a cap.}
+	\label{fig:imu}
+\end{figure}
 
 \subsection{Handling Wiimote Input}
 The Wiimote communication is handled in much the same manner as the IMU on the head.
@@ -591,12 +600,14 @@ accountability for actions committed by the PR2.
 
 \section{Conclusions}
 \label{sec:conclusions}
-The {\tt PROTOS} system demonstrates the feasiblity of teleoperation for the
-PR2 robot. Consisting of inexpensive consumer hardware, {\tt PROTOS}
-provides an accurate, immersive control interface which is also fairly 
-portable. With even such a simple system able to replay movement, one can
-only wonder what a machine learning-driven planner could accomplish if trained
-on the data.
+\indent The {\tt PROTOS} system demonstrates the feasiblity of immersive teleoperation for controlling humanoid robots such as the PR2. 
+Consisting of inexpensive consumer hardware, {\tt PROTOS}
+provides an accurate, immersive control interface which is fairly 
+portable and intuitive to use. Simple, human tasks can be effectively performed by a user of the system. 
+
+\indent This immersive teleoperation system provides a novel way to perform and capture human motions and
+translate them into commands to a robot. The {\tt PROTOS} system leads one to wonder what a machine learning-driven planner could accomplish if trained
+on this data.
 	% AW: We next move onto the bibliography.
 \bibliographystyle{plain} % Please do not change the bib-style
 \bibliography{final_spec}  % Just the *.BIB filename
