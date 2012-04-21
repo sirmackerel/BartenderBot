@@ -72,8 +72,8 @@ transmission of complex behavior in a manner far easier than individually planni
 \indent The {\tt PROTOS} system is designed to be an immersive teleoperation system for controlling the WillowGarage PR2 humanoid robot. `Teleoperation' means controlling the PR2 from
 a distance. `Immersive', means giving the human operator the illusion of being inside the PR2.
 
-\indent The PR2 is a humanoid robot developed by  Willow Garage~\cite{pr2} for the purpose of robotics 
-research. It is omnidirectional and capable of telescoping height. The PR2 has a pair of highly movable arms and grippers
+\indent The PR2 is a humanoid robot developed by Willow Garage for the purpose of robotics 
+research~\cite{pr2}. It is omnidirectional and capable of telescoping height. The PR2 has a pair of highly movable arms and grippers
 that allow grasping of many different kinds of objects. The PR2 also comes with a robust set of highly useful software development tools,
 including a versatile simulator that allows developers to perform trial runs on a virtual PR2 without
 risking damage to the actual robot or environment. Institutions across the
@@ -370,7 +370,7 @@ tracking them. Once it has done so, it will publish data on various
 topics (such as {\tt left\_shoulder}, {\tt right\_elbow}). These messages
 contain joint angle transforms that are delivered to the {\tt PROTOS Software}.
 
-\indent The {\tt PROTOS Software} receives messages from the
+\indent The {\tt PROTOS Software} polls and listens for messages from the
  {\tt openni\_tracker}.
 When it receives information for an altered joint position, it applies the
 appropriate transformations and instructs the PR2 on how to set its own joints
